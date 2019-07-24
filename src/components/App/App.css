@@ -10,7 +10,11 @@
 }
 
 .menu__list-item {
-  margin: 10px 20px;
+  margin: 10px 0;
+}
+
+.menu__list-item:not(:last-child) {
+  margin-right: 40px;
 }
 
 .menu__link {
