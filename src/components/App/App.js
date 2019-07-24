@@ -12,11 +12,19 @@ function App() {
       <div className="App">
         <header className="header">
           <nav className="menu">
-            <ul>
-              <li><Link to="/">Home</Link></li>
-              <li><Link to="/analytics">Analytics</Link></li>
-              <li><Link to="/surveys">Surveys</Link></li>
-              <li><Link to="/builder">Survey Builder</Link></li>
+            <ul className="menu__list">
+              <li className="menu__list-item">
+                <Link className="menu__link" to="/">Home</Link>
+              </li>
+              <li className="menu__list-item">
+                <Link className="menu__link" to="/analytics">Analytics</Link>
+              </li>
+              <li className="menu__list-item">
+                <Link className="menu__link" to="/surveys">Surveys</Link>
+              </li>
+              <li className="menu__list-item">
+                <Link className="menu__link" to="/builder">Survey Builder</Link>
+              </li>
             </ul>
           </nav>
         </header>
