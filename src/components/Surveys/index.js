@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import SurveyList from './SurveyList';
 import './Surveys.css';
 
 export default function Surveys(props) {
@@ -45,6 +46,7 @@ export default function Surveys(props) {
           <input type="submit" />
         </div>
       </form>
+      <SurveyList />
     </div>
   );
-}
+};
