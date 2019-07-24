@@ -5,25 +5,23 @@ export default function SurveySearchForm(props) {
     search,
     sort,
     filter,
-    handleChangeSearch,
-    handleChangeSort,
-    handleChangeFilter,
+    handleChange,
     handleSubmit,
-  } = props.formState;
+  } = props.formControls;
 
   return (
     <form className="form" onSubmit={handleSubmit}>
       <div className="form__input">
         <label for="search">Search:{' '}</label>
-        <input type="text" name="search" value={search} onChange={handleChangeSearch} />
+        <input type="text" name="search" value={search} onChange={handleChange} />
       </div>
       <div className="form__input">
         <label for="sort">Sort By:{' '}</label>
-        <input type="text" name="sort" value={sort} onChange={handleChangeSort} />
+        <input type="text" name="sort" value={sort} onChange={handleChange} />
       </div>
       <div className="form__input">
         <label for="filter">Filter:{' '}</label>
-        <input type="text" name="filter" value={filter} onChange={handleChangeFilter} />
+        <input type="text" name="filter" value={filter} onChange={handleChange} />
       </div>
       <div className="form__input">
         <input type="submit" />

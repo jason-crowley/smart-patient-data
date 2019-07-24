@@ -4,43 +4,35 @@ import SurveyList from './SurveyList';
 import './Surveys.css';
 
 export default function Surveys(props) {
-  // Handle search state
-  const [search, setSearch] = useState('');
-  const handleChangeSearch = e => {
-    setSearch(e.target.value);
-  };
+  const [formState, setFormState] = useState({
+    search: '',
+    sort: '',
+    filter: '',
+  });
 
-  // Handle sort state
-  const [sort, setSort] = useState('');
-  const handleChangeSort = e => {
-    setSort(e.target.value);
-  };
-
-  // Handle filter state
-  const [filter, setFilter] = useState('');
-  const handleChangeFilter = e => {
-    setFilter(e.target.value);
+  const handleChange = e => {
+    setFormState({
+      ...formState,
+      [e.target.name]: e.target.value,
+    });
   };
 
   const handleSubmit = e => {
     e.preventDefault();
+    const { search, sort, filter } = formState;
     alert(`Search: ${search}, Sort: ${sort}, Filter: ${filter}`);
   };
 
-  const formState = {
-    search,
-    sort,
-    filter,
-    handleChangeSearch,
-    handleChangeSort,
-    handleChangeFilter,
+  const formControls = {
+    ...formState,
+    handleChange,
     handleSubmit,
   };
 
   return (
     <div>
       <h1>Surveys</h1>
-      <SurveySearchForm formState={formState} />
+      <SurveySearchForm formControls={formControls} />
       <SurveyList />
     </div>
   );
