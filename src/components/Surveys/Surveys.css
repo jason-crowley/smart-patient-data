@@ -1,0 +1,13 @@
+.form {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+/* .form__input { */
+/*   margin: 20px 0; */
+/* } */
+
+.form__input:not(:last-child) {
+  margin-right: 20px;
+}
