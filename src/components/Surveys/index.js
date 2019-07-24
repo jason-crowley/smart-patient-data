@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import SurveySearchForm from './SurveySearchForm';
 import SurveyList from './SurveyList';
 import './Surveys.css';
 
@@ -26,26 +27,20 @@ export default function Surveys(props) {
     alert(`Search: ${search}, Sort: ${sort}, Filter: ${filter}`);
   };
 
+  const formState = {
+    search,
+    sort,
+    filter,
+    handleChangeSearch,
+    handleChangeSort,
+    handleChangeFilter,
+    handleSubmit,
+  };
+
   return (
     <div>
       <h1>Surveys</h1>
-      <form className="form" onSubmit={handleSubmit}>
-        <div className="form__input">
-          <label for="search">Search:{' '}</label>
-          <input type="text" name="search" value={search} onChange={handleChangeSearch} />
-        </div>
-        <div className="form__input">
-          <label for="sort">Sort By:{' '}</label>
-          <input type="text" name="sort" value={sort} onChange={handleChangeSort} />
-        </div>
-        <div className="form__input">
-          <label for="filter">Filter:{' '}</label>
-          <input type="text" name="filter" value={filter} onChange={handleChangeFilter} />
-        </div>
-        <div className="form__input">
-          <input type="submit" />
-        </div>
-      </form>
+      <SurveySearchForm formState={formState} />
       <SurveyList />
     </div>
   );
