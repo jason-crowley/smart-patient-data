@@ -1,9 +1,9 @@
 import React from 'react';
 import { BrowserRouter, Route, Link } from 'react-router-dom';
-import Home from '../Home/Home';
-import Analytics from '../Analytics/Analytics';
-import Surveys from '../Surveys/Surveys';
-import Builder from '../Builder/Builder';
+import Home from '../Home';
+import Analytics from '../Analytics';
+import Surveys from '../Surveys';
+import Builder from '../Builder';
 import './App.css';
 
 function App() {
