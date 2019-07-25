@@ -21,6 +21,8 @@ export default function SurveyListItem(props) {
       <p>{description}</p>
       <p>Created: {formatDate(date)}</p>
       <p>Publisher: {publisher}</p>
+      <button>Preview</button>
+      <button>Select</button>
     </li>
   );
 };
