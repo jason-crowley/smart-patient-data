@@ -1,0 +1,13 @@
+.list {
+  /* margin: 20px 160px; */
+  /* padding: 0 160px; */
+  margin: 0 auto;
+  width: 100%;
+  max-width: 800px;
+  border: 1px solid yellow;
+}
+
+.list__item {
+  padding: 20px 40px;
+  border: 1px solid blue;
+}
