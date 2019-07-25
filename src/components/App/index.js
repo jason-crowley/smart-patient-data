@@ -1,12 +1,12 @@
 import React from 'react';
-import { BrowserRouter, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 import Home from '../Home';
 import Analytics from '../Analytics';
 import Surveys from '../Surveys';
 import Builder from '../Builder';
 import './App.css';
 
-function App() {
+export default function App() {
   return (
     <BrowserRouter>
       <div className="App">
@@ -28,14 +28,13 @@ function App() {
             </ul>
           </nav>
         </header>
-
-        <Route path="/" exact component={Home} />
-        <Route path="/analytics" component={Analytics} />
-        <Route path="/surveys" component={Surveys} />
-        <Route path="/builder" component={Builder} />
+        <Switch>
+          <Route path="/" exact component={Home} />
+          <Route path="/analytics" component={Analytics} />
+          <Route path="/surveys" component={Surveys} />
+          <Route path="/builder" component={Builder} />
+        </Switch>
       </div>
     </BrowserRouter>
   );
-}
-
-export default App;
+};
