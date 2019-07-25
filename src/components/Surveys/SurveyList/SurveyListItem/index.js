@@ -11,7 +11,7 @@ export default function SurveyListItem(props) {
     description,
     date,
     publisher,
-    experimental = false,
+    experimental,
   } = props;
 
   return (
