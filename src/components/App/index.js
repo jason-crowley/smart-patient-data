@@ -4,30 +4,20 @@ import Home from '../Home';
 import Analytics from '../Analytics';
 import Surveys from '../Surveys';
 import Builder from '../Builder';
+import Header from '../Header';
 import './App.css';
 
 export default function App() {
   return (
     <BrowserRouter>
       <div className="App">
-        <header className="header">
-          <nav className="menu">
-            <ul className="menu__list">
-              <li className="menu__list-item">
-                <Link className="menu__link" to="/">Home</Link>
-              </li>
-              <li className="menu__list-item">
-                <Link className="menu__link" to="/analytics">Analytics</Link>
-              </li>
-              <li className="menu__list-item">
-                <Link className="menu__link" to="/surveys">Surveys</Link>
-              </li>
-              <li className="menu__list-item">
-                <Link className="menu__link" to="/builder">Survey Builder</Link>
-              </li>
-            </ul>
-          </nav>
-        </header>
+        <Header>
+          <Link className="menu__link" to="/">Home</Link>
+          <Link className="menu__link" to="/analytics">Analytics</Link>
+          <Link className="menu__link" to="/surveys">Surveys</Link>
+          <Link className="menu__link" to="/builder">Survey Builder</Link>
+        </Header>
+
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path="/analytics" component={Analytics} />
