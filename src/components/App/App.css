@@ -2,23 +2,3 @@
   padding: 20px 40px;
   border: 1px solid green;
 }
-
-.menu__list {
-  display: flex;
-  list-style-type: none;
-  border: 1px solid red;
-}
-
-.menu__list-item {
-  margin: 10px 0;
-}
-
-.menu__list-item:not(:last-child) {
-  margin-right: 40px;
-}
-
-.menu__link {
-  padding: 5px 10px;
-  text-decoration: none;
-  border: 1px solid black;
-}

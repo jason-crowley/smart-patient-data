@@ -12,10 +12,10 @@ export default function App() {
     <BrowserRouter>
       <div className="App">
         <Header>
-          <Link className="menu__link" to="/">Home</Link>
-          <Link className="menu__link" to="/analytics">Analytics</Link>
-          <Link className="menu__link" to="/surveys">Surveys</Link>
-          <Link className="menu__link" to="/builder">Survey Builder</Link>
+          <Link className="HeaderNav__link" to="/">Home</Link>
+          <Link className="HeaderNav__link" to="/analytics">Analytics</Link>
+          <Link className="HeaderNav__link" to="/surveys">Surveys</Link>
+          <Link className="HeaderNav__link" to="/builder">Survey Builder</Link>
         </Header>
 
         <Switch>

@@ -30,7 +30,7 @@ export default function Surveys(props) {
   };
 
   return (
-    <div>
+    <div className="Surveys">
       <h1>Surveys</h1>
       <SurveySearchForm formControls={formControls} />
       <SurveyList />

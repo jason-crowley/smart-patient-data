@@ -1,0 +1,19 @@
+.HeaderNav__list {
+  display: flex;
+  list-style-type: none;
+  border: 1px solid red;
+}
+
+.HeaderNav__item {
+  margin: 10px 0;
+}
+
+.HeaderNav__item:not(:last-child) {
+  margin-right: 40px;
+}
+
+.HeaderNav__link {
+  padding: 5px 10px;
+  text-decoration: none;
+  border: 1px solid black;
+}
