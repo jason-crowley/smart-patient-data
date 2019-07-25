@@ -15,12 +15,12 @@ export default function SurveyListItem(props) {
   } = props;
 
   return (
-    <div className="list__item">
+    <li className="list__item">
       <h2>{title}</h2>
       { experimental && <h3 className="experimental">Experimental</h3> }
       <p>{description}</p>
       <p>Created: {formatDate(date)}</p>
       <p>Publisher: {publisher}</p>
-    </div>
+    </li>
   );
 };

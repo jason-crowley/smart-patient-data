@@ -4,7 +4,7 @@ import './SurveyList.css';
 
 export default function SurveyList(props) {
   return (
-    <div className="list">
+    <ul className="list">
       <SurveyListItem
         title="Daily Activity Survey"
         description="This survey asks about your daily activity and how you feel about exercise."
@@ -24,6 +24,6 @@ export default function SurveyList(props) {
         publisher="Dr. Jones"
         experimental
       />
-    </div>
+    </ul>
   );
 };

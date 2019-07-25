@@ -1,8 +1,8 @@
 .list {
-  /* margin: 20px 160px; */
-  /* padding: 0 160px; */
   margin: 0 auto;
+  padding: 0;
   width: 100%;
   max-width: 800px;
+  list-style-type: none;
   border: 1px solid yellow;
 }
