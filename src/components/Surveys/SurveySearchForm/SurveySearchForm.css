@@ -10,3 +10,11 @@
 .form__input:not(:last-child) {
   margin-right: 20px;
 }
+
+.none {
+  color: gray;
+}
+
+option {
+  color: black;
+}

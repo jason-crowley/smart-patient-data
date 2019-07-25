@@ -24,11 +24,35 @@ export default function SurveySearchForm(props) {
       </div>
       <div className="form__input">
         <label htmlFor="sort">Sort By:{' '}</label>
-        <input type="text" name="sort" value={sort} onChange={handleChange} />
+        <select
+          className={sort ? undefined : 'none'}
+          name="sort"
+          value={sort}
+          onChange={handleChange}
+        >
+          <option value="">None</option>
+          <option value="name">Name (Ascending)</option>
+          <option value="name-desc">Name (Descending)</option>
+          <option value="date">Date (Newest First)</option>
+          <option value="date-desc">Date (Oldest First)</option>
+          <option value="pub">Publisher (Ascending)</option>
+          <option value="pub-desc">Publisher (Descending)</option>
+        </select>
       </div>
       <div className="form__input">
         <label htmlFor="filter">Filter:{' '}</label>
-        <input type="text" name="filter" value={filter} onChange={handleChange} />
+        <select
+          className={filter ? undefined : 'none'}
+          name="filter"
+          value={filter}
+          onChange={handleChange}
+        >
+          <option value="">None</option>
+          <option value="expr">Experimental</option>
+          <option value="non-expr">Non-experimental</option>
+          <option value="crt-after">Created After</option>
+          <option value="crt-before">Created Before</option>
+        </select>
       </div>
       <div className="form__input">
         <input type="submit" />
