@@ -4,7 +4,7 @@ import BuilderQuestion from '../BuilderQuestion';
 import './BuilderGroup.css';
 
 export default function BuilderGroup(props) {
-  const { linkId, prefix, description, children } = props;
+  const { linkId, prefix, text, children } = props;
   const dispatch = useContext(BuilderContext);
 
   return (
@@ -21,23 +21,23 @@ export default function BuilderGroup(props) {
       </div>
       <textarea
         className="BuilderItem__text"
-        value={description}
+        value={text}
         placeholder="Enter text for group description here"
       />
       {children.map(question => {
         return (
           <BuilderQuestion
-            key={question.id}
-            linkId={question.id}
+            key={question.linkId}
+            linkId={question.linkId}
             groupId={linkId}
             prefix={question.prefix}
-            description={question.description}
+            text={question.text}
             handleDelete={() =>
               dispatch({
                 itemType: 'question',
                 type: 'remove',
                 groupId: linkId,
-                id: question.id
+                id: question.linkId
               })
             }
           />

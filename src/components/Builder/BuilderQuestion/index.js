@@ -2,7 +2,7 @@ import React from 'react';
 import './BuilderQuestion.css';
 
 export default function BuilderQuestion(props) {
-  const { linkId, prefix, description, handleDelete } = props;
+  const { linkId, prefix, text, handleDelete } = props;
   return (
     <div className="BuilderQuestion">
       <div>
@@ -13,7 +13,7 @@ export default function BuilderQuestion(props) {
       </div>
       <textarea
         className="BuilderItem__text"
-        value={description}
+        value={text}
         placeholder="Enter text for question here"
       />
       <button type="button" onClick={handleDelete}>

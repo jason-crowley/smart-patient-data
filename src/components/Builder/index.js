@@ -11,27 +11,29 @@ const initialState = {
   publisher: '',
   item: [
     {
-      id: '1',
+      linkId: '1',
       prefix: '1',
-      description: '',
-      questions: [
-      {
-        id: '1.1',
-        prefix: '1(b)',
-        description: '',
-      },
-      {
-        id: '1.2',
-        prefix: '1(g)',
-        description: '',
-      },
+      text: '',
+      item: [
+        {
+          linkId: '1.1',
+          prefix: '1(b)',
+          text: '',
+          item: [],
+        },
+        {
+          linkId: '1.2',
+          prefix: '1(g)',
+          text: '',
+          item: [],
+        },
       ],
     },
     {
-      id: '2',
+      linkId: '2',
       prefix: '2A',
-      description: '',
-      questions: [],
+      text: '',
+      item: [],
     },
   ],
 };
@@ -40,15 +42,14 @@ function reducer(state, action) {
   const items = state.item;
   switch (action.itemType) {
     case 'group': {
-      const [newItems, newGroup] = itemReducer(items, action);
-      if (newGroup) newGroup.questions = [];
-      return { ...state, item: newItems };
+      const newGroups = itemReducer(items, action);
+      return { ...state, item: newGroups };
     }
     case 'question': {
       const newItems = [...items];
-      const group = newItems.find(group => group.id === action.groupId);
-      const [newQuestions] = itemReducer(group.questions, action);
-      group.questions = newQuestions;
+      const group = newItems.find(group => group.linkId === action.groupId);
+      const newQuestions = itemReducer(group.item, action);
+      group.item = newQuestions;
       return { ...state, item: newItems };
     }
     default:
@@ -58,19 +59,18 @@ function reducer(state, action) {
   }
 }
 
-// (items, action) => [newItems, newItem]
+// (items, action) => [newItems]
 function itemReducer(items, action) {
   switch (action.type) {
     case 'add': {
-      const newItem = { id: 'next', prefix: 'next', description: '' };
-      const newItems = [...items, newItem];
-      return [newItems, newItem];
+      const newItem = { linkId: 'next', prefix: 'next', text: '', item: [], };
+      return [...items, newItem];
     }
     case 'remove': {
       const newItems = [...items];
-      const index = newItems.findIndex(item => item.id === action.id);
+      const index = newItems.findIndex(item => item.linkId === action.id);
       if (index !== -1) newItems.splice(index, 1);
-      return [newItems];
+      return newItems;
     }
     default:
       throw new Error(`Could not perform action of type '${action.type}'.`);
@@ -82,7 +82,7 @@ export default function Builder(props) {
 
   const handleSubmit = e => {
     e.preventDefault();
-    alert(builderState);
+    alert(JSON.stringify(builderState, null, 2));
   };
 
   return (
@@ -91,15 +91,15 @@ export default function Builder(props) {
         <h1>Builder</h1>
         <form className="BuilderForm" onSubmit={handleSubmit}>
           {builderState.item.map(group => {
-            const { id, prefix, description, questions } = group;
+            const { linkId, prefix, text, item } = group;
             return (
               <BuilderGroup
-                key={id}
-                linkId={id}
+                key={linkId}
+                linkId={linkId}
                 prefix={prefix}
-                description={description}
+                text={text}
               >
-                {questions}
+                {item}
               </BuilderGroup>
             );
           })}
