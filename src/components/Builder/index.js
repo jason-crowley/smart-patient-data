@@ -3,12 +3,18 @@ import { BuilderContext } from './BuilderContext';
 import BuilderGroup from './BuilderGroup';
 import './Builder.css';
 
-const initialState = [
-  {
-    id: '1',
-    prefix: '1',
-    description: '',
-    questions: [
+const initialState = {
+  title: '',
+  status: 'unknown',
+  experimental: false,
+  date: new Date().toISOString(),
+  publisher: '',
+  item: [
+    {
+      id: '1',
+      prefix: '1',
+      description: '',
+      questions: [
       {
         id: '1.1',
         prefix: '1(b)',
@@ -19,29 +25,31 @@ const initialState = [
         prefix: '1(g)',
         description: '',
       },
-    ],
-  },
-  {
-    id: '2',
-    prefix: '2A',
-    description: '',
-    questions: [],
-  },
-];
+      ],
+    },
+    {
+      id: '2',
+      prefix: '2A',
+      description: '',
+      questions: [],
+    },
+  ],
+};
 
 function reducer(state, action) {
+  const items = state.item;
   switch (action.itemType) {
     case 'group': {
-      const [newState, newGroup] = itemReducer(state, action);
+      const [newItems, newGroup] = itemReducer(items, action);
       if (newGroup) newGroup.questions = [];
-      return newState;
+      return { ...state, item: newItems };
     }
     case 'question': {
-      const newState = [...state];
-      const group = newState.find(group => group.id === action.groupId);
+      const newItems = [...items];
+      const group = newItems.find(group => group.id === action.groupId);
       const [newQuestions] = itemReducer(group.questions, action);
       group.questions = newQuestions;
-      return newState;
+      return { ...state, item: newItems };
     }
     default:
       throw new Error(
@@ -70,11 +78,11 @@ function itemReducer(items, action) {
 }
 
 export default function Builder(props) {
-  const [formState, dispatch] = useReducer(reducer, initialState);
+  const [builderState, dispatch] = useReducer(reducer, initialState);
 
   const handleSubmit = e => {
     e.preventDefault();
-    alert(formState);
+    alert(builderState);
   };
 
   return (
@@ -82,7 +90,7 @@ export default function Builder(props) {
       <div className="Builder">
         <h1>Builder</h1>
         <form className="BuilderForm" onSubmit={handleSubmit}>
-          {formState.map(group => {
+          {builderState.item.map(group => {
             const { id, prefix, description, questions } = group;
             return (
               <BuilderGroup
