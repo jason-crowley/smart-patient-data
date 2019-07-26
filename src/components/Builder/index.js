@@ -13,6 +13,11 @@ const initialState = [
         prefix: '1(b)',
         description: '',
       },
+      {
+        id: '1.2',
+        prefix: '1(g)',
+        description: '',
+      },
     ],
   },
   {
@@ -75,22 +80,27 @@ export default function Builder(props) {
     <div className="Builder">
       <h1>Builder</h1>
       <form className="BuilderForm" onSubmit={handleSubmit}>
-        <BuilderGroup />
-        <BuilderGroup />
-        <div className="Group">
-          <div>
-            <label>Group {' '}
-              <input type="number" defaultValue="2" />: {' '}
-            </label>
-            <input
-              type="text"
-              defaultValue="Treatment Feedback"
-              placeholder="Enter group name here"
-            />
-          </div>
-          <textarea placeholder="Enter text for group description here" />
-          <button>+ Question</button>
-        </div>
+        {formState.map(group => {
+          const { id, prefix, description, questions } = group;
+          return (
+            <BuilderGroup
+              key={id}
+              linkId={id}
+              prefix={prefix}
+              description={description}
+              dispatch={dispatch}
+            >
+              {questions}
+            </BuilderGroup>
+          );
+        })}
+        <button
+          type="button"
+          onClick={() => dispatch({ itemType: 'group', type: 'add' })}
+        >
+          + Group
+        </button>
+        <button>Submit</button>
       </form>
     </div>
   );
