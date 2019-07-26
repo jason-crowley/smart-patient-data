@@ -1,4 +1,5 @@
 import React, { useReducer } from 'react';
+import { BuilderContext } from './BuilderContext';
 import BuilderGroup from './BuilderGroup';
 import './Builder.css';
 
@@ -77,31 +78,32 @@ export default function Builder(props) {
   };
 
   return (
-    <div className="Builder">
-      <h1>Builder</h1>
-      <form className="BuilderForm" onSubmit={handleSubmit}>
-        {formState.map(group => {
-          const { id, prefix, description, questions } = group;
-          return (
-            <BuilderGroup
-              key={id}
-              linkId={id}
-              prefix={prefix}
-              description={description}
-              dispatch={dispatch}
-            >
-              {questions}
-            </BuilderGroup>
-          );
-        })}
-        <button
-          type="button"
-          onClick={() => dispatch({ itemType: 'group', type: 'add' })}
-        >
-          Add Group
-        </button>
-        <button>Submit</button>
-      </form>
-    </div>
+    <BuilderContext.Provider value={dispatch}>
+      <div className="Builder">
+        <h1>Builder</h1>
+        <form className="BuilderForm" onSubmit={handleSubmit}>
+          {formState.map(group => {
+            const { id, prefix, description, questions } = group;
+            return (
+              <BuilderGroup
+                key={id}
+                linkId={id}
+                prefix={prefix}
+                description={description}
+              >
+                {questions}
+              </BuilderGroup>
+            );
+          })}
+          <button
+            type="button"
+            onClick={() => dispatch({ itemType: 'group', type: 'add' })}
+          >
+            Add Group
+          </button>
+          <button>Submit</button>
+        </form>
+      </div>
+    </BuilderContext.Provider>
   );
 };

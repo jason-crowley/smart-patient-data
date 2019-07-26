@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { BuilderContext } from '../BuilderContext';
 import BuilderQuestion from '../BuilderQuestion';
 import './BuilderGroup.css';
 
 export default function BuilderGroup(props) {
-  const { linkId, prefix, description, dispatch, children } = props;
+  const { linkId, prefix, description, children } = props;
+  const dispatch = useContext(BuilderContext);
 
   return (
     <div className="BuilderGroup">
