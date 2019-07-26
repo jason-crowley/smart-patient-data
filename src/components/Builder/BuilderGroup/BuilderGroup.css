@@ -6,7 +6,3 @@
 .Group:not(:last-child) {
   margin-bottom: 40px;
 }
-
-.Item__prefix {
-  width: 40px;
-}

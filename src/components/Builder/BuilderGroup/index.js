@@ -9,11 +9,16 @@ export default function BuilderGroup(props) {
     <div className="Group">
       <div>
         <label>Group {' '}
-          <input className="Item__prefix" type="text" value={prefix || linkId} />: {' '}
+          <input
+            className="BuilderItem__prefix"
+            type="text"
+            value={prefix || linkId}
+          />: {' '}
         </label>
         <input type="text" placeholder="Enter group name here" />
       </div>
       <textarea
+        className="BuilderItem__text"
         value={description}
         placeholder="Enter text for group description here"
       />
@@ -26,7 +31,12 @@ export default function BuilderGroup(props) {
             prefix={question.prefix}
             description={question.description}
             handleDelete={() =>
-              dispatch({ itemType: 'question', type: 'remove', groupId: linkId, id: question.id})
+              dispatch({
+                itemType: 'question',
+                type: 'remove',
+                groupId: linkId,
+                id: question.id
+              })
             }
           />
         );
