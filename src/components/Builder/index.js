@@ -32,7 +32,7 @@ function reducer(state, action) {
   switch (action.itemType) {
     case 'group': {
       const [newState, newGroup] = itemReducer(state, action);
-      newGroup.questions = [];
+      if (newGroup) newGroup.questions = [];
       return newState;
     }
     case 'question': {
@@ -98,7 +98,7 @@ export default function Builder(props) {
           type="button"
           onClick={() => dispatch({ itemType: 'group', type: 'add' })}
         >
-          + Group
+          Add Group
         </button>
         <button>Submit</button>
       </form>

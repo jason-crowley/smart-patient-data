@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default function BuilderQuestion(props) {
-  const { linkId, prefix, description, dispatch } = props;
+  const { linkId, prefix, description, handleDelete } = props;
   return (
     <div className="Question">
       <div>
@@ -11,6 +11,9 @@ export default function BuilderQuestion(props) {
         <input type="text" placeholder="Enter question name here" />
       </div>
       <textarea value={description} placeholder="Enter text for question here" />
+      <button type="button" onClick={handleDelete}>
+        Remove Question
+      </button>
     </div>
   );
 };

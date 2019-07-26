@@ -22,9 +22,12 @@ export default function BuilderGroup(props) {
           <BuilderQuestion
             key={question.id}
             linkId={question.id}
+            groupId={linkId}
             prefix={question.prefix}
             description={question.description}
-            dispatch={dispatch}
+            handleDelete={() =>
+              dispatch({ itemType: 'question', type: 'remove', groupId: linkId, id: question.id})
+            }
           />
         );
       })}
@@ -32,7 +35,13 @@ export default function BuilderGroup(props) {
         type="button"
         onClick={() => dispatch({ itemType: 'question', type: 'add', groupId: linkId, })}
       >
-        + Question
+        Add Question
+      </button>
+      <button
+        type="button"
+        onClick={() => dispatch({ itemType: 'group', type: 'remove', id: linkId })}
+      >
+        Remove Group
       </button>
     </div>
   );
