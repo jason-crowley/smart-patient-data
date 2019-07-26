@@ -1,9 +1,10 @@
 import React from 'react';
+import './BuilderQuestion.css';
 
 export default function BuilderQuestion(props) {
   const { linkId, prefix, description, handleDelete } = props;
   return (
-    <div className="Question">
+    <div className="BuilderQuestion">
       <div>
         <label>Question {' '}
           <input className="BuilderItem__prefix" type="text" value={prefix || linkId} />: {' '}

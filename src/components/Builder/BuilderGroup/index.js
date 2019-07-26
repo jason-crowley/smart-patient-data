@@ -6,7 +6,7 @@ export default function BuilderGroup(props) {
   const { linkId, prefix, description, dispatch, children } = props;
 
   return (
-    <div className="Group">
+    <div className="BuilderGroup">
       <div>
         <label>Group {' '}
           <input
