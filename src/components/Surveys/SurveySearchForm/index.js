@@ -11,8 +11,8 @@ export default function SurveySearchForm(props) {
   } = props.formControls;
 
   return (
-    <form className="form" onSubmit={handleSubmit}>
-      <div className="form__input">
+    <form className="SearchForm" onSubmit={handleSubmit}>
+      <div className="SearchForm__input">
         <label htmlFor="search">Search:{' '}</label>
         <input
           type="text"
@@ -22,7 +22,7 @@ export default function SurveySearchForm(props) {
           onChange={handleChange}
         />
       </div>
-      <div className="form__input">
+      <div className="SearchForm__input">
         <label htmlFor="sort">Sort By:{' '}</label>
         <select
           className={sort ? undefined : 'none'}
@@ -39,7 +39,7 @@ export default function SurveySearchForm(props) {
           <option value="pub-desc">Publisher (Descending)</option>
         </select>
       </div>
-      <div className="form__input">
+      <div className="SearchForm__input">
         <label htmlFor="filter">Filter:{' '}</label>
         <select
           className={filter ? undefined : 'none'}
@@ -54,7 +54,7 @@ export default function SurveySearchForm(props) {
           <option value="crt-before">Created Before</option>
         </select>
       </div>
-      <div className="form__input">
+      <div className="SearchForm__input">
         <input type="submit" />
       </div>
     </form>
