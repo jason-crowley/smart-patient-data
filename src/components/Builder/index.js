@@ -1,30 +1,19 @@
 import React from 'react';
+import BuilderGroup from './BuilderGroup';
 import './Builder.css';
 
 export default function Builder(props) {
+  const handleSubmit = e => {
+    e.preventDefault();
+    alert(formState);
+  };
+
   return (
     <div className="Builder">
       <h1>Builder</h1>
-      <form className="BuilderForm">
-        <div className="Group">
-          <div>
-            <label>Group {' '}
-              <input type="number" defaultValue="1" />: {' '}
-            </label>
-            <input type="text" placeholder="Enter group name here" />
-          </div>
-          <textarea placeholder="Enter text for group description here" />
-          <div className="Question">
-            <div>
-              <label>Question {' '}
-                <input type="number" defaultValue="1" />: {' '}
-              </label>
-              <input type="text" placeholder="Enter question name here" />
-            </div>
-            <textarea placeholder="Enter text for question here" />
-          </div>
-          <button>+ Question</button>
-        </div>
+      <form className="BuilderForm" onSubmit={handleSubmit}>
+        <BuilderGroup />
+        <BuilderGroup />
         <div className="Group">
           <div>
             <label>Group {' '}

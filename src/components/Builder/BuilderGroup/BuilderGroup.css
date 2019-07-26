@@ -1,0 +1,8 @@
+.Group {
+  padding: 20px;
+  border: 1px solid blue;
+}
+
+.Group:not(:last-child) {
+  margin-bottom: 40px;
+}
