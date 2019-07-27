@@ -89,6 +89,7 @@ function reducer(state, action) {
 export default function Builder(props) {
   const [builderState, dispatch] = useReducer(reducer, initialState);
 
+  const handleAddGroup = () => dispatch({ type: 'add', linkId: '' });
   const handleSubmit = e => {
     e.preventDefault();
     alert(JSON.stringify(builderState, null, 2));
@@ -112,7 +113,7 @@ export default function Builder(props) {
               </BuilderGroup>
             );
           })}
-          <button type="button" onClick={() => dispatch({ type: 'add', linkId: '', })}>
+          <button type="button" onClick={handleAddGroup}>
             Add Group
           </button>
           <button>Submit</button>

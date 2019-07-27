@@ -7,22 +7,35 @@ export default function BuilderGroup(props) {
   const { linkId, prefix, text, children } = props;
   const dispatch = useContext(BuilderContext);
 
+  const handleAddQuestion = () => dispatch({ type: 'add', linkId });
+  const handleRemoveGroup = () => dispatch({ type: 'remove', linkId });
+  const handleChange = e => {
+    const { name, value } = e.target;
+    const payload = { name, value };
+    dispatch({ type: 'change', linkId, payload });
+  };
+
   return (
     <div className="BuilderGroup">
       <div>
         <label>Group {' '}
-          <input
-            className="BuilderItem__prefix"
-            type="text"
-            value={prefix || linkId}
-          />: {' '}
+        <input
+          className="BuilderItem__prefix"
+          type="text"
+          name="prefix"
+          value={prefix}
+          placeholder={linkId}
+          onChange={handleChange}
+        />: {' '}
         </label>
         <input type="text" placeholder="Enter group name here" />
       </div>
       <textarea
         className="BuilderItem__text"
+        name="text"
         value={text}
         placeholder="Enter text for group description here"
+        onChange={handleChange}
       />
       {children.map(question => {
         const { linkId, prefix, text } = question;
@@ -35,10 +48,10 @@ export default function BuilderGroup(props) {
           />
         );
       })}
-      <button type="button" onClick={() => dispatch({ type: 'add', linkId })}>
+      <button type="button" onClick={handleAddQuestion}>
         Add Question
       </button>
-      <button type="button" onClick={() => dispatch({ type: 'remove', linkId })}>
+      <button type="button" onClick={handleRemoveGroup}>
         Remove Group
       </button>
     </div>
