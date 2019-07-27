@@ -19,14 +19,14 @@ export default function BuilderGroup(props) {
     <div className="BuilderGroup">
       <div>
         <label>Group {' '}
-        <input
-          className="BuilderItem__prefix"
-          type="text"
-          name="prefix"
-          value={prefix}
-          placeholder={linkId}
-          onChange={handleChange}
-        />: {' '}
+          <input
+            className="BuilderItem__prefix"
+            type="text"
+            name="prefix"
+            value={prefix}
+            placeholder={linkId}
+            onChange={handleChange}
+          />: {' '}
         </label>
         <input type="text" placeholder="Enter group name here" />
       </div>
