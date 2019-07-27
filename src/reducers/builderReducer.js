@@ -39,7 +39,7 @@ function pathReducer(surveyItem, action, path) {
 }
 
 function actionReducer(surveyItem, action) {
-  const { type, targetId } = action;
+  const { type } = action;
   switch (type) {
     case 'add':
       // In the case that surveyItem === state,
