@@ -1,48 +1,60 @@
-function findAtPath(path, builderItem) {
-  // Assign the 'item' array from the current builder item
-  const { item } = builderItem;
-  const _path = [...path];
-  const key = _path.shift();
+export default function builderReducer(state, action) {
+  const path = action.targetId.split('.');
+  // Reverse path array to serve as a stack instead of more inefficient queue
+  return pathReducer(state, action, path.reverse());
+}
+
+// Find the first survey item in the 'item' array with the given key
+// as the whole linkId or as the linkId's suffix (after the '.').
+// NOTE: Assumes survey items can be nested no more than one level deep
+// (i.e. assumes the form 'key' or 'root.key' for linkId).
+function findIndex(key, item) {
+  const regex = new RegExp('(^|\\.)' + key + '$');
+  return item.findIndex(({ linkId }) => regex.test(linkId));
+}
+
+function pathReducer(surveyItem, action, path) {
+  const { item } = surveyItem;
+  const key = path.pop();
   if (key) {
-    // Regex for testing if the last identifier matches the next key
-    const regex = new RegExp('(^|\\.)' + key + '$');
-    const nextBuilderItem = item.find(({ linkId }) => regex.test(linkId));
-    if (!nextBuilderItem) throw new Error(`Could not find key '${key}' in array ${item}.`);
-    return findAtPath(_path, nextBuilderItem);
+    const index = findIndex(key, item);
+    if (index === -1) throw new Error();
+    const newSurveyItem = pathReducer(item[index], action, path);
+    const left = item.slice(0, index);
+    const right = item.slice(index + 1);
+    // Include newSurveyItem in new item array if not null
+    const newItem = (newSurveyItem)
+      ? [...left, newSurveyItem, ...right]
+      : [...left, ...right];
+    return {
+      ...surveyItem,
+      item: newItem,
+    };
   } else {
-    return builderItem;
+    return actionReducer(surveyItem, action);
   }
 }
 
-export default function builderReducer(state, action) {
-  const newState = { ...state };
+function actionReducer(surveyItem, action) {
   const { type, targetId } = action;
-  const path = targetId.split('.');
   switch (type) {
-    case 'add': {
-      const builderItem = findAtPath(path, newState);
-      let { linkId, item } = builderItem;
-      linkId += (linkId && '.') + 'next'; // Doesn't modify builderItem
-      item.push({ linkId, prefix: 'next', text: '', item: [] });
-      return newState;
-    }
-    case 'change': {
+    case 'add':
+      let { linkId = '', item } = surveyItem;
+      linkId += (linkId && '.') + 'next' // Doesn't modify surveyItem
+      const newSurveyItem = { linkId, prefix: 'next', text: '', item: [] };
+      return {
+        ...surveyItem,
+        item: [...item, newSurveyItem],
+      };
+    case 'change':
       const { name, value } = action.payload;
-      const builderItem = findAtPath(path, newState);
-      builderItem[name] = value;
-      return newState;
-    }
-    case 'remove': {
-      // Remove the last identifier in the path
-      const [last] = path.splice(path.length - 1);
-      const { item } = findAtPath(path, newState);
-      const regex = new RegExp('(^|\\.)' + last + '$');
-      const index = item.findIndex(({ linkId }) => regex.test(linkId));
-      if (index === -1) throw new Error(`Could not find key '${last}' in array ${item}.`);
-      item.splice(index, 1);
-      return newState;
-    }
+      return {
+        ...surveyItem,
+        [name]: value,
+      };
+    case 'remove':
+      return null;
     default:
-      throw new Error(`Could not perform action of type '${type}'.`);
+      throw new Error();
   }
 }
