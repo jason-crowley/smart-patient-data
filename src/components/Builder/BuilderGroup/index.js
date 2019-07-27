@@ -25,34 +25,20 @@ export default function BuilderGroup(props) {
         placeholder="Enter text for group description here"
       />
       {children.map(question => {
+        const { linkId, prefix, text } = question;
         return (
           <BuilderQuestion
-            key={question.linkId}
-            linkId={question.linkId}
-            groupId={linkId}
-            prefix={question.prefix}
-            text={question.text}
-            handleDelete={() =>
-              dispatch({
-                itemType: 'question',
-                type: 'remove',
-                groupId: linkId,
-                id: question.linkId
-              })
-            }
+            key={linkId}
+            linkId={linkId}
+            prefix={prefix}
+            text={text}
           />
         );
       })}
-      <button
-        type="button"
-        onClick={() => dispatch({ itemType: 'question', type: 'add', groupId: linkId, })}
-      >
+      <button type="button" onClick={() => dispatch({ type: 'add', linkId })}>
         Add Question
       </button>
-      <button
-        type="button"
-        onClick={() => dispatch({ itemType: 'group', type: 'remove', id: linkId })}
-      >
+      <button type="button" onClick={() => dispatch({ type: 'remove', linkId })}>
         Remove Group
       </button>
     </div>

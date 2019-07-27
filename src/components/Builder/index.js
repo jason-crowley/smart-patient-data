@@ -38,42 +38,51 @@ const initialState = {
   ],
 };
 
-function reducer(state, action) {
-  const items = state.item;
-  switch (action.itemType) {
-    case 'group': {
-      const newGroups = itemReducer(items, action);
-      return { ...state, item: newGroups };
-    }
-    case 'question': {
-      const newItems = [...items];
-      const group = newItems.find(group => group.linkId === action.groupId);
-      const newQuestions = itemReducer(group.item, action);
-      group.item = newQuestions;
-      return { ...state, item: newItems };
-    }
-    default:
-      throw new Error(
-        `Could not perform action on item type '${action.itemType}'.`
-      );
+function findAtPath(path, builderItem) {
+  // Assign the 'item' array from the current builder item
+  const { item } = builderItem;
+  const _path = [...path];
+  const key = _path.shift();
+  if (key) {
+    // Regex for testing if the last identifier matches the next key
+    const regex = new RegExp('(^|\\.)' + key + '$');
+    const nextBuilderItem = item.find(({ linkId }) => regex.test(linkId));
+    if (!nextBuilderItem) throw new Error(`Could not find key '${key}' in array ${item}.`);
+    return findAtPath(_path, nextBuilderItem);
+  } else {
+    return builderItem;
   }
 }
 
-// (items, action) => [newItems]
-function itemReducer(items, action) {
-  switch (action.type) {
+function reducer(state, action) {
+  const newState = { ...state };
+  const { type, linkId = '' } = action;
+  const path = linkId.split('.');
+  switch (type) {
     case 'add': {
-      const newItem = { linkId: 'next', prefix: 'next', text: '', item: [], };
-      return [...items, newItem];
+      const builderItem = findAtPath(path, newState);
+      const { linkId: itemId, item } = builderItem;
+      item.push({ linkId: `${itemId}.next`, prefix: 'next', text: '', item: [] });
+      return newState;
+    }
+    case 'change': {
+      const { name, value } = action.payload;
+      const builderItem = findAtPath(path, newState);
+      builderItem[name] = value;
+      return newState;
     }
     case 'remove': {
-      const newItems = [...items];
-      const index = newItems.findIndex(item => item.linkId === action.id);
-      if (index !== -1) newItems.splice(index, 1);
-      return newItems;
+      // Remove the last identifier in the path
+      const [last] = path.splice(path.length - 1);
+      const { item } = findAtPath(path, newState);
+      const regex = new RegExp('(^|\\.)' + last + '$');
+      const index = item.findIndex(({ linkId: itemId }) => regex.test(itemId));
+      if (index === -1) throw new Error(`Could not find key '${last}' in array ${item}.`);
+      item.splice(index, 1);
+      return newState;
     }
     default:
-      throw new Error(`Could not perform action of type '${action.type}'.`);
+      throw new Error(`Could not perform action of type '${type}'.`);
   }
 }
 
@@ -103,10 +112,7 @@ export default function Builder(props) {
               </BuilderGroup>
             );
           })}
-          <button
-            type="button"
-            onClick={() => dispatch({ itemType: 'group', type: 'add' })}
-          >
+          <button type="button" onClick={() => dispatch({ type: 'add', linkId: '', })}>
             Add Group
           </button>
           <button>Submit</button>
