@@ -4,7 +4,7 @@ import BuilderQuestion from '../BuilderQuestion';
 import './BuilderGroup.css';
 
 export default function BuilderGroup(props) {
-  const { linkId, prefix, text, children } = props;
+  const { linkId, prefix, text, item } = props;
   const dispatch = useContext(BuilderContext);
 
   const handleAddQuestion = () => dispatch({ type: 'add', targetId: linkId });
@@ -37,17 +37,12 @@ export default function BuilderGroup(props) {
         placeholder="Enter text for group description here"
         onChange={handleChange}
       />
-      {children.map(question => {
-        const { linkId, prefix, text } = question;
-        return (
-          <BuilderQuestion
-            key={linkId}
-            linkId={linkId}
-            prefix={prefix}
-            text={text}
-          />
-        );
-      })}
+      {item.map(question => (
+        <BuilderQuestion
+          {...question}
+          key={question.linkId}
+        />
+      ))}
       <button type="button" onClick={handleAddQuestion}>
         Add Question
       </button>

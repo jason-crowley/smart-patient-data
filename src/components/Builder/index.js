@@ -53,19 +53,12 @@ export default function Builder(props) {
       <div className="Builder">
         <h1>Builder</h1>
         <form className="BuilderForm" onSubmit={handleSubmit}>
-          {builderState.item.map(group => {
-            const { linkId, prefix, text, item } = group;
-            return (
-              <BuilderGroup
-                key={linkId}
-                linkId={linkId}
-                prefix={prefix}
-                text={text}
-              >
-                {item}
-              </BuilderGroup>
-            );
-          })}
+          {builderState.item.map(group => (
+            <BuilderGroup
+              {...group}
+              key={group.linkId}
+            />
+          ))}
           <button type="button" onClick={handleAddGroup}>
             Add Group
           </button>
