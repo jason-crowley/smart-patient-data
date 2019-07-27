@@ -18,7 +18,10 @@ function pathReducer(surveyItem, action, path) {
   const key = path.pop();
   if (key) {
     const index = findIndex(key, item);
-    if (index === -1) throw new Error();
+    if (index === -1)
+      throw new Error(
+        `Could not find item with key '${key}' in array ${JSON.stringify(item)}.`
+      );
     const newSurveyItem = pathReducer(item[index], action, path);
     const left = item.slice(0, index);
     const right = item.slice(index + 1);
@@ -39,6 +42,8 @@ function actionReducer(surveyItem, action) {
   const { type, targetId } = action;
   switch (type) {
     case 'add':
+      // In the case that surveyItem === state,
+      // linkId should default to ''
       let { linkId = '', item } = surveyItem;
       linkId += (linkId && '.') + 'next' // Doesn't modify surveyItem
       const newSurveyItem = { linkId, prefix: 'next', text: '', item: [] };
@@ -55,6 +60,8 @@ function actionReducer(surveyItem, action) {
     case 'remove':
       return null;
     default:
-      throw new Error();
+      throw new Error(
+        `Could not perform action of type '${type}' on ${JSON.stringify(surveyItem)}.`
+      );
   }
 }
