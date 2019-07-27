@@ -6,11 +6,11 @@ export default function BuilderQuestion(props) {
   const { linkId, prefix, text } = props;
   const dispatch = useContext(BuilderContext);
 
-  const handleRemoveQuestion = () => dispatch({ type: 'remove', linkId });
+  const handleRemoveQuestion = () => dispatch({ type: 'remove', targetId: linkId });
   const handleChange = e => {
     const { name, value } = e.target;
     const payload = { name, value };
-    dispatch({ type: 'change', linkId, payload });
+    dispatch({ type: 'change', targetId: linkId, payload });
   };
 
   return (

@@ -16,14 +16,14 @@ function findAtPath(path, builderItem) {
 
 export default function builderReducer(state, action) {
   const newState = { ...state };
-  const { type, linkId } = action;
-  const path = linkId.split('.');
+  const { type, targetId } = action;
+  const path = targetId.split('.');
   switch (type) {
     case 'add': {
       const builderItem = findAtPath(path, newState);
-      const { linkId: itemId, item } = builderItem;
-      const newLinkId = itemId + (itemId && '.') + 'next';
-      item.push({ linkId: newLinkId, prefix: 'next', text: '', item: [] });
+      let { linkId, item } = builderItem;
+      linkId += (linkId && '.') + 'next'; // Doesn't modify builderItem
+      item.push({ linkId, prefix: 'next', text: '', item: [] });
       return newState;
     }
     case 'change': {
@@ -37,7 +37,7 @@ export default function builderReducer(state, action) {
       const [last] = path.splice(path.length - 1);
       const { item } = findAtPath(path, newState);
       const regex = new RegExp('(^|\\.)' + last + '$');
-      const index = item.findIndex(({ linkId: itemId }) => regex.test(itemId));
+      const index = item.findIndex(({ linkId }) => regex.test(linkId));
       if (index === -1) throw new Error(`Could not find key '${last}' in array ${item}.`);
       item.splice(index, 1);
       return newState;

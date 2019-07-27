@@ -42,7 +42,7 @@ const initialState = {
 export default function Builder(props) {
   const [builderState, dispatch] = useReducer(builderReducer, initialState);
 
-  const handleAddGroup = () => dispatch({ type: 'add', linkId: '' });
+  const handleAddGroup = () => dispatch({ type: 'add', targetId: '' });
   const handleSubmit = e => {
     e.preventDefault();
     alert(JSON.stringify(builderState, null, 2));

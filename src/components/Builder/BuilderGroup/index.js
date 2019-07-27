@@ -7,12 +7,12 @@ export default function BuilderGroup(props) {
   const { linkId, prefix, text, children } = props;
   const dispatch = useContext(BuilderContext);
 
-  const handleAddQuestion = () => dispatch({ type: 'add', linkId });
-  const handleRemoveGroup = () => dispatch({ type: 'remove', linkId });
+  const handleAddQuestion = () => dispatch({ type: 'add', targetId: linkId });
+  const handleRemoveGroup = () => dispatch({ type: 'remove', targetId: linkId });
   const handleChange = e => {
     const { name, value } = e.target;
     const payload = { name, value };
-    dispatch({ type: 'change', linkId, payload });
+    dispatch({ type: 'change', targetId: linkId, payload });
   };
 
   return (
