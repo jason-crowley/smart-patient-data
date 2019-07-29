@@ -1,7 +1,10 @@
+import Survey from 'models/Survey';
+import SurveyItem from 'models/SurveyItem';
+
 export default function builderReducer(state, action) {
   const path = action.targetId.split('.');
   // Reverse path array to serve as a stack instead of more inefficient queue
-  return pathReducer(state, action, path.reverse());
+  return pathReducer(state, action, path.reverse(), Survey);
 }
 
 // Find the first survey item in the 'items' array with the given key
@@ -13,7 +16,8 @@ function findIndex(key, items) {
   return items.findIndex(({ itemId }) => regex.test(itemId));
 }
 
-function pathReducer(surveyItem, action, path) {
+// (item, action, path, constructor) => item (of type constructor.name)
+function pathReducer(surveyItem, action, path, constructor) {
   const { items } = surveyItem;
   const key = path.pop();
   if (key) {
@@ -22,23 +26,26 @@ function pathReducer(surveyItem, action, path) {
       throw new Error(
         `Could not find item with key '${key}' in array ${JSON.stringify(items)}.`
       );
-    const newSurveyItem = pathReducer(items[index], action, path);
+    const newSurveyItem = pathReducer(items[index], action, path, SurveyItem);
     const left = items.slice(0, index);
     const right = items.slice(index + 1);
     // Include newSurveyItem in new items array if not null
-    const newItem = (newSurveyItem)
+    const newItems = (newSurveyItem)
       ? [...left, newSurveyItem, ...right]
       : [...left, ...right];
-    return {
-      ...surveyItem,
-      items: newItem,
-    };
+    return new constructor({ ...surveyItem, items: newItems });
+    // if (surveyItem.constructor.name === 'Survey') {
+    //   return new Survey({ ...surveyItem, items: newItems });
+    // } else {
+    //   return new SurveyItem({ ...surveyItem, items: newItems });
+    // }
   } else {
-    return actionReducer(surveyItem, action);
+    return actionReducer(surveyItem, action, constructor);
   }
 }
 
-function actionReducer(surveyItem, action) {
+// (item, action, constructor) => item (of type constructor.name)
+function actionReducer(surveyItem, action, constructor) {
   const { type } = action;
   switch (type) {
     case 'add':
@@ -46,17 +53,13 @@ function actionReducer(surveyItem, action) {
       // itemId should default to ''
       let { itemId = '', items } = surveyItem;
       itemId += (itemId && '.') + 'next' // Doesn't modify surveyItem
-      const newSurveyItem = { itemId, label: 'next', text: '', items: [] };
-      return {
+      return new constructor({
         ...surveyItem,
-        items: [...items, newSurveyItem],
-      };
+        items: [...items, new SurveyItem({ type: 'question', itemId, label: 'next' })],
+      });
     case 'change':
       const { name, value } = action.payload;
-      return {
-        ...surveyItem,
-        [name]: value,
-      };
+      return new constructor({ ...surveyItem, [name]: value });
     case 'remove':
       return null;
     default:
