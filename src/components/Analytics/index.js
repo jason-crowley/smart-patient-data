@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
+import './Analytics.css';
 
-class Analytics extends Component {
-  render() {
-    return <div>Analytics</div>
-  }
-}
-
-export default Analytics;
+export default function Analytics(props) {
+  return (
+    <div className="Analytics">
+      <h1>Analytics</h1>
+    </div>
+  );
+};
