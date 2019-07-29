@@ -26,7 +26,6 @@ export default function BuilderQuestion(props) {
             onChange={handleChange}
           />: {' '}
         </label>
-        <input type="text" placeholder="Enter question name here" />
       </div>
       <textarea
         className="BuilderItem__text"

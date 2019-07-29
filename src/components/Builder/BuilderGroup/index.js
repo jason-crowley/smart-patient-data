@@ -27,13 +27,12 @@ export default function BuilderGroup({ itemId, label, text, items }) {
             onChange={handleChange}
           />: {' '}
         </label>
-        <input type="text" placeholder="Enter group name here" />
       </div>
       <textarea
         className="BuilderItem__text"
         name="text"
         value={text}
-        placeholder="Enter text for group description here"
+        placeholder="Enter text for group name or description here"
         onChange={handleChange}
       />
       {items.map(question => (
