@@ -41,6 +41,7 @@ export default class Survey {
     const { items, ...fhirProps } = this;
     return {
       ...fhirProps,
+      resourceType: 'Questionnaire',
       item: items.map(item => item.toFhir()),
     };
   }
