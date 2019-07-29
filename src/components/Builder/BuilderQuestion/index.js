@@ -3,14 +3,14 @@ import { BuilderContext } from '../BuilderContext';
 import './BuilderQuestion.css';
 
 export default function BuilderQuestion(props) {
-  const { linkId, prefix, text } = props;
+  const { itemId, label, text } = props;
   const dispatch = useContext(BuilderContext);
 
-  const handleRemoveQuestion = () => dispatch({ type: 'remove', targetId: linkId });
+  const handleRemoveQuestion = () => dispatch({ type: 'remove', targetId: itemId });
   const handleChange = e => {
     const { name, value } = e.target;
     const payload = { name, value };
-    dispatch({ type: 'change', targetId: linkId, payload });
+    dispatch({ type: 'change', targetId: itemId, payload });
   };
 
   return (
@@ -18,11 +18,11 @@ export default function BuilderQuestion(props) {
       <div>
         <label>Question {' '}
           <input
-            className="BuilderItem__prefix"
+            className="BuilderItem__label"
             type="text"
-            name="prefix"
-            value={prefix}
-            placeholder={linkId}
+            name="label"
+            value={label}
+            placeholder={itemId}
             onChange={handleChange}
           />: {' '}
         </label>

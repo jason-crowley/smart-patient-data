@@ -2,6 +2,7 @@ import React, { useReducer } from 'react';
 import builderReducer from 'reducers/builderReducer';
 import { BuilderContext } from './BuilderContext';
 import BuilderGroup from './BuilderGroup';
+import SurveyItem from 'models/SurveyItem';
 import './Builder.css';
 
 const initialState = {
@@ -10,34 +11,38 @@ const initialState = {
   experimental: false,
   date: new Date().toISOString(),
   publisher: '',
-  item: [
-    {
-      linkId: '1',
-      prefix: '1',
-      text: '',
-      item: [
-        {
-          linkId: '1.1',
-          prefix: '1(b)',
-          text: '',
-          item: [],
-        },
-        {
-          linkId: '1.2',
-          prefix: '1(g)',
-          text: '',
-          item: [],
-        },
+  items: [
+    new SurveyItem({
+      type: 'group',
+      itemId: '1',
+      label: '1',
+      items: [
+        new SurveyItem({
+          type: 'question',
+          itemId: '1.1',
+          label: '1(b)',
+        }),
+        new SurveyItem({
+          type: 'question',
+          itemId: '1.2',
+          label: '1(g)',
+        }),
       ],
-    },
-    {
-      linkId: '2',
-      prefix: '2A',
-      text: '',
-      item: [],
-    },
+    }),
+    new SurveyItem({
+      type: 'group',
+      itemId: '2',
+      label: '2A',
+      items: [
+        new SurveyItem({
+          type: 'display',
+          itemId: '2.d1',
+          text: 'This is just for display!',
+        }),
+      ],
+    }),
   ],
-};
+}
 
 export default function Builder(props) {
   const [builderState, dispatch] = useReducer(builderReducer, initialState);
@@ -53,7 +58,7 @@ export default function Builder(props) {
       <div className="Builder">
         <h1>Builder</h1>
         <form className="BuilderForm" onSubmit={handleSubmit}>
-          {builderState.item.map(group => (
+          {builderState.items.map(group => (
             <BuilderGroup
               {...group}
               key={group.linkId}

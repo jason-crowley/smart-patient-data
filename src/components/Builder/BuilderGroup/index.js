@@ -3,16 +3,15 @@ import { BuilderContext } from '../BuilderContext';
 import BuilderQuestion from '../BuilderQuestion';
 import './BuilderGroup.css';
 
-export default function BuilderGroup(props) {
-  const { linkId, prefix, text, item } = props;
+export default function BuilderGroup({ itemId, label, text, items }) {
   const dispatch = useContext(BuilderContext);
 
-  const handleAddQuestion = () => dispatch({ type: 'add', targetId: linkId });
-  const handleRemoveGroup = () => dispatch({ type: 'remove', targetId: linkId });
+  const handleAddQuestion = () => dispatch({ type: 'add', targetId: itemId });
+  const handleRemoveGroup = () => dispatch({ type: 'remove', targetId: itemId });
   const handleChange = e => {
     const { name, value } = e.target;
     const payload = { name, value };
-    dispatch({ type: 'change', targetId: linkId, payload });
+    dispatch({ type: 'change', targetId: itemId, payload });
   };
 
   return (
@@ -20,11 +19,11 @@ export default function BuilderGroup(props) {
       <div>
         <label>Group {' '}
           <input
-            className="BuilderItem__prefix"
+            className="BuilderItem__label"
             type="text"
-            name="prefix"
-            value={prefix}
-            placeholder={linkId}
+            name="label"
+            value={label}
+            placeholder={itemId}
             onChange={handleChange}
           />: {' '}
         </label>
@@ -37,10 +36,10 @@ export default function BuilderGroup(props) {
         placeholder="Enter text for group description here"
         onChange={handleChange}
       />
-      {item.map(question => (
+      {items.map(question => (
         <BuilderQuestion
           {...question}
-          key={question.linkId}
+          key={question.itemId}
         />
       ))}
       <button type="button" onClick={handleAddQuestion}>

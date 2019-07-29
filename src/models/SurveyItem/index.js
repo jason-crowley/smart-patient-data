@@ -1,10 +1,10 @@
-const required = () => throw new Error('Missing required parameter');
+// const required = () => throw new Error('Missing required parameter');
 
 export default class SurveyItem {
   // Specify defaults and required parameters
   constructor({
-    type = required(),
-    itemId = required(),
+    type = 'unknown',
+    itemId = 'unknown',
     label = '',
     text = '',
     items = [],
@@ -20,7 +20,7 @@ export default class SurveyItem {
     Object.assign(this, restProps);
 
     // FHIR Questionnaire Rules
-    if (type === 'group' && !this.items.length || type === 'display' && this.items.length)
+    if ((type === 'group' && !this.items.length) || (type === 'display' && this.items.length))
       throw new Error('Group items must have nested items, display items cannot have nested items');
     if (type === 'question' && this.answerOption && this.answerValueSet)
       throw new Error('A question cannot have both answerOption and answerValueSet');
@@ -38,7 +38,7 @@ export default class SurveyItem {
       throw new Error('If one or more answerOption is present, initial[x] must be missing');
     if (this.enableWhen && this.enableWhen.length > 0 && !this.enableBehavior)
       throw new Error('If there are more than one enableWhen, enableBehavior must be specified');
-    if (!this.repeats && this.initial.length > 1)
+    if (!this.repeats && this.initial && this.initial.length > 1)
       throw new Error('Can only have multiple initial values for repeating items');
 
     // Custom configuration based on type

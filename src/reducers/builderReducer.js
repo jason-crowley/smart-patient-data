@@ -4,34 +4,34 @@ export default function builderReducer(state, action) {
   return pathReducer(state, action, path.reverse());
 }
 
-// Find the first survey item in the 'item' array with the given key
-// as the whole linkId or as the linkId's suffix (after the '.').
+// Find the first survey item in the 'items' array with the given key
+// as the whole itemId or as the itemId's suffix (after the '.').
 // NOTE: Assumes survey items can be nested no more than one level deep
-// (i.e. assumes the form 'key' or 'root.key' for linkId).
-function findIndex(key, item) {
+// (i.e. assumes the form 'key' or 'root.key' for itemId).
+function findIndex(key, items) {
   const regex = new RegExp('(^|\\.)' + key + '$');
-  return item.findIndex(({ linkId }) => regex.test(linkId));
+  return items.findIndex(({ itemId }) => regex.test(itemId));
 }
 
 function pathReducer(surveyItem, action, path) {
-  const { item } = surveyItem;
+  const { items } = surveyItem;
   const key = path.pop();
   if (key) {
-    const index = findIndex(key, item);
+    const index = findIndex(key, items);
     if (index === -1)
       throw new Error(
-        `Could not find item with key '${key}' in array ${JSON.stringify(item)}.`
+        `Could not find item with key '${key}' in array ${JSON.stringify(items)}.`
       );
-    const newSurveyItem = pathReducer(item[index], action, path);
-    const left = item.slice(0, index);
-    const right = item.slice(index + 1);
-    // Include newSurveyItem in new item array if not null
+    const newSurveyItem = pathReducer(items[index], action, path);
+    const left = items.slice(0, index);
+    const right = items.slice(index + 1);
+    // Include newSurveyItem in new items array if not null
     const newItem = (newSurveyItem)
       ? [...left, newSurveyItem, ...right]
       : [...left, ...right];
     return {
       ...surveyItem,
-      item: newItem,
+      items: newItem,
     };
   } else {
     return actionReducer(surveyItem, action);
@@ -43,13 +43,13 @@ function actionReducer(surveyItem, action) {
   switch (type) {
     case 'add':
       // In the case that surveyItem === state,
-      // linkId should default to ''
-      let { linkId = '', item } = surveyItem;
-      linkId += (linkId && '.') + 'next' // Doesn't modify surveyItem
-      const newSurveyItem = { linkId, prefix: 'next', text: '', item: [] };
+      // itemId should default to ''
+      let { itemId = '', items } = surveyItem;
+      itemId += (itemId && '.') + 'next' // Doesn't modify surveyItem
+      const newSurveyItem = { itemId, label: 'next', text: '', items: [] };
       return {
         ...surveyItem,
-        item: [...item, newSurveyItem],
+        items: [...items, newSurveyItem],
       };
     case 'change':
       const { name, value } = action.payload;
