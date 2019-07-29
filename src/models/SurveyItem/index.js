@@ -72,6 +72,7 @@ export default class SurveyItem {
     const { index, itemId, label, items, ...fhirProps } = this;
     return {
       ...fhirProps,
+      resourceType: 'Questionnaire',
       linkId: itemId,
       prefix: label,
       item: items.map(item => item.toFhir()),
