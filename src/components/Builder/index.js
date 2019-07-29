@@ -2,15 +2,11 @@ import React, { useReducer } from 'react';
 import builderReducer from 'reducers/builderReducer';
 import { BuilderContext } from './BuilderContext';
 import BuilderGroup from './BuilderGroup';
+import Survey from 'models/Survey';
 import SurveyItem from 'models/SurveyItem';
 import './Builder.css';
 
-const initialState = {
-  title: '',
-  status: 'unknown',
-  experimental: false,
-  date: new Date().toISOString(),
-  publisher: '',
+const initialState = new Survey({
   items: [
     new SurveyItem({
       type: 'group',
@@ -42,7 +38,7 @@ const initialState = {
       ],
     }),
   ],
-}
+});
 
 export default function Builder(props) {
   const [builderState, dispatch] = useReducer(builderReducer, initialState);
@@ -50,7 +46,7 @@ export default function Builder(props) {
   const handleAddGroup = () => dispatch({ type: 'add', targetId: '' });
   const handleSubmit = e => {
     e.preventDefault();
-    alert(JSON.stringify(builderState, null, 2));
+    alert(JSON.stringify(builderState.toFhir(), null, 2));
   };
 
   return (
