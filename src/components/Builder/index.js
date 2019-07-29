@@ -57,7 +57,7 @@ export default function Builder(props) {
           {builderState.items.map(group => (
             <BuilderGroup
               {...group}
-              key={group.linkId}
+              key={group.itemId}
             />
           ))}
           <button type="button" onClick={handleAddGroup}>
