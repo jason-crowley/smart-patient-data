@@ -24,6 +24,17 @@ export default class Survey {
     this.description = description;
     this.items = items;
     Object.assign(this, restProps);
+
+    // Check for uniqueness in itemIds
+    const itemStack = [...items];
+    const seenIds = new Set();
+    while (itemStack.length) {
+      const { itemId, items } = itemStack.pop();
+      if (seenIds.has(itemId))
+        throw new Error(`Item id ${itemId} is not unique.`);
+      seenIds.add(itemId);
+      itemStack.push(...items);
+    }
   }
 
   toFhir() {
