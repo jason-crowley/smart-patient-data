@@ -1,4 +1,4 @@
-// const required = () => throw new Error('Missing required parameter');
+// const required = () => { throw new Error('Missing required parameter'); };
 
 export default class Survey {
   // Specify defaults and required parameters

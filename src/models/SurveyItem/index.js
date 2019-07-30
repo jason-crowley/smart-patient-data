@@ -1,10 +1,10 @@
-// const required = () => throw new Error('Missing required parameter');
+const required = () => { throw new Error('Missing required parameter'); };
 
 export default class SurveyItem {
   // Specify defaults and required parameters
   constructor({
-    type = 'unknown',
-    itemId = 'unknown',
+    type = required(),
+    itemId = required(),
     label = '',
     text = '',
     items = [],
