@@ -1,13 +1,14 @@
 import React from 'react';
+import ResponseItem from 'models/ResponseItem';
 import { LineChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Line } from 'recharts';
 import moment from 'moment';
 import './Analytics.css';
 
 const data = [
-  { id: 'id1', date: '2019-01-20', value: 503 },
-  { id: 'id2', date: '2019-01-21', value: 291 },
-  { id: 'id3', date: '2019-01-22', value: 817 },
-  { id: 'id4', date: '2019-01-23', value: 582 },
+  new ResponseItem({ id: 'id1', date: '2019-01-20', value: 503, code: '' }),
+  new ResponseItem({ id: 'id2', date: '2019-01-21', value: 291, code: '' }),
+  new ResponseItem({ id: 'id3', date: '2019-01-22', value: 817, code: '' }),
+  new ResponseItem({ id: 'id4', date: '2019-01-23', value: 582, code: '' }),
 ];
 
 export default function Analytics(props) {
