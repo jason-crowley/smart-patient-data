@@ -2,3 +2,8 @@
   padding: 20px;
   border: 1px solid red;
 }
+
+.Analytics__pghd, .Analytics__ehr {
+  padding: 20px;
+  border: 1px solid blue;
+}
