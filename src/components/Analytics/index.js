@@ -1,7 +1,6 @@
 import React from 'react';
 import ResponseItem from 'models/ResponseItem';
-import { LineChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Line } from 'recharts';
-import moment from 'moment';
+import AnalyticsChart from './AnalyticsChart';
 import './Analytics.css';
 
 const data = [
@@ -20,68 +19,12 @@ export default function Analytics(props) {
       <div className="Analytics__pghd">
         <h2>PGHD</h2>
         <div className="Analytics__pghd-charts">
-          <div>
-            <h3>Surveys Chart</h3>
-            <LineChart width={300} height={200} data={data}>
-              <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-              <XAxis
-                dataKey="date"
-                tickFormatter={date => moment(date).format('MM/DD')}
-                padding={{ left: 10, right: 10 }}
-              />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="value" />
-            </LineChart>
-          </div>
-          <div>
-            <h3>Activity Chart</h3>
-            <LineChart width={300} height={200} data={data}>
-              <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-              <XAxis
-                dataKey="date"
-                tickFormatter={date => moment(date).format('MM/DD')}
-                padding={{ left: 10, right: 10 }}
-              />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="value" />
-            </LineChart>
-          </div>
-          <div>
-            <h3>Sleep Chart</h3>
-            <LineChart width={300} height={200} data={data}>
-              <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-              <XAxis
-                dataKey="date"
-                tickFormatter={date => moment(date).format('MM/DD')}
-                padding={{ left: 10, right: 10 }}
-              />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Line type="monotone" dataKey="value" />
-            </LineChart>
-    </div>
-      <div>
-        <h3>Blood Pressure Chart</h3>
-        <LineChart width={300} height={200} data={data}>
-          <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-          <XAxis
-            dataKey="date"
-            tickFormatter={date => moment(date).format('MM/DD')}
-            padding={{ left: 10, right: 10 }}
-          />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Line type="monotone" dataKey="value" />
-        </LineChart>
+          <AnalyticsChart title="Surveys Chart" data={data} />
+          <AnalyticsChart title="Activity Chart" data={data} />
+          <AnalyticsChart title="Sleep Chart" data={data} />
+          <AnalyticsChart title="Blood Pressure Chart" data={data} />
+        </div>
       </div>
-    </div>
-    </div>
       <div className="Analytics__ehr">
         <h2>EHR</h2>
         <div>
