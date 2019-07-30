@@ -13,7 +13,9 @@ const data = [
 export default function Analytics(props) {
   return (
     <div className="Analytics">
-      <h1>Analytics</h1>
+      <header className="Analytics__header">
+        <h1>Analytics</h1>
+      </header>
       <div className="Analytics__pghd">
         <h2>PGHD</h2>
         <div className="Analytics__pghd-charts">

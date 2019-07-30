@@ -1,11 +1,29 @@
 .Analytics {
+  display: grid;
+  grid-template-rows: 100px 1fr;
+  grid-template-columns: 5fr 3fr;
+  grid-template-areas: "header header"
+                       "pghd   ehr";
+  grid-gap: 20px;
   padding: 20px;
   border: 1px solid red;
+}
+
+.Analytics__header {
+  grid-area: header;
 }
 
 .Analytics__pghd, .Analytics__ehr {
   padding: 20px;
   border: 1px solid blue;
+}
+
+.Analytics__pghd {
+  grid-area: pghd;
+}
+
+.Analytics__ehr {
+  grid-area: ehr;
 }
 
 .Analytics__pghd-charts {
