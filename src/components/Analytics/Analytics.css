@@ -23,8 +23,9 @@
 }
 
 .Analytics__pghd-charts {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  justify-items: center;
+  grid-template-columns: 1fr 1fr;
 }
 
 .Analytics__ehr {
