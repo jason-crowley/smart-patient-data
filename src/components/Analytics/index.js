@@ -53,9 +53,7 @@ export default function Analytics(props) {
 
   return (
     <div className="Analytics">
-      <header className="Analytics__header">
-        <h1>Analytics</h1>
-      </header>
+      <h1 className="Analytics__header">Analytics</h1>
       <div className="Analytics__pghd">
         <h2>PGHD</h2>
         {
