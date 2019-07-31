@@ -70,7 +70,7 @@ export default function Analytics(props) {
         <div className="Analytics__pghd-charts">
           {Object.entries(observations).map(([key, obs]) => {
             const data = map(ResponseItem.from, obs);
-            return <AnalyticsChart key={key} title={key} data={data} />;
+            return <AnalyticsChart key={key} data={data} />;
           })}
           {/* <AnalyticsChart title="Surveys Chart" data={observations} /> */}
           {/* <AnalyticsChart title="Activity Chart" data={observations} /> */}
