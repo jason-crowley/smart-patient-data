@@ -27,18 +27,38 @@ export default function Analytics(props) {
       </div>
       <div className="Analytics__ehr">
         <h2>EHR</h2>
-        <div>
-          <h3>Blood Pressure</h3>
-        </div>
-        <div>
-          <h3>Conditions</h3>
-        </div>
-        <div>
-          <h3>Lab Test (Glucose)</h3>
-        </div>
-        <div>
-          <h3>Body Weight</h3>
-        </div>
+        <form>
+          <ul className="Analytics__ehr-checkboxes">
+            <li>
+              <label>
+                <input type="checkbox" />
+                {' '} Surveys
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" />
+                {' '} Activity
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" />
+                {' '} Sleep
+              </label>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" />
+                {' '} Blood Pressure
+              </label>
+            </li>
+          </ul>
+        </form>
+        <h3>Blood Pressure</h3>
+        <h3>Conditions</h3>
+        <h3>Lab Test (Glucose)</h3>
+        <h3>Body Weight</h3>
       </div>
     </div>
   );
