@@ -7,15 +7,15 @@ import './Analytics.css';
 
 const client = FHIR.client('https://r4.smarthealthit.org');
 
-const data = [
-  new ResponseItem({ id: 'id1', date: '2019-01-20', value: 503, code: '' }),
-  new ResponseItem({ id: 'id2', date: '2019-01-21', value: 291, code: '' }),
-  new ResponseItem({ id: 'id3', date: '2019-01-22', value: 817, code: '' }),
-  new ResponseItem({ id: 'id4', date: '2019-01-23', value: 582, code: '' }),
-];
+// const data = [
+//   new ResponseItem({ id: 'id1', date: '2019-01-20', value: 503, code: '' }),
+//   new ResponseItem({ id: 'id2', date: '2019-01-21', value: 291, code: '' }),
+//   new ResponseItem({ id: 'id3', date: '2019-01-22', value: 817, code: '' }),
+//   new ResponseItem({ id: 'id4', date: '2019-01-23', value: 582, code: '' }),
+// ];
 
 export default function Analytics(props) {
-  const [observations, setObservations] = useState([]);
+  const [observations, setObservations] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
@@ -35,7 +35,6 @@ export default function Analytics(props) {
           // if there is one. Otherwise, 'url' will be assigned to undefined
           ({ url } = link.find(({ relation }) => relation === 'next') || {});
         }
-        setObservations(data);
         const observations = pipe(
           map(prop('resource')),
           filter(has('valueQuantity')),
@@ -47,6 +46,7 @@ export default function Analytics(props) {
         );
         const grouped = groupBy(getKey, observations);
         console.log(grouped);
+        setObservations(grouped);
       } catch (err) {
         console.error(err);
         setIsError(true);
@@ -68,10 +68,14 @@ export default function Analytics(props) {
       <div className="Analytics__pghd">
         <h2>PGHD</h2>
         <div className="Analytics__pghd-charts">
-          <AnalyticsChart title="Surveys Chart" data={observations} />
-          <AnalyticsChart title="Activity Chart" data={observations} />
-          <AnalyticsChart title="Sleep Chart" data={observations} />
-          <AnalyticsChart title="Blood Pressure Chart" data={observations} />
+          {Object.entries(observations).map(([key, obs]) => {
+            const data = map(ResponseItem.from, obs);
+            return <AnalyticsChart key={key} title={key} data={data} />;
+          })}
+          {/* <AnalyticsChart title="Surveys Chart" data={observations} /> */}
+          {/* <AnalyticsChart title="Activity Chart" data={observations} /> */}
+          {/* <AnalyticsChart title="Sleep Chart" data={observations} /> */}
+          {/* <AnalyticsChart title="Blood Pressure Chart" data={observations} /> */}
         </div>
       </div>
       <div className="Analytics__ehr">
