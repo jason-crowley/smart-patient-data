@@ -16,21 +16,30 @@ const data = [
 export default function Analytics(props) {
   const [observations, setObservations] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     const fetchObservations = async () => {
+      setIsError(false);
       setIsLoading(true);
       let url = 'Observation?patient=Patient/030b3765-844c-4cc1-a36f-974c37895eee';
       const entries = [];
-      while (url) {
-        const { entry, link } = await client.request(url);
-        entries.push(...entry);
-        // Assign 'url' to the url of the link with relation 'next',
-        // if there is one. Otherwise, 'url' will be assigned to undefined
-        ({ url } = link.find(({ relation }) => relation === 'next') || {});
+
+      // Try to fetch all observations for a given patient
+      try {
+        while (url) {
+          const { entry, link } = await client.request(url);
+          entries.push(...entry);
+          // Assign 'url' to the url of the link with relation 'next',
+          // if there is one. Otherwise, 'url' will be assigned to undefined
+          ({ url } = link.find(({ relation }) => relation === 'next') || {});
+        }
+        console.log(entries);
+        setObservations(data);
+      } catch (err) {
+        setIsError(true);
       }
-      console.log(entries);
-      setObservations(data);
+
       setIsLoading(false);
     };
 
@@ -39,6 +48,7 @@ export default function Analytics(props) {
 
   return (
     (isLoading && <h2>Loading...</h2>) ||
+    (isError && <h2>There was an error processing your request.</h2>) ||
     <div className="Analytics">
       <header className="Analytics__header">
         <h1>Analytics</h1>
