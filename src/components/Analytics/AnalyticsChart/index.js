@@ -15,7 +15,10 @@ export default function AnalyticsChart({ data }) {
           padding={{ left: 20, right: 20 }}
         />
         <YAxis />
-        <Tooltip />
+        <Tooltip
+          labelFormatter={date => moment(date).format('MMM DD, YYYY')}
+          formatter={value => value.toFixed(2)}
+        />
         <Legend />
         <Line type="monotone" dataKey="value" />
       </LineChart>
