@@ -18,6 +18,7 @@ export default function AnalyticsChart({ data }) {
         <Tooltip
           labelFormatter={date => moment(date).format('MMM DD, YYYY')}
           formatter={value => value.toFixed(2)}
+          animationEasing="ease-in-out"
         />
         <Legend />
         <Line type="monotone" dataKey="value" />
