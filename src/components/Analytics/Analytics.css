@@ -25,7 +25,14 @@
 .Analytics__pghd-charts {
   display: grid;
   justify-items: center;
+  align-items: end;
   grid-template-columns: 1fr 1fr;
+}
+
+@media only screen and (max-width: 1000px) {
+  .Analytics__pghd-charts {
+    grid-template-columns: 1fr;
+  }
 }
 
 .Analytics__ehr {
