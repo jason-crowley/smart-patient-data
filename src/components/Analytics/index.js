@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ResponseItem from 'models/ResponseItem';
 import AnalyticsChart from './AnalyticsChart';
 import FHIR from 'fhirclient';
+import { pipe, map, prop, filter, has, path, groupBy } from 'ramda';
 import './Analytics.css';
 
 const client = FHIR.client('https://r4.smarthealthit.org');
@@ -34,9 +35,20 @@ export default function Analytics(props) {
           // if there is one. Otherwise, 'url' will be assigned to undefined
           ({ url } = link.find(({ relation }) => relation === 'next') || {});
         }
-        console.log(entries);
         setObservations(data);
+        const observations = pipe(
+          map(prop('resource')),
+          filter(has('valueQuantity')),
+        )(entries);
+        const getKey = pipe(
+          path(['code', 'coding']),
+          codings => codings[0],
+          coding => coding.system + '|' + coding.code,
+        );
+        const grouped = groupBy(getKey, observations);
+        console.log(grouped);
       } catch (err) {
+        console.error(err);
         setIsError(true);
       }
 
