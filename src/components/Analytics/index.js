@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import ResponseItem from 'models/ResponseItem';
 import AnalyticsChart from './AnalyticsChart';
+import FHIR from 'fhirclient';
 import './Analytics.css';
+
+const client = FHIR.client('https://r4.smarthealthit.org');
 
 const data = [
   new ResponseItem({ id: 'id1', date: '2019-01-20', value: 503, code: '' }),
@@ -17,7 +20,16 @@ export default function Analytics(props) {
   useEffect(() => {
     const fetchObservations = async () => {
       setIsLoading(true);
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      let url = 'Observation?patient=Patient/030b3765-844c-4cc1-a36f-974c37895eee';
+      const entries = [];
+      while (url) {
+        const { entry, link } = await client.request(url);
+        entries.push(...entry);
+        // Assign 'url' to the url of the link with relation 'next',
+        // if there is one. Otherwise, 'url' will be assigned to undefined
+        ({ url } = link.find(({ relation }) => relation === 'next') || {});
+      }
+      console.log(entries);
       setObservations(data);
       setIsLoading(false);
     };
