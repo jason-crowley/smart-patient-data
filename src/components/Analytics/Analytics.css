@@ -38,8 +38,3 @@
 .Analytics__ehr {
   grid-area: ehr;
 }
-
-.Analytics__ehr-checkboxes {
-  padding: 0;
-  list-style-type: none;
-}

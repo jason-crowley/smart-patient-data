@@ -2,6 +2,7 @@ import React from 'react';
 import useObservationData from 'hooks/useObservationData';
 import ResponseItem from 'models/ResponseItem';
 import AnalyticsChart from './AnalyticsChart';
+import AnalyticsEvents from './AnalyticsEvents';
 import './Analytics.css';
 
 export default function Analytics(props) {
@@ -26,38 +27,9 @@ export default function Analytics(props) {
       </div>
       <div className="Analytics__ehr">
         <h2>EHR Events</h2>
-        <form>
-          <ul className="Analytics__ehr-checkboxes">
-            <li>
-              <label>
-                <input type="checkbox" />
-                {' '} Surveys
-              </label>
-            </li>
-            <li>
-              <label>
-                <input type="checkbox" />
-                {' '} Activity
-              </label>
-            </li>
-            <li>
-              <label>
-                <input type="checkbox" />
-                {' '} Sleep
-              </label>
-            </li>
-            <li>
-              <label>
-                <input type="checkbox" />
-                {' '} Blood Pressure
-              </label>
-            </li>
-          </ul>
-        </form>
-        <h3>Blood Pressure</h3>
-        <h3>Conditions</h3>
-        <h3>Lab Test (Glucose)</h3>
-        <h3>Body Weight</h3>
+        <AnalyticsEvents>
+          {['Blood Pressure', 'Conditions', 'Lab Test (Glucose)', 'Body Weight']}
+        </AnalyticsEvents>
       </div>
     </div>
   );
