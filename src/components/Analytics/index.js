@@ -12,7 +12,7 @@ export default function Analytics(props) {
   return (
     <div className="Analytics">
       <h1 className="Analytics__header">Analytics</h1>
-      <div className="Analytics__pghd">
+      <main className="Analytics__pghd">
         <h2>PGHD</h2>
         {
           (isLoading && <h2>Loading...</h2>) ||
@@ -24,13 +24,13 @@ export default function Analytics(props) {
             })}
           </div>
         }
-      </div>
-      <div className="Analytics__ehr">
+      </main>
+      <aside className="Analytics__ehr">
         <h2>EHR Events</h2>
         <AnalyticsEvents>
           {['Blood Pressure', 'Conditions', 'Lab Test (Glucose)', 'Body Weight']}
         </AnalyticsEvents>
-      </div>
+      </aside>
     </div>
   );
 };
