@@ -1,33 +1,7 @@
 import { useEffect, useReducer } from 'react';
+import fetchReducer from 'reducers/fetchReducer';
 import FHIR from 'fhirclient';
 import { pipe, map, prop, filter, has, path, groupBy } from 'ramda';
-
-const fetchReducer = (state, action) => {
-  switch (action.type) {
-    case 'FETCH_INIT':
-      return {
-        ...state,
-        isLoading: true,
-        isError: false,
-      };
-    case 'FETCH_SUCCESS':
-      return {
-        ...state,
-        isLoading: false,
-        isError: false,
-        observations: action.payload,
-      };
-    case 'FETCH_FAILURE':
-      console.error(action.reason);
-      return {
-        ...state,
-        isLoading: false,
-        isError: true,
-      };
-    default:
-      throw new Error(`Action of type '${action.type}' is not recognized.`);
-  }
-};
 
 const useObservationData = patientId => {
   const [state, dispatch] = useReducer(fetchReducer, {
