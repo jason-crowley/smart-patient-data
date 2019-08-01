@@ -1,22 +1,50 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useReducer } from 'react';
 import FHIR from 'fhirclient';
 import { pipe, map, prop, filter, has, path, groupBy } from 'ramda';
 
+const fetchReducer = (state, action) => {
+  switch (action.type) {
+    case 'FETCH_INIT':
+      return {
+        ...state,
+        isLoading: true,
+        isError: false,
+      };
+    case 'FETCH_SUCCESS':
+      return {
+        ...state,
+        isLoading: false,
+        isError: false,
+        observations: action.payload,
+      };
+    case 'FETCH_FAILURE':
+      console.error(action.reason);
+      return {
+        ...state,
+        isLoading: false,
+        isError: true,
+      };
+    default:
+      throw new Error(`Action of type '${action.type}' is not recognized.`);
+  }
+};
+
 const useObservationData = patientId => {
-  const [observations, setObservations] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
+  const [state, dispatch] = useReducer(fetchReducer, {
+    isLoading: false,
+    isError: false,
+    observations: {},
+  });
 
   useEffect(() => {
     const client = FHIR.client('https://r4.smarthealthit.org');
 
     const fetchObservations = async () => {
-      setIsError(false);
-      setIsLoading(true);
       let url = `Observation?patient=Patient/${patientId}`;
       const entries = [];
 
       // Try to fetch all observations for a given patient
+      dispatch({ type: 'FETCH_INIT' });
       try {
         while (url) {
           const { entry, link } = await client.request(url);
@@ -34,21 +62,16 @@ const useObservationData = patientId => {
           codings => codings[0],
           coding => coding.system + '|' + coding.code,
         );
-        const grouped = groupBy(getKey, observations);
-        console.log(grouped);
-        setObservations(grouped);
+        dispatch({ type: 'FETCH_SUCCESS', payload: groupBy(getKey, observations) });
       } catch (err) {
-        console.error(err);
-        setIsError(true);
+        dispatch({ type: 'FETCH_FAILURE', reason: err });
       }
-
-      setIsLoading(false);
     };
 
     fetchObservations();
   }, [patientId]);
 
-  return { isLoading, isError, observations };
+  return state;
 };
 
 export default useObservationData;
