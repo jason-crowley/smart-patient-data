@@ -33,6 +33,7 @@ export default class ResponseItem {
           if (item) stack.push(...item);
           if (!answer) continue;
           Object.values(answer).forEach(value => {
+            if (typeof value !== 'number') return;
             hits.push(new ResponseItem({ id, date, value, code: 'unknown' }));
           });
         }
