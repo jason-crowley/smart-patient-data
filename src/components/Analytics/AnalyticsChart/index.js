@@ -4,9 +4,10 @@ import moment from 'moment';
 import './AnalyticsChart.css';
 
 export default function AnalyticsChart({ data }) {
+  const { text } = data[0].code;
   return (
     <div>
-      <h3 className="AnalyticsChart__header">{data[0].code.text}</h3>
+      <h3 className="AnalyticsChart__header">{text}</h3>
       <LineChart
         width={500}
         height={300}
@@ -20,7 +21,7 @@ export default function AnalyticsChart({ data }) {
           padding={{ left: 20, right: 20 }}
           label={{ value: 'Date', position: 'insideBottom', offset: -15 }}
         />
-        <YAxis label={{ value: 'Value', position: 'insideLeft', angle: -90 }} />
+        <YAxis label={{ value: text, position: 'insideLeft', angle: -90 }} />
         <Tooltip
           labelFormatter={date => moment(date).format('MMM DD, YYYY')}
           formatter={value => value.toFixed(2)}
