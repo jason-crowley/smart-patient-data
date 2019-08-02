@@ -1,9 +1,43 @@
 import React from 'react';
 import useObservationData from 'hooks/useObservationData';
 import ResponseItem from 'models/ResponseItem';
+import Event from 'models/Event';
 import AnalyticsChart from './AnalyticsChart';
 import AnalyticsEvents from './AnalyticsEvents';
 import './Analytics.css';
+
+const events = [
+  {
+    category: 'MedicationRequest',
+    events: [
+      new Event({
+        category: 'MedicationRequest',
+        code: {
+          coding: [
+            {
+              system: 'http://loinc.org',
+              code: '34921-33',
+              display: 'Diabetes',
+            },
+          ],
+        },
+        startDate: '2019-05-10',
+      }),
+    ],
+  },
+  {
+    category: 'Condition',
+    events: [],
+  },
+  {
+    category: 'Encounter',
+    events: [],
+  },
+  {
+    category: 'Observation',
+    events: [],
+  },
+];
 
 export default function Analytics(props) {
   const { isLoading, isError, observations } =
@@ -28,7 +62,7 @@ export default function Analytics(props) {
       <aside className="Analytics__ehr">
         <h2>EHR Events</h2>
         <AnalyticsEvents>
-          {['Blood Pressure', 'Conditions', 'Lab Test (Glucose)', 'Body Weight']}
+          {events}
         </AnalyticsEvents>
       </aside>
     </div>
