@@ -5,7 +5,7 @@ import { map, prop } from 'ramda';
 
 const useFhirBundle = (patientId, resourceTypes) => {
   const [state, dispatch] = useReducer(fetchReducer, {
-    isLoading: false,
+    isLoading: true,
     isError: false,
     data: [],
   });
