@@ -1,10 +1,10 @@
 import React from 'react';
-// import useObservationData from 'hooks/useObservationData';
 import usePatientData from 'hooks/usePatientData';
 import ResponseItem from 'models/ResponseItem';
 import Event from 'models/Event';
 import AnalyticsChart from './AnalyticsChart';
 import AnalyticsEvents from './AnalyticsEvents';
+import { find, propEq, filter, has, pipe, path, groupBy } from 'ramda';
 import './Analytics.css';
 
 const events = [
@@ -51,6 +51,17 @@ const RESOURCE_TYPES = [
 export default function Analytics(props) {
   const { isLoading, isError, data } =
     usePatientData(PATIENT_ID, RESOURCE_TYPES);
+  let grouped;
+  if (!isLoading && !isError) {
+    const { resources } = find(propEq('resourceType', 'Observation'), data);
+    const filtered = filter(has('valueQuantity'), resources);
+    const getKey = pipe(
+      path(['code', 'coding']),
+      codings => codings[0],
+      coding => coding.system + '|' + coding.code,
+    );
+    grouped = groupBy(getKey, filtered);
+  }
 
   return (
     <div className="Analytics">
@@ -60,13 +71,12 @@ export default function Analytics(props) {
         {
           (isLoading && <h2>Loading...</h2>) ||
           (isError && <h2>There was an error processing your request.</h2>) ||
-          console.log(data)
-          // <div className="Analytics__pghd-charts">
-          //   {Object.entries(observations).map(([key, obs]) => {
-          //     const data = obs.map(ResponseItem.from);
-          //     return <AnalyticsChart key={key} data={data} />;
-          //   })}
-          // </div>
+          <div className="Analytics__pghd-charts">
+            {Object.entries(grouped).map(([key, obs]) => {
+              const data = obs.map(ResponseItem.from);
+              return <AnalyticsChart key={key} data={data} />;
+            })}
+          </div>
         }
       </main>
       <aside className="Analytics__ehr">
