@@ -3,7 +3,7 @@ import fetchReducer from 'reducers/fetchReducer';
 import FHIR from 'fhirclient';
 import { map, prop } from 'ramda';
 
-const useFhirBundle = (patientId, resourceTypes) => {
+const usePatientData = (patientId, resourceTypes) => {
   const [state, dispatch] = useReducer(fetchReducer, {
     isLoading: true,
     isError: false,
@@ -28,7 +28,7 @@ const useFhirBundle = (patientId, resourceTypes) => {
           ({ url } = link.find(({ relation }) => relation === 'next') || {});
         }
         const resources = map(prop('resource'), entries);
-        const bundle = { type: resourceType, data: resources };
+        const bundle = { resourceType, resources };
         dispatch({ type: 'FETCH_ACCUMULATE', payload: bundle });
       } catch (err) {
         dispatch({ type: 'FETCH_FAILURE', reason: err });
@@ -43,4 +43,4 @@ const useFhirBundle = (patientId, resourceTypes) => {
   return state;
 };
 
-export default useFhirBundle;
+export default usePatientData;
