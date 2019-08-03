@@ -1,5 +1,6 @@
 import React from 'react';
-import useObservationData from 'hooks/useObservationData';
+// import useObservationData from 'hooks/useObservationData';
+import usePatientData from 'hooks/usePatientData';
 import ResponseItem from 'models/ResponseItem';
 import Event from 'models/Event';
 import AnalyticsChart from './AnalyticsChart';
@@ -39,9 +40,17 @@ const events = [
   },
 ];
 
+const PATIENT_ID = '030b3765-844c-4cc1-a36f-974c37895eee';
+const RESOURCE_TYPES = [
+  'Observation',
+  'MedicationRequest',
+  'Condition',
+  'Encounter',
+];
+
 export default function Analytics(props) {
-  const { isLoading, isError, observations } =
-    useObservationData('030b3765-844c-4cc1-a36f-974c37895eee');
+  const { isLoading, isError, data } =
+    usePatientData(PATIENT_ID, RESOURCE_TYPES);
 
   return (
     <div className="Analytics">
@@ -51,12 +60,13 @@ export default function Analytics(props) {
         {
           (isLoading && <h2>Loading...</h2>) ||
           (isError && <h2>There was an error processing your request.</h2>) ||
-          <div className="Analytics__pghd-charts">
-            {Object.entries(observations).map(([key, obs]) => {
-              const data = obs.map(ResponseItem.from);
-              return <AnalyticsChart key={key} data={data} />;
-            })}
-          </div>
+          console.log(data)
+          // <div className="Analytics__pghd-charts">
+          //   {Object.entries(observations).map(([key, obs]) => {
+          //     const data = obs.map(ResponseItem.from);
+          //     return <AnalyticsChart key={key} data={data} />;
+          //   })}
+          // </div>
         }
       </main>
       <aside className="Analytics__ehr">
