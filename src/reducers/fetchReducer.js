@@ -6,12 +6,16 @@ const fetchReducer = (state, action) => {
         isLoading: true,
         isError: false,
       };
+    case 'FETCH_ACCUMULATE':
+      return {
+        ...state,
+        data: [...state.data, action.payload],
+      };
     case 'FETCH_SUCCESS':
       return {
         ...state,
         isLoading: false,
         isError: false,
-        observations: action.payload,
       };
     case 'FETCH_FAILURE':
       console.error(action.reason);
