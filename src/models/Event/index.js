@@ -20,7 +20,6 @@ export default class Event {
     switch (category) {
       case 'MedicationRequest': {
         const {
-          // category: [{}] = [{}],
           medicationCodeableConcept: code,
           authoredOn: startDate,
         } = resource;
@@ -36,8 +35,8 @@ export default class Event {
       }
       case 'Encounter': {
         const {
-          type: code,
-          period: [{ start: startDate, end: endDate }] = [{}],
+          type: [code],
+          period: { start: startDate, end: endDate } = {},
         } = resource;
         return new Event({ category, code, startDate, endDate });
       }

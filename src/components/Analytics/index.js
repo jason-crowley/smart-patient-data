@@ -4,41 +4,8 @@ import ResponseItem from 'models/ResponseItem';
 import Event from 'models/Event';
 import AnalyticsChart from './AnalyticsChart';
 import AnalyticsEvents from './AnalyticsEvents';
-import { find, propEq, filter, has, pipe, path, groupBy } from 'ramda';
+import { find, propEq, filter, has, pipe, path, groupBy, compose, not, map } from 'ramda';
 import './Analytics.css';
-
-const events = [
-  {
-    category: 'MedicationRequest',
-    events: [
-      new Event({
-        category: 'MedicationRequest',
-        code: {
-          coding: [
-            {
-              system: 'http://loinc.org',
-              code: '34921-33',
-              display: 'Diabetes',
-            },
-          ],
-        },
-        startDate: '2019-05-10',
-      }),
-    ],
-  },
-  {
-    category: 'Condition',
-    events: [],
-  },
-  {
-    category: 'Encounter',
-    events: [],
-  },
-  {
-    category: 'Observation',
-    events: [],
-  },
-];
 
 const PATIENT_ID = '030b3765-844c-4cc1-a36f-974c37895eee';
 const RESOURCE_TYPES = [
@@ -52,6 +19,7 @@ export default function Analytics(props) {
   const { isLoading, isError, data } =
     usePatientData(PATIENT_ID, RESOURCE_TYPES);
   let grouped;
+  let events;
   if (!isLoading && !isError) {
     const { resources } = find(propEq('resourceType', 'Observation'), data);
     const filtered = filter(has('valueQuantity'), resources);
@@ -61,6 +29,12 @@ export default function Analytics(props) {
       coding => coding.system + '|' + coding.code,
     );
     grouped = groupBy(getKey, filtered);
+    const filterNotObs = filter(compose(not, propEq('resourceType', 'Observation')));
+    const mapToEvents = map(({ resourceType: category, resources }) => {
+      const events = map(Event.from, resources);
+      return { category, events };
+    });
+    events = pipe(filterNotObs, mapToEvents)(data);
   }
 
   return (
@@ -82,7 +56,7 @@ export default function Analytics(props) {
       <aside className="Analytics__ehr">
         <h2>EHR Events</h2>
         <AnalyticsEvents>
-          {events}
+          {events || []}
         </AnalyticsEvents>
       </aside>
     </div>
