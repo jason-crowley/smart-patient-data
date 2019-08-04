@@ -4,7 +4,8 @@ import ResponseItem from 'models/ResponseItem';
 import Event from 'models/Event';
 import AnalyticsChart from './AnalyticsChart';
 import AnalyticsEvents from './AnalyticsEvents';
-import { find, propEq, filter, has, pipe, path, groupBy, compose, not, map } from 'ramda';
+import { find, propEq, filter, has, pipe, compose, not, map } from 'ramda';
+import groupByCodeKey from 'utils/groupByCodeKey';
 import './Analytics.css';
 
 const PATIENT_ID = '030b3765-844c-4cc1-a36f-974c37895eee';
@@ -23,12 +24,7 @@ export default function Analytics(props) {
   if (!isLoading && !isError) {
     const { resources } = find(propEq('resourceType', 'Observation'), data);
     const filtered = filter(has('valueQuantity'), resources);
-    const getKey = pipe(
-      path(['code', 'coding']),
-      codings => codings[0],
-      coding => coding.system + '|' + coding.code,
-    );
-    grouped = groupBy(getKey, filtered);
+    grouped = groupByCodeKey(filtered);
     const filterNotObs = filter(compose(not, propEq('resourceType', 'Observation')));
     const mapToEvents = map(({ resourceType: category, resources }) => {
       const events = map(Event.from, resources);
