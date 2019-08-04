@@ -1,11 +1,9 @@
 import { pipe, path, groupBy } from 'ramda';
 
-const getKey = pipe(
+const getCodeKey = pipe(
   path(['code', 'coding']),
   codings => codings[0],
   coding => coding.system + '|' + coding.code,
 );
 
-const groupByKey = groupBy(getKey);
-
-export default groupByKey;
+export default groupBy(getCodeKey);
