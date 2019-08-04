@@ -38,25 +38,23 @@ export default function Analytics(props) {
   }
 
   return (
+    (isLoading && <h2>Loading...</h2>) ||
+    (isError && <h2>There was an error processing your request.</h2>) ||
     <div className="Analytics">
       <h1 className="Analytics__header">Analytics</h1>
       <main className="Analytics__pghd">
         <h2>PGHD</h2>
-        {
-          (isLoading && <h2>Loading...</h2>) ||
-          (isError && <h2>There was an error processing your request.</h2>) ||
-          <div className="Analytics__pghd-charts">
-            {Object.entries(grouped).map(([key, obs]) => {
-              const data = obs.map(ResponseItem.from);
-              return <AnalyticsChart key={key} data={data} />;
-            })}
-          </div>
-        }
+        <div className="Analytics__pghd-charts">
+          {Object.entries(grouped).map(([key, obs]) => {
+            const data = obs.map(ResponseItem.from);
+            return <AnalyticsChart key={key} data={data} />;
+          })}
+        </div>
       </main>
       <aside className="Analytics__ehr">
         <h2>EHR Events</h2>
         <AnalyticsEvents>
-          {events || []}
+          {events}
         </AnalyticsEvents>
       </aside>
     </div>
