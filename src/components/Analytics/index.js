@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import usePatientData from 'hooks/usePatientData';
 import ResponseItem from 'models/ResponseItem';
 import Event from 'models/Event';
@@ -19,6 +19,8 @@ const RESOURCE_TYPES = [
 export default function Analytics(props) {
   const { isLoading, isError, data } =
     usePatientData(PATIENT_ID, RESOURCE_TYPES);
+
+  const [active, setActive] = useState(null);
 
   // Display loading and error messages
   if (isLoading)
@@ -48,17 +50,28 @@ export default function Analytics(props) {
       <h1 className="Analytics__header">Analytics</h1>
       <main className="Analytics__pghd">
         <h2>PGHD</h2>
-        <div className="Analytics__pghd-charts">
-          {responseItemsByKey.map(({ key, grouping: data }) => {
-            return (
+        {
+          (active)
+            ? (
               <AnalyticsChart
-                key={key}
-                data={data}
-                onClick={() => setActive(key)}
+                key={'yo'}
+                data={[{ code: { text: 'test' } }]}
+                onClick={() => setActive(null)}
               />
-            );
-          })}
-        </div>
+            ) : (
+              <div className="Analytics__pghd-charts">
+                {responseItemsByKey.map(({ key, grouping: data }) => {
+                  return (
+                    <AnalyticsChart
+                      key={key}
+                      data={data}
+                      onClick={() => setActive(key)}
+                    />
+                  );
+                })}
+              </div>
+            )
+        }
       </main>
       <aside className="Analytics__ehr">
         <h2>EHR Events</h2>
