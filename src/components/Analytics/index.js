@@ -62,9 +62,7 @@ export default function Analytics(props) {
       </main>
       <aside className="Analytics__ehr">
         <h2>EHR Events</h2>
-        <AnalyticsEvents>
-          {eventsByCategory}
-        </AnalyticsEvents>
+        <AnalyticsEvents eventsByCategory={eventsByCategory} />
       </aside>
     </div>
   );
