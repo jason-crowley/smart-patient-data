@@ -19,23 +19,28 @@ const RESOURCE_TYPES = [
 export default function Analytics(props) {
   const { isLoading, isError, data } =
     usePatientData(PATIENT_ID, RESOURCE_TYPES);
-  let grouped;
-  let events;
-  if (!isLoading && !isError) {
-    const { resources } = find(propEq('resourceType', 'Observation'), data);
-    const filtered = filter(has('valueQuantity'), resources);
-    grouped = groupByCodeKey(filtered);
-    const filterNotObs = filter(compose(not, propEq('resourceType', 'Observation')));
-    const mapToEvents = map(({ resourceType: category, resources }) => {
-      const events = map(Event.from, resources);
-      return { category, events };
-    });
-    events = pipe(filterNotObs, mapToEvents)(data);
-  }
+
+  // Display loading and error messages
+  if (isLoading)
+    return <h2>Loading...</h2>;
+  if (isError)
+    return <h2>There was an error processing your request.</h2>;
+
+  // PGHD
+  const { resources } = find(propEq('resourceType', 'Observation'), data);
+  const filtered = filter(has('valueQuantity'), resources);
+  const grouped = groupByCodeKey(filtered);
+
+  // EHR
+  const filterNotObs = filter(compose(not, propEq('resourceType', 'Observation')));
+  const mapToGroupedEvents = map(({ resourceType: category, resources }) => {
+    const events = map(Event.from, resources);
+    const groupedEvents = groupByCodeKey(events);
+    return { category, groupedEvents };
+  });
+  const events = pipe(filterNotObs, mapToGroupedEvents)(data);
 
   return (
-    (isLoading && <h2>Loading...</h2>) ||
-    (isError && <h2>There was an error processing your request.</h2>) ||
     <div className="Analytics">
       <h1 className="Analytics__header">Analytics</h1>
       <main className="Analytics__pghd">
