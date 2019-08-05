@@ -3,16 +3,18 @@ import { LineChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Line } from 'r
 import moment from 'moment';
 import './AnalyticsChart.css';
 
-export default function AnalyticsChart({ data }) {
+export default function AnalyticsChart({ data, onClick }) {
   const { text } = data[0].code;
   return (
     <div>
       <h3 className="AnalyticsChart__header">{text}</h3>
       <LineChart
+        className="AnalyticsChart__chart"
         width={500}
         height={300}
         data={data}
         margin={{ top: 10, right: 10, bottom: 10, left: 10 }}
+        onClick={onClick}
       >
         <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
         <XAxis

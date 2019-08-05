@@ -2,6 +2,10 @@
   margin: 0 auto;
 }
 
+.AnalyticsChart__chart .recharts-surface {
+  cursor: pointer;
+}
+
 .AnalyticsChart__header {
   text-align: center;
 }
