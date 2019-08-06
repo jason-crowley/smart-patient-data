@@ -1,6 +1,12 @@
+.HeaderNav {
+  height: 100%;
+}
+
 .HeaderNav__list {
   display: flex;
+  align-items: center;
   margin: 0;
+  height: 100%;
   list-style-type: none;
   border: 1px solid red;
 }
