@@ -2,6 +2,11 @@
   margin: 0 auto;
 }
 
+.AnalyticsChart {
+  width: 100%;
+  height: 100%;
+}
+
 .AnalyticsChart__chart .recharts-surface {
   cursor: pointer;
 }
