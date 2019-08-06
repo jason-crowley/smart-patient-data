@@ -10,8 +10,8 @@ export default function AnalyticsChart({ data, onClick }) {
       <h3 className="AnalyticsChart__header">{text}</h3>
       <LineChart
         className="AnalyticsChart__chart"
-        width={500}
-        height={300}
+        width={450}
+        height={250}
         data={data}
         margin={{ top: 10, right: 10, bottom: 10, left: 10 }}
         onClick={onClick}
