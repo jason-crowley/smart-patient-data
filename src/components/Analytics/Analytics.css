@@ -6,6 +6,8 @@
                        "pghd   ehr";
   grid-gap: 20px;
   padding: 20px;
+  height: 100%;
+  overflow: hidden;
   border: 1px solid red;
 }
 
@@ -15,6 +17,8 @@
 
 .Analytics__pghd, .Analytics__ehr {
   padding: 20px;
+  height: 100%;
+  overflow: scroll;
   border: 1px solid blue;
 }
 
