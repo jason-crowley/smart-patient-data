@@ -17,7 +17,11 @@ export default function AnalyticsChart({ data, onClick }) {
   return (
     <div className="AnalyticsChart">
       <h3 className="AnalyticsChart__header">{text}</h3>
-      <ResponsiveContainer width="99%" aspect={1.5}>
+      <ResponsiveContainer
+        className="AnalyticsChart__container"
+        width="99%"
+        aspect={1.8}
+      >
         <LineChart
           className="AnalyticsChart__chart"
           data={data}
