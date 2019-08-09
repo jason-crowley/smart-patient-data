@@ -10,7 +10,6 @@ import {
   VictoryScatter,
   VictoryTooltip,
 } from 'victory';
-import ResponseItem from 'models/ResponseItem';
 import moment from 'moment';
 import AnalyticsVictoryTheme from './AnalyticsVictoryTheme';
 import AnalyticsLegendIcon from './AnalyticsLegendIcon';
