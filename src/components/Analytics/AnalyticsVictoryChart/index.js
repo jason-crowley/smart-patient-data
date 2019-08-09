@@ -8,6 +8,7 @@ import {
   VictoryGroup,
   VictoryLine,
   VictoryScatter,
+  VictoryBar,
   VictoryTooltip,
 } from 'victory';
 import moment from 'moment';
@@ -28,7 +29,7 @@ export default function AnalyticsVictoryChart({ data: { responseItems } }) {
           />
         }
       >
-        <VictoryLabel x={220} y={25}
+        <VictoryLabel x={225} y={25}
           text={text}
           textAnchor="middle"
           style={{ fontSize: 16 }}
@@ -63,6 +64,11 @@ export default function AnalyticsVictoryChart({ data: { responseItems } }) {
             size={(datum, active) => active ? 5 : 3}
           />
         </VictoryGroup>
+        <VictoryBar
+          data={responseItems}
+          x="date"
+          y="value"
+        />
       </VictoryChart>
     </div>
   );
