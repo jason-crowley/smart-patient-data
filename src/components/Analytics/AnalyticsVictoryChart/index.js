@@ -16,9 +16,27 @@ import AnalyticsVictoryTheme from './AnalyticsVictoryTheme';
 import AnalyticsLegendIcon from './AnalyticsLegendIcon';
 import './AnalyticsVictoryChart.css';
 
+const svgNS = 'http://www.w3.org/2000/svg';
+const svgTag = document.createElementNS(svgNS, 'svg');
+const textTag = document.createElementNS(svgNS, 'text');
+const tspanTag = document.createElementNS(svgNS, 'tspan');
+document.body.appendChild(svgTag);
+svgTag.appendChild(textTag);
+textTag.appendChild(tspanTag);
+tspanTag.setAttribute('font-size', '12');
+tspanTag.setAttribute('font-family', "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif");
+
 export default function AnalyticsVictoryChart({ data: { responseItems } }) {
   const { text } = responseItems[0].code;
-  const trimmedText = text.replace(/\[.*/, '');
+  const trimmedText = text.replace(/\[.*/, '').trim();
+
+  // Calculate text size for legend
+  const textNode = document.createTextNode(trimmedText);
+  tspanTag.appendChild(textNode);
+  const textLength = tspanTag.getComputedTextLength();
+  tspanTag.removeChild(textNode);
+  console.log(textLength);
+
   return (
     <div className="AnalyticsVictoryChart">
       <VictoryChart
@@ -46,6 +64,7 @@ export default function AnalyticsVictoryChart({ data: { responseItems } }) {
         <VictoryLegend x={90} y={50}
           data={[{ name: trimmedText }]}
           dataComponent={<AnalyticsLegendIcon />}
+          width={textLength + 40}
         />
         <VictoryGroup
           data={responseItems}
