@@ -13,27 +13,8 @@ import {
 import ResponseItem from 'models/ResponseItem';
 import moment from 'moment';
 import AnalyticsVictoryTheme from './AnalyticsVictoryTheme';
+import AnalyticsLegendIcon from './AnalyticsLegendIcon';
 import './AnalyticsVictoryChart.css';
-
-const LegendIcon = props => {
-  const { x, y } = props;
-  return (
-    <g transform={`translate(${x - 4},${y - 6})`}>
-      <svg width="14" height="14" viewBox="0 0 32 32">
-        <path
-          strokeWidth="4"
-          fill="none"
-          stroke="#3182bd"
-          d="M0,16h10.666666666666666
-          A5.333333333333333,5.333333333333333,0,1,1,21.333333333333332,16
-          H32M21.333333333333332,16
-          A5.333333333333333,5.333333333333333,0,1,1,10.666666666666666,16"
-        >
-        </path>
-      </svg>
-    </g>
-  );
-};
 
 const data = [
   new ResponseItem({ id: 'id1', date: '2019-02-24', value: 34.2, code: {} }),
@@ -69,7 +50,7 @@ export default function AnalyticsVictoryChart(props) {
         />
         <VictoryLegend x={70} y={60}
           data={[{ name: text }]}
-          dataComponent={<LegendIcon />}
+          dataComponent={<AnalyticsLegendIcon />}
         />
         <VictoryGroup
           data={data}
