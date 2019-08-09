@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import usePatientData from 'hooks/usePatientData';
 import ResponseItem from 'models/ResponseItem';
 import Event from 'models/Event';
+import AnalyticsVictoryChart from './AnalyticsVictoryChart';
 import AnalyticsChart from './AnalyticsChart';
 import AnalyticsEvents from './AnalyticsEvents';
 import { propEq, has, compose, not } from 'ramda';
@@ -62,9 +63,9 @@ export default function Analytics(props) {
               <div className="Analytics__pghd-charts">
                 {responseItemsByKey.map(({ key, grouping: data }) => {
                   return (
-                    <AnalyticsChart
+                    <AnalyticsVictoryChart
                       key={key}
-                      data={data}
+                      data={{ responseItems: data }}
                       onClick={() => setActive(key)}
                     />
                   );
