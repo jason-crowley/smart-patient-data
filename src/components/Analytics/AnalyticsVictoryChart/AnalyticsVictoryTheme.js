@@ -31,8 +31,4 @@ export default {
       data: { fill: '#fff', stroke: '#3182bd', strokeWidth: 1 },
     },
   },
-  tooltip: {
-    cornerRadius: 0.8,
-    flyoutStyle: { fill: '#fff' },
-  },
 };

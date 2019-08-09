@@ -76,7 +76,12 @@ export default function AnalyticsVictoryChart(props) {
           x="date"
           y="value"
           labels={d => d.value}
-          labelComponent={<VictoryTooltip />}
+          labelComponent={
+            <VictoryTooltip
+              cornerRadius={0.8}
+              flyoutStyle={{ fill: '#fff' }}
+            />
+          }
         >
           <VictoryLine animate={{ duration: 1500 }} />
           <VictoryScatter
