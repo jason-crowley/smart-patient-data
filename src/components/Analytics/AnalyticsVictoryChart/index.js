@@ -16,15 +16,9 @@ import AnalyticsVictoryTheme from './AnalyticsVictoryTheme';
 import AnalyticsLegendIcon from './AnalyticsLegendIcon';
 import './AnalyticsVictoryChart.css';
 
-const data = [
-  new ResponseItem({ id: 'id1', date: '2019-02-24', value: 34.2, code: {} }),
-  new ResponseItem({ id: 'id2', date: '2019-02-25', value: 29.5, code: {} }),
-  new ResponseItem({ id: 'id3', date: '2019-02-26', value: 19.3, code: {} }),
-  new ResponseItem({ id: 'id4', date: '2019-02-27', value: 62.2, code: {} }),
-];
-
-export default function AnalyticsVictoryChart(props) {
-  const text = 'Body Mass Index';
+export default function AnalyticsVictoryChart({ data: { responseItems } }) {
+  const { text } = responseItems[0].code;
+  const trimmedText = text.replace(/\[.*/, '');
   return (
     <div className="AnalyticsVictoryChart">
       <VictoryChart
@@ -35,9 +29,10 @@ export default function AnalyticsVictoryChart(props) {
           />
         }
       >
-        <VictoryLabel x={160} y={25}
+        <VictoryLabel x={220} y={25}
           text={text}
-          style={{ fontSize: 18 }}
+          textAnchor="middle"
+          style={{ fontSize: 16 }}
         />
         <VictoryAxis
           label="Date"
@@ -45,15 +40,15 @@ export default function AnalyticsVictoryChart(props) {
           tickFormat={date => moment(date).format('MM/DD')}
         />
         <VictoryAxis dependentAxis
-          label={text}
+          label={trimmedText}
           axisLabelComponent={<VictoryLabel dy={-15} />}
         />
-        <VictoryLegend x={70} y={60}
-          data={[{ name: text }]}
+        <VictoryLegend x={90} y={50}
+          data={[{ name: trimmedText }]}
           dataComponent={<AnalyticsLegendIcon />}
         />
         <VictoryGroup
-          data={data}
+          data={responseItems}
           x="date"
           y="value"
           labels={d => d.value}

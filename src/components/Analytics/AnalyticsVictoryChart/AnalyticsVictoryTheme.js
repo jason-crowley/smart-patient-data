@@ -10,7 +10,7 @@ export default {
   // bar: {},
   chart: {
     domainPadding: 30,
-    padding: { top: 50, right: 50, bottom: 60, left: 60 },
+    padding: { top: 100, right: 50, bottom: 60, left: 80 },
   },
   legend: {
     orientation: 'horizontal',
