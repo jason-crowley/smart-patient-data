@@ -4,10 +4,14 @@ export default {
       axis: { stroke: '#666' },
       grid: { stroke: '#ccc', strokeDasharray: '5 5' },
       ticks: { size: 6, stroke: '#666' },
-      tickLabels: { fill: '#666' },
+      tickLabels: { fill: '#666', fontSize: 12 },
     },
   },
-  // bar: {},
+  bar: {
+    style: {
+      data: { fill: 'red' },
+    },
+  },
   chart: {
     domainPadding: 30,
     padding: { top: 100, right: 50, bottom: 60, left: 80 },

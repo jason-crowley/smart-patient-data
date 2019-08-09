@@ -65,7 +65,15 @@ export default function Analytics(props) {
                   return (
                     <AnalyticsVictoryChart
                       key={key}
-                      data={{ responseItems: data }}
+                      data={{
+                        responseItems: data,
+                        events: [
+                          {
+                            startDate: '2010-10-15T17:58:38-04:00',
+                            endDate: '2014-12-25T16:58:38-05:00'
+                          }
+                        ],
+                      }}
                       onClick={() => setActive(key)}
                     />
                   );

@@ -26,9 +26,13 @@ textTag.appendChild(tspanTag);
 tspanTag.setAttribute('font-size', '12');
 tspanTag.setAttribute('font-family', "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif");
 
-export default function AnalyticsVictoryChart({ data: { responseItems } }) {
+export default function AnalyticsVictoryChart({ data: { responseItems, events } }) {
   const { text } = responseItems[0].code;
   const trimmedText = text.replace(/\[.*/, '').trim();
+
+  // Map date strings to date objects for time scale
+  responseItems = responseItems.map(({ date, value }) => ({ date: new Date(date), value }));
+  events = events.map(({ startDate, endDate }) => ({ startDate: new Date(startDate), endDate: new Date(endDate) }));
 
   // Calculate text size for legend
   const textNode = document.createTextNode(trimmedText);
@@ -40,7 +44,9 @@ export default function AnalyticsVictoryChart({ data: { responseItems } }) {
   return (
     <div className="AnalyticsVictoryChart">
       <VictoryChart
+        horizontal
         theme={AnalyticsVictoryTheme}
+        scale={{ y: 'time' }}
         containerComponent={
           <VictoryVoronoiContainer
             className="AnalyticsVictoryChart__container"
@@ -53,11 +59,12 @@ export default function AnalyticsVictoryChart({ data: { responseItems } }) {
           style={{ fontSize: 16 }}
         />
         <VictoryAxis
+          dependentAxis
           label="Date"
           axisLabelComponent={<VictoryLabel dy={10} />}
-          tickFormat={date => moment(date).format('MM/DD')}
+          tickFormat={date => moment(date).format('MMM YYYY')}
         />
-        <VictoryAxis dependentAxis
+        <VictoryAxis
           label={trimmedText}
           axisLabelComponent={<VictoryLabel dy={-15} />}
         />
@@ -66,10 +73,16 @@ export default function AnalyticsVictoryChart({ data: { responseItems } }) {
           dataComponent={<AnalyticsLegendIcon />}
           width={textLength + 40}
         />
+        <VictoryBar
+          data={events}
+          x={d => 0}
+          y0="startDate"
+          y="endDate"
+        />
         <VictoryGroup
           data={responseItems}
-          x="date"
-          y="value"
+          x="value"
+          y="date"
           labels={d => d.value.toFixed(2)}
           labelComponent={
             <VictoryTooltip
@@ -78,16 +91,11 @@ export default function AnalyticsVictoryChart({ data: { responseItems } }) {
             />
           }
         >
-          <VictoryLine animate={{ duration: 1500 }} />
+          <VictoryLine sortKey="date" animate={{ duration: 1500 }} />
           <VictoryScatter
             size={(datum, active) => active ? 5 : 3}
           />
         </VictoryGroup>
-        <VictoryBar
-          data={responseItems}
-          x="date"
-          y="value"
-        />
       </VictoryChart>
     </div>
   );
