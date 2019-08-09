@@ -1,0 +1,16 @@
+.AnalyticsVictoryChart {
+  width: 50%;
+  height: 50%;
+  overflow: visible;
+  border: 1px solid blue;
+}
+
+.AnalyticsVictoryChart__container {
+  display: flex;
+}
+
+.AnalyticsVictoryChart__container > svg {
+  margin: 0 auto;
+  max-width: 100%;
+  max-height: 100%;
+}
