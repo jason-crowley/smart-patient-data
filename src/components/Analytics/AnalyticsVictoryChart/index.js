@@ -51,7 +51,7 @@ export default function AnalyticsVictoryChart({ data: { responseItems } }) {
           data={responseItems}
           x="date"
           y="value"
-          labels={d => d.value}
+          labels={d => d.value.toFixed(2)}
           labelComponent={
             <VictoryTooltip
               cornerRadius={0.8}
