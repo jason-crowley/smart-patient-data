@@ -19,9 +19,10 @@ export default class ResponseItem {
         const {
           id,
           code,
-          effectiveDateTime: date,
+          effectiveDateTime,
           valueQuantity: { value } = {}
         } = resource;
+        const date = new Date(effectiveDateTime);
         return new ResponseItem({ id, date, code, value });
       }
       case 'QuestionnaireResponse': {

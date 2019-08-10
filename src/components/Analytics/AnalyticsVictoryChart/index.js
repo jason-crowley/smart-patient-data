@@ -36,8 +36,8 @@ export default function AnalyticsVictoryChart({ data: { responseItems, events } 
     : legendText;
 
   // Map date strings to date objects for time scale
-  responseItems = responseItems.map(({ date, value }) => ({ date: new Date(date), value }));
-  events = events.map(({ startDate, endDate }) => ({ startDate: new Date(startDate), endDate: new Date(endDate) }));
+  // responseItems = responseItems.map(({ date, value }) => ({ date: new Date(date), value }));
+  // events = events.map(({ startDate, endDate }) => ({ startDate: new Date(startDate), endDate: new Date(endDate) }));
 
   // Calculate text size for legend
   const textNode = document.createTextNode(legendText);

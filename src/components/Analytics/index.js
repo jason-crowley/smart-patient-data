@@ -69,8 +69,8 @@ export default function Analytics(props) {
                         responseItems: data,
                         events: [
                           {
-                            startDate: '2010-10-15T17:58:38-04:00',
-                            endDate: '2014-12-25T16:58:38-05:00'
+                            startDate: new Date( '2010-10-15T17:58:38-04:00'),
+                            endDate: new Date( '2014-12-25T16:58:38-05:00'),
                           }
                         ],
                       }}

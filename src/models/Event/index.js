@@ -21,23 +21,28 @@ export default class Event {
       case 'MedicationRequest': {
         const {
           medicationCodeableConcept: code,
-          authoredOn: startDate,
+          authoredOn,
         } = resource;
+        const startDate = new Date(authoredOn);
         return new Event({ category, code, startDate });
       }
       case 'Condition': {
         const {
           code,
-          onsetDateTime: startDate,
-          abatementDateTime: endDate,
+          onsetDateTime,
+          abatementDateTime,
         } = resource;
+        const startDate = new Date(onsetDateTime);
+        const endDate = new Date(abatementDateTime);
         return new Event({ category, code, startDate, endDate });
       }
       case 'Encounter': {
         const {
           type: [code],
-          period: { start: startDate, end: endDate } = {},
+          period: { start, end } = {},
         } = resource;
+        const startDate = new Date(start);
+        const endDate = new Date(end);
         return new Event({ category, code, startDate, endDate });
       }
       default:
