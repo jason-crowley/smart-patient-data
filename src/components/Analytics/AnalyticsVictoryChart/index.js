@@ -5,6 +5,7 @@ import {
   VictoryLabel,
   VictoryAxis,
   VictoryLegend,
+  Border,
   VictoryGroup,
   VictoryLine,
   VictoryScatter,
@@ -28,24 +29,27 @@ tspanTag.setAttribute('font-family', "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 
 
 export default function AnalyticsVictoryChart({ data: { responseItems, events } }) {
   const { text } = responseItems[0].code;
-  const trimmedText = text.replace(/\[.*/, '').trim();
+  const titleText = text.replace(/\s*\[.*?\]\s*/, ' ');
+  const legendText = text.replace(/\[.*/, '').trim();
+  const axisText = (text.length < 40)
+    ? text.replace(/(?<=\]).*/, '').trim()
+    : legendText;
 
   // Map date strings to date objects for time scale
   responseItems = responseItems.map(({ date, value }) => ({ date: new Date(date), value }));
   events = events.map(({ startDate, endDate }) => ({ startDate: new Date(startDate), endDate: new Date(endDate) }));
 
   // Calculate text size for legend
-  const textNode = document.createTextNode(trimmedText);
+  const textNode = document.createTextNode(legendText);
   tspanTag.appendChild(textNode);
   const textLength = tspanTag.getComputedTextLength();
   tspanTag.removeChild(textNode);
-  console.log(textLength);
 
   return (
     <div className="AnalyticsVictoryChart">
       <VictoryChart
-        horizontal
         theme={AnalyticsVictoryTheme}
+        horizontal
         scale={{ y: 'time' }}
         containerComponent={
           <VictoryVoronoiContainer
@@ -54,7 +58,7 @@ export default function AnalyticsVictoryChart({ data: { responseItems, events } 
         }
       >
         <VictoryLabel x={225} y={25}
-          text={text}
+          text={titleText}
           textAnchor="middle"
           style={{ fontSize: 16 }}
         />
@@ -65,13 +69,13 @@ export default function AnalyticsVictoryChart({ data: { responseItems, events } 
           tickFormat={date => moment(date).format('MMM YYYY')}
         />
         <VictoryAxis
-          label={trimmedText}
+          label={axisText}
           axisLabelComponent={<VictoryLabel dy={-15} />}
         />
         <VictoryLegend x={90} y={50}
-          data={[{ name: trimmedText }]}
+          borderComponent={<Border width={textLength + 35} />}
+          data={[{ name: legendText }]}
           dataComponent={<AnalyticsLegendIcon />}
-          width={textLength + 40}
         />
         <VictoryBar
           data={events}
@@ -86,8 +90,9 @@ export default function AnalyticsVictoryChart({ data: { responseItems, events } 
           labels={d => d.value.toFixed(2)}
           labelComponent={
             <VictoryTooltip
-              cornerRadius={0.8}
+              cornerRadius={2}
               flyoutStyle={{ fill: '#fff' }}
+              horizontal={false}
             />
           }
         >
