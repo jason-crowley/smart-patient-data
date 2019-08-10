@@ -3,7 +3,6 @@ import usePatientData from 'hooks/usePatientData';
 import ResponseItem from 'models/ResponseItem';
 import Event from 'models/Event';
 import AnalyticsVictoryChart from './AnalyticsVictoryChart';
-import AnalyticsChart from './AnalyticsChart';
 import AnalyticsEvents from './AnalyticsEvents';
 import { propEq, has, compose, not } from 'ramda';
 import groupByCodeKey from 'utils/groupByCodeKey';
@@ -54,11 +53,9 @@ export default function Analytics(props) {
         {
           (active)
             ? (
-              <AnalyticsChart
-                key={'yo'}
-                data={[{ code: { text: 'test' } }]}
-                onClick={() => setActive(null)}
-              />
+              <h3 onClick={() => setActive(null)}>
+                Click here to return
+              </h3>
             ) : (
               <div className="Analytics__pghd-charts">
                 {responseItemsByKey.map(({ key, grouping: data }) => {
