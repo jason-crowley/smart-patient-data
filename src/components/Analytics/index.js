@@ -6,7 +6,7 @@ import AnalyticsContext from './AnalyticsContext';
 import AnalyticsVictoryChart from './AnalyticsVictoryChart';
 import AnalyticsEvents from './AnalyticsEvents';
 import eventReducer from 'reducers/eventReducer';
-import { propEq, has, compose, not, flatten, values, pick } from 'ramda';
+import { propEq, has, compose, not } from 'ramda';
 import groupByCodeKey from 'utils/groupByCodeKey';
 import './Analytics.css';
 
@@ -62,27 +62,30 @@ export default function Analytics(props) {
         {
           (active)
             ? (
-              <AnalyticsVictoryChart
-                key={'yo'}
-                data={{
-                  responseItems: [
-                    {
-                      id: 'id1',
-                      date: new Date(),
-                      value: 0,
-                      code: { text: 'test' },
-                    },
-                    {
-                      id: 'id2',
-                      date: new Date(),
-                      value: 1,
-                      code: { text: 'experiment' },
-                    },
-                  ],
-                  events: [],
-                }}
-                onClick={() => setActive(null)}
-              />
+              <div className="Analytics__focus">
+                <AnalyticsVictoryChart
+                  key={'yo'}
+                  data={{
+                    responseItems: [
+                      {
+                        id: 'id1',
+                        date: new Date(),
+                        value: 0,
+                        code: { text: 'test' },
+                      },
+                      {
+                        id: 'id2',
+                        date: new Date(),
+                        value: 1,
+                        code: { text: 'experiment' },
+                      },
+                    ],
+                    events: [],
+                  }}
+                  onClick={() =>
+                  setActive(null)}
+                />
+              </div>
             ) : (
               <div className="Analytics__pghd-charts">
                 {responseItemsByKey.map(({ key, grouping: data }) => {

@@ -1,6 +1,7 @@
 .AnalyticsVictoryChart {
   height: 100%;
   overflow: visible;
+  cursor: pointer;
   border: 1px solid blue;
 }
 

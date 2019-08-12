@@ -26,6 +26,10 @@
   grid-area: pghd;
 }
 
+.Analytics__focus {
+  height: calc(100% - 28px - 20px);
+}
+
 .Analytics__pghd-charts {
   display: grid;
   justify-items: center;
