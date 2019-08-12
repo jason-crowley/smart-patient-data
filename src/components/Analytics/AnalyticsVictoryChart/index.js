@@ -57,6 +57,14 @@ export default function AnalyticsVictoryChart({ data: { responseItems, events } 
   // Find min value for event bar height
   const values = responseItems.map(({ value }) => value);
   const minValue = reduce(min, Infinity, values);
+  const maxValue = reduce(max, -Infinity, values);
+  const range = maxValue - minValue;
+  const step = range / (events.length + 1);
+
+  let counter = 1;
+  const eventData = events.map(({ startDate, endDate }) => {
+    return { startDate, endDate, height: minValue - step * counter++ };
+  });
 
   return (
     <div className="AnalyticsVictoryChart">
@@ -92,8 +100,8 @@ export default function AnalyticsVictoryChart({ data: { responseItems, events } 
           labelComponent={<VictoryLabel dy={1} />}
         />
         <VictoryBar
-          data={events}
-          x={() => minValue}
+          data={eventData}
+          x="height"
           y0="startDate"
           y="endDate"
         />
