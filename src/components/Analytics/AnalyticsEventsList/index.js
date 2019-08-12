@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import AnalyticsContext from '../AnalyticsContext';
 import './AnalyticsEventsList.css';
 
 export default function AnalyticsEventsList({ eventsByKey }) {
+  const dispatch = useContext(AnalyticsContext);
   return (
     <ol className="AnalyticsEventsList__checkboxes">
       {
@@ -15,7 +17,7 @@ export default function AnalyticsEventsList({ eventsByKey }) {
               <label>
                 <input
                   type="checkbox"
-                  onClick={() => console.log(events)}
+                  onClick={() => dispatch({ key })}
                 />
                 {' ' + display} {length > 1 && ' (' + length + ')'}
               </label>

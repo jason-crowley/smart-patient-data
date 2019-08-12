@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useReducer } from 'react';
 import usePatientData from 'hooks/usePatientData';
 import ResponseItem from 'models/ResponseItem';
 import Event from 'models/Event';
+import AnalyticsContext from './AnalyticsContext';
 import AnalyticsVictoryChart from './AnalyticsVictoryChart';
 import AnalyticsEvents from './AnalyticsEvents';
-import { propEq, has, compose, not } from 'ramda';
+import eventReducer from 'reducers/eventReducer';
+import { propEq, has, compose, not, flatten, values, pick } from 'ramda';
 import groupByCodeKey from 'utils/groupByCodeKey';
 import './Analytics.css';
 
@@ -20,6 +22,7 @@ export default function Analytics(props) {
   const { isLoading, isError, data } =
     usePatientData(PATIENT_ID, RESOURCE_TYPES);
 
+  const [eventKeys, dispatch] = useReducer(eventReducer, new Set());
   const [active, setActive] = useState(null);
 
   // Display loading and error messages
@@ -36,12 +39,18 @@ export default function Analytics(props) {
   const responseItemsByKey = groupByCodeKey(responseItems);
 
   // EHR
+  const eventData = [];
   const eventBundles =
     data.filter(compose(not, propEq('resourceType', 'Observation')));
   const eventsByCategory =
     eventBundles.map(({ resourceType: category, resources }) => {
       const events = resources.map(Event.from);
       const eventsByKey = groupByCodeKey(events);
+      eventsByKey.forEach(({ key, grouping }) => {
+        if (eventKeys.has(key)) {
+          eventData.push(...grouping);
+        }
+      });
       return { category, eventsByKey };
     });
 
@@ -64,12 +73,7 @@ export default function Analytics(props) {
                       key={key}
                       data={{
                         responseItems: data,
-                        events: [
-                          {
-                            startDate: new Date( '2010-10-15T17:58:38-04:00'),
-                            endDate: new Date( '2014-12-25T16:58:38-05:00'),
-                          }
-                        ],
+                        events: eventData,
                       }}
                       onClick={() => setActive(key)}
                     />
@@ -81,7 +85,9 @@ export default function Analytics(props) {
       </main>
       <aside className="Analytics__ehr">
         <h2>EHR Events</h2>
-        <AnalyticsEvents eventsByCategory={eventsByCategory} />
+        <AnalyticsContext.Provider value={dispatch}>
+          <AnalyticsEvents eventsByCategory={eventsByCategory} />
+        </AnalyticsContext.Provider>
       </aside>
     </div>
   );
