@@ -62,9 +62,27 @@ export default function Analytics(props) {
         {
           (active)
             ? (
-              <h3 onClick={() => setActive(null)}>
-                Click here to return
-              </h3>
+              <AnalyticsVictoryChart
+                key={'yo'}
+                data={{
+                  responseItems: [
+                    {
+                      id: 'id1',
+                      date: new Date(),
+                      value: 0,
+                      code: { text: 'test' },
+                    },
+                    {
+                      id: 'id2',
+                      date: new Date(),
+                      value: 1,
+                      code: { text: 'experiment' },
+                    },
+                  ],
+                  events: [],
+                }}
+                onClick={() => setActive(null)}
+              />
             ) : (
               <div className="Analytics__pghd-charts">
                 {responseItemsByKey.map(({ key, grouping: data }) => {

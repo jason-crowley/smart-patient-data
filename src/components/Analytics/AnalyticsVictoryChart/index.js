@@ -28,7 +28,10 @@ textTag.appendChild(tspanTag);
 tspanTag.setAttribute('font-size', '12');
 tspanTag.setAttribute('font-family', "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif");
 
-export default function AnalyticsVictoryChart({ data: { responseItems, events } }) {
+export default function AnalyticsVictoryChart({
+  data: { responseItems, events },
+  onClick,
+}) {
   const { text } = responseItems[0].code;
   const titleText = text.replace(/\s*\[.*?\]\s*/, ' ');
   const legendText = text.replace(/\[.*/, '').trim();
@@ -77,6 +80,13 @@ export default function AnalyticsVictoryChart({ data: { responseItems, events } 
             className="AnalyticsVictoryChart__container"
           />
         }
+        events={[
+          {
+            childName: 'all',
+            target: 'parent',
+            eventHandlers: { onClick },
+          },
+        ]}
       >
         <VictoryLabel x={225} y={25}
           text={titleText}
