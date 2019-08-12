@@ -1,5 +1,4 @@
 import React, { useState, useReducer } from 'react';
-import usePatientData from 'hooks/usePatientData';
 import ResponseItem from 'models/ResponseItem';
 import Event from 'models/Event';
 import AnalyticsContext from './AnalyticsContext';
@@ -10,26 +9,9 @@ import { propEq, has, compose, not } from 'ramda';
 import groupByCodeKey from 'utils/groupByCodeKey';
 import './Analytics.css';
 
-const PATIENT_ID = '030b3765-844c-4cc1-a36f-974c37895eee';
-const RESOURCE_TYPES = [
-  'Observation',
-  'MedicationRequest',
-  'Condition',
-  'Encounter',
-];
-
-export default function Analytics(props) {
-  const { isLoading, isError, data } =
-    usePatientData(PATIENT_ID, RESOURCE_TYPES);
-
+export default function Analytics({ data }) {
   const [eventKeys, dispatch] = useReducer(eventReducer, new Set());
   const [active, setActive] = useState(null);
-
-  // Display loading and error messages
-  if (isLoading)
-    return <h2>Loading...</h2>;
-  if (isError)
-    return <h2>There was an error processing your request.</h2>;
 
   // PGHD
   const { resources: responseResources } =
