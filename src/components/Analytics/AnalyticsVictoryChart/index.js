@@ -12,6 +12,7 @@ import {
   VictoryBar,
   VictoryTooltip,
 } from 'victory';
+import { reduce, min, max } from 'ramda';
 import moment from 'moment';
 import AnalyticsVictoryTheme from './AnalyticsVictoryTheme';
 import AnalyticsLegendIcon from './AnalyticsLegendIcon';
@@ -35,15 +36,27 @@ export default function AnalyticsVictoryChart({ data: { responseItems, events } 
     ? text.replace(/(?<=\]).*/, '').trim()
     : legendText;
 
-  // Map date strings to date objects for time scale
-  // responseItems = responseItems.map(({ date, value }) => ({ date: new Date(date), value }));
-  // events = events.map(({ startDate, endDate }) => ({ startDate: new Date(startDate), endDate: new Date(endDate) }));
-
   // Calculate text size for legend
   const textNode = document.createTextNode(legendText);
   tspanTag.appendChild(textNode);
   const textLength = tspanTag.getComputedTextLength();
   tspanTag.removeChild(textNode);
+
+  // Filter out events that are not contained within the domain
+  const times = responseItems.map(({ date }) => date.getTime());
+  const minTime = reduce(min, Infinity, times);
+  const maxTime = reduce(max, -Infinity, times);
+  events = events.filter(({ startDate, endDate }) => {
+    const startTime = startDate.getTime();
+    const endTime = endDate.getTime();
+    const startInDomain = minTime < startTime && startTime < maxTime;
+    const endInDomain = minTime < endTime && endTime < maxTime;
+    return startInDomain || endInDomain;
+  });
+
+  // Find min value for event bar height
+  const values = responseItems.map(({ value }) => value);
+  const minValue = reduce(min, Infinity, values);
 
   return (
     <div className="AnalyticsVictoryChart">
@@ -76,10 +89,11 @@ export default function AnalyticsVictoryChart({ data: { responseItems, events } 
           borderComponent={<Border width={textLength + 35} />}
           data={[{ name: legendText }]}
           dataComponent={<AnalyticsLegendIcon />}
+          labelComponent={<VictoryLabel dy={1} />}
         />
         <VictoryBar
           data={events}
-          x={d => 0}
+          x={() => minValue}
           y0="startDate"
           y="endDate"
         />
