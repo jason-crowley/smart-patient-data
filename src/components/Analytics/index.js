@@ -64,23 +64,11 @@ export default function Analytics(props) {
             ? (
               <div className="Analytics__focus">
                 <AnalyticsVictoryChart
-                  key={'yo'}
                   data={{
-                    responseItems: [
-                      {
-                        id: 'id1',
-                        date: new Date(),
-                        value: 0,
-                        code: { text: 'test' },
-                      },
-                      {
-                        id: 'id2',
-                        date: new Date(),
-                        value: 1,
-                        code: { text: 'experiment' },
-                      },
-                    ],
-                    events: [],
+                    responseItems: responseItemsByKey.find(
+                      ({ key }) => key === active
+                    ).grouping,
+                    events: eventData,
                   }}
                   onClick={() =>
                   setActive(null)}
@@ -88,12 +76,12 @@ export default function Analytics(props) {
               </div>
             ) : (
               <div className="Analytics__pghd-charts">
-                {responseItemsByKey.map(({ key, grouping: data }) => {
+                {responseItemsByKey.map(({ key, grouping }) => {
                   return (
                     <AnalyticsVictoryChart
                       key={key}
                       data={{
-                        responseItems: data,
+                        responseItems: grouping,
                         events: eventData,
                       }}
                       onClick={() => setActive(key)}
