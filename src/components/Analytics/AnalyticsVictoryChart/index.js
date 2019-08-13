@@ -120,8 +120,12 @@ export default function AnalyticsVictoryChart({
           x="height"
           y0="startDate"
           y="endDate"
-          labels={d => moment(d.startDate).format('MM/DD/YY')}
           barWidth={8}
+          labels={({ startDate, endDate, code: { text} }) => {
+            const start = moment(startDate).format('MM/DD/YY');
+            const end = moment(endDate).format('MM/DD/YY');
+            return `${text}: ${(start === end) ? start : start + ' - ' + end}`;
+          }}
           labelComponent={
             <VictoryTooltip
               cornerRadius={2}
