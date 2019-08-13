@@ -121,10 +121,11 @@ export default function AnalyticsVictoryChart({
           y0="startDate"
           y="endDate"
           barWidth={8}
-          labels={({ startDate, endDate, code: { text} }) => {
+          labels={({ startDate, endDate, code: { text } }) => {
             const start = moment(startDate).format('MM/DD/YY');
             const end = moment(endDate).format('MM/DD/YY');
-            return `${text}: ${(start === end) ? start : start + ' - ' + end}`;
+            const dates = `${start}${(start === end) ? '' : ' - ' + end}`;
+            return `${text}: ${dates}`;
           }}
           labelComponent={
             <VictoryTooltip
@@ -140,9 +141,11 @@ export default function AnalyticsVictoryChart({
           data={responseItems}
           x="value"
           y="date"
-          labels={d =>
-              `Date: ${moment(d.date).format('MMM DD, YYYY')}\n
-              Value: ${d.value.toFixed(2)}`}
+          labels={({ date, value }) => {
+            date = moment(date).format('MMM DD, YYYY');
+            value = value.toFixed(2);
+            return `Date: ${date}\nValue: ${value}`;
+          }}
           labelComponent={
             <VictoryTooltip width={140} height={40}
               cornerRadius={2}

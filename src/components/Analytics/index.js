@@ -52,8 +52,7 @@ export default function Analytics({ data }) {
                     ).grouping,
                     eventData,
                   }}
-                  onClick={() =>
-                  setActive(null)}
+                  onClick={() => setActive(null)}
                 />
               </div>
             ) : (
