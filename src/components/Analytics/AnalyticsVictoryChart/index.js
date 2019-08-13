@@ -31,6 +31,7 @@ tspanTag.setAttribute('font-family', "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 
 export default function AnalyticsVictoryChart({
   data: { responseItems, eventData },
   onClick,
+  containerComponent: Container = <VictoryVoronoiContainer />,
 }) {
   const { text } = responseItems[0].code;
   const titleText = text.replace(/\s*\[.*?\]\s*/, ' ');
@@ -81,11 +82,10 @@ export default function AnalyticsVictoryChart({
         theme={AnalyticsVictoryTheme}
         horizontal
         scale={{ y: 'time' }}
-        containerComponent={
-          <VictoryVoronoiContainer
-            className="AnalyticsVictoryChart__container"
-          />
-        }
+        containerComponent={{
+          ...Container,
+          className: 'AnalyticsVictoryChart__container',
+        }}
         events={[
           {
             childName: 'all',
@@ -130,7 +130,7 @@ export default function AnalyticsVictoryChart({
           labelComponent={
             <VictoryTooltip
               cornerRadius={2}
-              dy={-10}
+              dy={4}
               flyoutStyle={{ fill: '#fff' }}
               orientation="top"
               pointerLength={5}
@@ -150,7 +150,6 @@ export default function AnalyticsVictoryChart({
             <VictoryTooltip width={140} height={40}
               cornerRadius={2}
               flyoutStyle={{ fill: '#fff' }}
-              labelComponent={<VictoryLabel dy={8} />}
               orientation="top"
               pointerLength={5}
             />
