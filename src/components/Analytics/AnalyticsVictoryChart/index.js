@@ -120,17 +120,31 @@ export default function AnalyticsVictoryChart({
           x="height"
           y0="startDate"
           y="endDate"
+          labels={d => moment(d.startDate).format('MM/DD/YY')}
+          labelComponent={
+            <VictoryTooltip
+              cornerRadius={2}
+              dy={-10}
+              flyoutStyle={{ fill: '#fff' }}
+              orientation="top"
+              pointerLength={5}
+            />
+          }
         />
         <VictoryGroup
           data={responseItems}
           x="value"
           y="date"
-          labels={d => d.value.toFixed(2)}
+          labels={d =>
+              `Date: ${moment(d.date).format('MMM DD, YYYY')}\n
+              Value: ${d.value.toFixed(2)}`}
           labelComponent={
-            <VictoryTooltip
+            <VictoryTooltip width={140} height={40}
               cornerRadius={2}
               flyoutStyle={{ fill: '#fff' }}
-              horizontal={false}
+              labelComponent={<VictoryLabel dy={8} />}
+              orientation="top"
+              pointerLength={5}
             />
           }
         >
