@@ -12,7 +12,7 @@ import {
   VictoryBar,
   VictoryTooltip,
 } from 'victory';
-import { reduce, min, max } from 'ramda';
+import { reduce, min, max, map, filter, flatten } from 'ramda';
 import moment from 'moment';
 import AnalyticsVictoryTheme from './AnalyticsVictoryTheme';
 import AnalyticsLegendIcon from './AnalyticsLegendIcon';
@@ -29,7 +29,7 @@ tspanTag.setAttribute('font-size', '12');
 tspanTag.setAttribute('font-family', "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif");
 
 export default function AnalyticsVictoryChart({
-  data: { responseItems, events },
+  data: { responseItems, eventData },
   onClick,
 }) {
   const { text } = responseItems[0].code;
@@ -49,25 +49,31 @@ export default function AnalyticsVictoryChart({
   const times = responseItems.map(({ date }) => date.getTime());
   const minTime = reduce(min, Infinity, times);
   const maxTime = reduce(max, -Infinity, times);
-  events = events.filter(({ startDate, endDate }) => {
+  eventData = map(filter(({ startDate, endDate }) => {
     const startTime = startDate.getTime();
     const endTime = endDate.getTime();
     const startInDomain = minTime < startTime && startTime < maxTime;
     const endInDomain = minTime < endTime && endTime < maxTime;
     return startInDomain || endInDomain;
-  });
+  }), eventData);
 
   // Find min value for event bar height
   const values = responseItems.map(({ value }) => value);
   const minValue = reduce(min, Infinity, values);
   const maxValue = reduce(max, -Infinity, values);
   const range = maxValue - minValue;
-  const step = range / (events.length + 1);
+  const step = range / (eventData.length + 1);
 
-  let counter = 1;
-  const eventData = events.map(({ startDate, endDate }) => {
-    return { startDate, endDate, height: minValue - step * counter++ };
+  eventData = eventData.map((events, i) => {
+    return events.map(event => (
+      {
+        ...event,
+        height: minValue - step * (i + 1),
+        color: 'blue',
+      }
+    ));
   });
+  eventData = flatten(eventData);
 
   return (
     <div className="AnalyticsVictoryChart">

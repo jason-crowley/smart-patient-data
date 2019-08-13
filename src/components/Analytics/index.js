@@ -30,7 +30,7 @@ export default function Analytics({ data }) {
       const eventsByKey = groupByCodeKey(events);
       eventsByKey.forEach(({ key, grouping }) => {
         if (eventKeys.has(key)) {
-          eventData.push(...grouping);
+          eventData.push(grouping);
         }
       });
       return { category, eventsByKey };
@@ -50,7 +50,7 @@ export default function Analytics({ data }) {
                     responseItems: responseItemsByKey.find(
                       ({ key }) => key === active
                     ).grouping,
-                    events: eventData,
+                    eventData,
                   }}
                   onClick={() =>
                   setActive(null)}
@@ -64,7 +64,7 @@ export default function Analytics({ data }) {
                       key={key}
                       data={{
                         responseItems: grouping,
-                        events: eventData,
+                        eventData,
                       }}
                       onClick={() => setActive(key)}
                     />
