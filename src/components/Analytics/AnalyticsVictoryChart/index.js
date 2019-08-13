@@ -62,14 +62,14 @@ export default function AnalyticsVictoryChart({
   const minValue = reduce(min, Infinity, values);
   const maxValue = reduce(max, -Infinity, values);
   const range = maxValue - minValue;
-  const step = range / (eventData.length + 1);
+  const step = range * 1.5 / (eventData.length || 1);
 
   eventData = eventData.map((events, i) => {
     return events.map(event => (
       {
         ...event,
         height: minValue - step * (i + 1),
-        color: 'blue',
+        color: (i % 2 === 0) ? 'red' : 'green',
       }
     ));
   });
@@ -121,6 +121,7 @@ export default function AnalyticsVictoryChart({
           y0="startDate"
           y="endDate"
           labels={d => moment(d.startDate).format('MM/DD/YY')}
+          barWidth={8}
           labelComponent={
             <VictoryTooltip
               cornerRadius={2}
@@ -149,9 +150,7 @@ export default function AnalyticsVictoryChart({
           }
         >
           <VictoryLine sortKey="date" animate={{ duration: 1500 }} />
-          <VictoryScatter
-            size={(datum, active) => active ? 5 : 3}
-          />
+          <VictoryScatter />
         </VictoryGroup>
       </VictoryChart>
     </div>

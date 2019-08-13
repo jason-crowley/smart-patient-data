@@ -9,7 +9,7 @@ export default {
   },
   bar: {
     style: {
-      data: { fill: 'red' },
+      data: { fill: (datum) => datum.color },
     },
   },
   chart: {
@@ -30,7 +30,7 @@ export default {
     },
   },
   scatter: {
-    size: 3,
+    size: (datum, active) => active ? 5 : 3,
     style: {
       data: { fill: '#fff', stroke: '#3182bd', strokeWidth: 1 },
     },
