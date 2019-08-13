@@ -57,6 +57,7 @@ export default function AnalyticsVictoryChart({
     const endInDomain = minTime < endTime && endTime < maxTime;
     return startInDomain || endInDomain;
   }), eventData);
+  eventData = eventData.filter(events => events.length);
 
   // Find min value for event bar height
   const values = responseItems.map(({ value }) => value);
