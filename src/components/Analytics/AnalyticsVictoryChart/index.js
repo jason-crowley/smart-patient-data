@@ -107,7 +107,6 @@ export default function AnalyticsVictoryChart({
           dependentAxis
           label="Date"
           axisLabelComponent={<VictoryLabel dy={10} />}
-          tickFormat={date => moment(date).format('MMM YYYY')}
         />
         <VictoryAxis
           label={axisText}
