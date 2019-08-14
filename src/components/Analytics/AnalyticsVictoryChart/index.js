@@ -32,8 +32,9 @@ export default function AnalyticsVictoryChart({
   animate = false,
   data: { responseItems, eventData },
   onClick,
-  containerComponent = <VictoryVoronoiContainer />,
+  ...restProps
 }) {
+  // Format text for chart labels
   const { text } = responseItems[0].code;
   const titleText = text.replace(/\s*\[.*?\]\s*/, ' ');
   const legendText = text.replace(/\[.*/, '').trim();
@@ -67,6 +68,7 @@ export default function AnalyticsVictoryChart({
   const range = maxValue - minValue;
   const step = range * 1.5 / (eventData.length || 1);
 
+  // Assign a height and color for each grouping of events
   eventData = eventData.map((events, i) => {
     return events.map(event => (
       {
@@ -84,7 +86,8 @@ export default function AnalyticsVictoryChart({
         theme={AnalyticsVictoryTheme}
         horizontal
         scale={{ y: 'time' }}
-        containerComponent={containerComponent}
+        containerComponent={<VictoryVoronoiContainer />}
+        // containerComponent={containerComponent}
         // containerComponent={React.cloneElement(Container, { className: 'AnalyticsVictoryChart__container' })}
         events={[
           {
@@ -93,6 +96,7 @@ export default function AnalyticsVictoryChart({
             eventHandlers: { onClick },
           },
         ]}
+        {...restProps}
       >
         <VictoryLabel x={225} y={25}
           text={titleText}
