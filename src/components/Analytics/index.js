@@ -2,6 +2,7 @@ import React, { useState, useReducer } from 'react';
 import ResponseItem from 'models/ResponseItem';
 import Event from 'models/Event';
 import AnalyticsContext from './AnalyticsContext';
+import AnalyticsFocusVictoryChart from './AnalyticsFocusVictoryChart';
 import AnalyticsVictoryChart from './AnalyticsVictoryChart';
 import AnalyticsEvents from './AnalyticsEvents';
 import eventReducer from 'reducers/eventReducer';
@@ -44,23 +45,22 @@ export default function Analytics({ data }) {
         {
           (active)
             ? (
-              <div className="Analytics__focus">
-                <AnalyticsVictoryChart
-                  data={{
-                    responseItems: responseItemsByKey.find(
-                      ({ key }) => key === active
-                    ).grouping,
-                    eventData,
-                  }}
-                  onClick={() => setActive(null)}
-                />
-              </div>
+              <AnalyticsFocusVictoryChart
+                data={{
+                  responseItems: responseItemsByKey.find(
+                    ({ key }) => key === active
+                  ).grouping,
+                  eventData,
+                }}
+                onClick={() => setActive(null)}
+              />
             ) : (
               <div className="Analytics__pghd-charts">
                 {responseItemsByKey.map(({ key, grouping }) => {
                   return (
                     <AnalyticsVictoryChart
                       key={key}
+                      animate={{ duration: 1500 }}
                       data={{
                         responseItems: grouping,
                         eventData,
