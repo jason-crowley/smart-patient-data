@@ -31,8 +31,6 @@ export default function AnalyticsFocusVictoryChart({ data, onClick }) {
           containerComponent={
             <VictoryZoomVoronoiContainer
               className="AnalyticsVictoryChart__container"
-              zoomDimension="y"
-              zoomDomain={zoomDomain}
               onZoomDomainChange={domain => setZoomDomain(domain)}
             />
           }
@@ -47,9 +45,10 @@ export default function AnalyticsFocusVictoryChart({ data, onClick }) {
           containerComponent={
             <VictoryBrushContainer
               className="AnalyticsVictoryChart__container"
+              allowDrag={false}
+              allowResize={false}
               brushDimension="y"
               brushDomain={zoomDomain}
-              onBrushDomainChange={domain => setZoomDomain(domain)}
             />
           }
         >
