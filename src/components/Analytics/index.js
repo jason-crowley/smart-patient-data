@@ -12,7 +12,7 @@ import './Analytics.css';
 
 export default function Analytics({ data }) {
   const [eventKeys, dispatch] = useReducer(eventReducer, new Set());
-  const [active, setActive] = useState(null);
+  const [focus, setFocus] = useState(null);
 
   // PGHD
   const { resources: responseResources } =
@@ -20,6 +20,10 @@ export default function Analytics({ data }) {
   const filtered = responseResources.filter(has('valueQuantity'));
   const responseItems = filtered.map(ResponseItem.from);
   const responseItemsByKey = groupByCodeKey(responseItems);
+  const responseItemsByFocusKey =
+    responseItemsByKey.find(({ key }) => key === focus);
+  const responseItemsForFocus =
+    responseItemsByFocusKey && responseItemsByFocusKey.grouping;
 
   // EHR
   const eventData = [];
@@ -43,16 +47,14 @@ export default function Analytics({ data }) {
       <main className="Analytics__pghd">
         <h2>PGHD</h2>
         {
-          (active)
+          (focus)
             ? (
               <AnalyticsFocusVictoryChart
                 data={{
-                  responseItems: responseItemsByKey.find(
-                    ({ key }) => key === active
-                  ).grouping,
+                  responseItems: responseItemsForFocus,
                   eventData,
                 }}
-                onClick={() => setActive(null)}
+                onClick={() => setFocus(null)}
               />
             ) : (
               <div className="Analytics__pghd-charts">
@@ -65,7 +67,7 @@ export default function Analytics({ data }) {
                         responseItems: grouping,
                         eventData,
                       }}
-                      onClick={() => setActive(key)}
+                      onClick={() => setFocus(key)}
                     />
                   );
                 })}
