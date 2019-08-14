@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
-import { createContainer, VictoryZoomContainer, VictoryBrushContainer } from 'victory';
-import AnalyticsVictoryChart from '../AnalyticsVictoryChart';
+import {
+  createContainer,
+  VictoryZoomContainer,
+  VictoryBrushContainer,
+  VictoryChart,
+  VictoryAxis,
+  VictoryLine,
+} from 'victory';
 import { reduce, minBy, maxBy } from 'ramda';
+import moment from 'moment';
+import AnalyticsVictoryChart from '../AnalyticsVictoryChart';
+import AnalyticsVictoryTheme from '../AnalyticsVictoryTheme';
 import './AnalyticsFocusVictoryChart.css';
-
-// const data = {
-//   responseItems: [
-//     { id: 'id1', date: new Date(), value: 2, code: { text: 'hello' } },
-//     { id: 'id2', date: new Date(+new Date() + 100), value: 3, code: { text: 'hello' } },
-//   ],
-//   eventData: [],
-// };
 
 export default function AnalyticsFocusVictoryChart({ data, onClick }) {
   const { responseItems } = data;
@@ -38,9 +39,11 @@ export default function AnalyticsFocusVictoryChart({ data, onClick }) {
         />
       </div>
       <div className="AnalyticsFocus__brush">
-        <AnalyticsVictoryChart
-          data={{ responseItems, eventData: [] }}
-          onClick={() => console.log('hi')}
+        <VictoryChart
+          width={600} height={100} scale={{ y: 'time' }}
+          horizontal
+          theme={AnalyticsVictoryTheme}
+          padding={20}
           containerComponent={
             <VictoryBrushContainer
               className="AnalyticsVictoryChart__container"
@@ -49,7 +52,28 @@ export default function AnalyticsFocusVictoryChart({ data, onClick }) {
               onBrushDomainChange={domain => setZoomDomain(domain)}
             />
           }
-        />
+        >
+          <VictoryAxis
+            dependentAxis
+            tickFormat={date => moment(date).format('YYYY')}
+          />
+          <VictoryLine
+            data={responseItems}
+            x="value" y="date" sortKey="date"
+          />
+        </VictoryChart>
+        {/* <AnalyticsVictoryChart */}
+        {/*   data={{ responseItems, eventData: [] }} */}
+        {/*   onClick={() => console.log('hi')} */}
+        {/*   containerComponent={ */}
+        {/*     <VictoryBrushContainer */}
+        {/*       className="AnalyticsVictoryChart__container" */}
+        {/*       brushDimension="y" */}
+        {/*       brushDomain={zoomDomain} */}
+        {/*       onBrushDomainChange={domain => setZoomDomain(domain)} */}
+        {/*     /> */}
+        {/*   } */}
+        {/* /> */}
       </div>
     </div>
   );

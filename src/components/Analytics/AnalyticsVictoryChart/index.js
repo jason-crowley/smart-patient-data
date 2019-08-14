@@ -14,7 +14,7 @@ import {
 } from 'victory';
 import { reduce, min, max, map, filter, flatten } from 'ramda';
 import moment from 'moment';
-import AnalyticsVictoryTheme from './AnalyticsVictoryTheme';
+import AnalyticsVictoryTheme from '../AnalyticsVictoryTheme';
 import AnalyticsLegendIcon from './AnalyticsLegendIcon';
 import './AnalyticsVictoryChart.css';
 
@@ -84,8 +84,8 @@ export default function AnalyticsVictoryChart({
         theme={AnalyticsVictoryTheme}
         horizontal
         scale={{ y: 'time' }}
-        // containerComponent={React.cloneElement(Container, { className: 'AnalyticsVictoryChart__container' })}
         containerComponent={containerComponent}
+        // containerComponent={React.cloneElement(Container, { className: 'AnalyticsVictoryChart__container' })}
         events={[
           {
             childName: 'all',
