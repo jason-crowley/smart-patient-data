@@ -60,18 +60,6 @@ export default function AnalyticsFocusVictoryChart({ data, onClick }) {
             x="value" y="date" sortKey="date"
           />
         </VictoryChart>
-        {/* <AnalyticsVictoryChart */}
-        {/*   data={{ responseItems, eventData: [] }} */}
-        {/*   onClick={() => console.log('hi')} */}
-        {/*   containerComponent={ */}
-        {/*     <VictoryBrushContainer */}
-        {/*       className="AnalyticsVictoryChart__container" */}
-        {/*       brushDimension="y" */}
-        {/*       brushDomain={zoomDomain} */}
-        {/*       onBrushDomainChange={domain => setZoomDomain(domain)} */}
-        {/*     /> */}
-        {/*   } */}
-        {/* /> */}
       </div>
     </div>
   );
