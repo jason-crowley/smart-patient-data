@@ -25,7 +25,8 @@ export default function AnalyticsFocusVictoryChart({ data, onClick }) {
   return (
     <div className="AnalyticsFocus">
       <div className="AnalyticsFocus__zoom">
-        <AnalyticsVictoryChart
+        <AnalyticsVictoryChart width={600} height={250}
+          padding={{ top: 50, right: 80, bottom: 50, left: 80 }}
           data={data}
           onClick={() => console.log('hi')}
           containerComponent={
