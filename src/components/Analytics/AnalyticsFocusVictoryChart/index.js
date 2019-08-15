@@ -30,7 +30,6 @@ export default function AnalyticsFocusVictoryChart({ data, onClick }) {
           onClick={() => console.log('hi')}
           containerComponent={
             <VictoryZoomVoronoiContainer
-              className="AnalyticsVictoryChart__container"
               onZoomDomainChange={domain => setZoomDomain(domain)}
             />
           }
@@ -44,7 +43,6 @@ export default function AnalyticsFocusVictoryChart({ data, onClick }) {
           padding={20}
           containerComponent={
             <VictoryBrushContainer
-              className="AnalyticsVictoryChart__container"
               allowDrag={false}
               allowResize={false}
               brushDimension="y"
