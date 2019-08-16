@@ -112,12 +112,6 @@ export default function AnalyticsVictoryChart({
           label={axisText}
           axisLabelComponent={<VictoryLabel dy={-15} />}
         />
-        <VictoryLegend x={90} y={50}
-          borderComponent={<Border width={textLength + 35} />}
-          data={[{ name: legendText }]}
-          dataComponent={<AnalyticsLegendIcon />}
-          labelComponent={<VictoryLabel dy={1} />}
-        />
         <VictoryBar
           data={eventData}
           x="height"
@@ -161,6 +155,13 @@ export default function AnalyticsVictoryChart({
           <VictoryLine sortKey="date" animate={animate} />
           <VictoryScatter />
         </VictoryGroup>
+        <VictoryLegend x={90} y={50}
+          borderComponent={<Border width={textLength + 35} />}
+          data={[{ name: legendText }]}
+          dataComponent={<AnalyticsLegendIcon />}
+          labelComponent={<VictoryLabel dy={1} />}
+          style={{ border: { fill: 'white' } }}
+        />
       </VictoryChart>
     </div>
   );
