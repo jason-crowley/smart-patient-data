@@ -6,23 +6,18 @@ const fetchReducer = (state, action) => {
         isLoading: true,
         isError: false,
       };
-    case 'FETCH_ACCUMULATE':
-      return {
-        ...state,
-        data: [...state.data, action.payload],
-      };
     case 'FETCH_SUCCESS':
       return {
-        ...state,
         isLoading: false,
         isError: false,
+        data: action.payload,
       };
     case 'FETCH_FAILURE':
       console.error(action.reason);
       return {
-        ...state,
         isLoading: false,
         isError: true,
+        data: [],
       };
     default:
       throw new Error(`Action of type '${action.type}' is not recognized.`);

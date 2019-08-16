@@ -1,7 +1,7 @@
 import { useEffect, useReducer } from 'react';
 import fetchReducer from 'reducers/fetchReducer';
 import { oauth2 as SMART } from 'fhirclient';
-import { prop, propEq } from 'ramda';
+import { curry, map } from 'ramda';
 
 const usePatientData = resourceTypes => {
   const [state, dispatch] = useReducer(fetchReducer, {
@@ -11,31 +11,21 @@ const usePatientData = resourceTypes => {
   });
 
   useEffect(() => {
-    const fetchData = async resourceType => {
-      // Try to fetch all resources of type 'resourceType' for patient
-      dispatch({ type: 'FETCH_INIT' });
-      try {
-        const client = await SMART.ready();
-        const { id } = client.patient;
-        let url = `${resourceType}?_count=250&patient=Patient/${id}`;
-        const entries = [];
-        while (url) {
-          const { entry, link } = await client.request(url);
-          entries.push(...entry);
-          // Assign 'url' to the url of the link with relation 'next',
-          // if there is one. Otherwise, 'url' will be undefined
-          ({ url } = link.find(propEq('relation', 'next')) || {});
-        }
-        const resources = entries.map(prop('resource'));
-        const bundle = { resourceType, resources };
-        dispatch({ type: 'FETCH_ACCUMULATE', payload: bundle });
-      } catch (err) {
-        dispatch({ type: 'FETCH_FAILURE', reason: err });
-      }
+    const fetchTypeWith = async (client, resourceType) => {
+      const { id } = client.patient;
+      const resourceUri = `${resourceType}?patient=Patient/${id}`;
+      const resources = await client.request(resourceUri, {
+        pageLimit: 0,
+        flat: true,
+      });
+      return { resourceType, resources };
     };
 
-    Promise.all(resourceTypes.map(fetchData))
-      .then(() => dispatch({ type: 'FETCH_SUCCESS' }))
+    dispatch({ type: 'FETCH_INIT' });
+    SMART.ready()
+      .then(client => curry(fetchTypeWith)(client))
+      .then(fetchType => Promise.all(map(fetchType, resourceTypes)))
+      .then(payload => dispatch({ type: 'FETCH_SUCCESS', payload }))
       .catch(err => dispatch({ type: 'FETCH_FAILURE', reason: err }));
   }, [resourceTypes]);
 
