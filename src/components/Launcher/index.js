@@ -8,6 +8,9 @@ export default function Launcher({ location }) {
       clientId: 'smart-surveys',
       scope: 'launch launch/patient patient/read offline_access',
       redirectUri: '/app',
+      // For development only
+      fhirServiceUrl: 'https://r4.smarthealthit.org',
+      patientId: '030b3765-844c-4cc1-a36f-974c37895eee',
     }).catch(err => setError(err.message));
   }, []);
 
