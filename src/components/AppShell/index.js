@@ -39,7 +39,7 @@ export default function AppShell() {
           <Route path="/home" component={Home} />
           <Route
             path="/analytics"
-            render={(props) => <Analytics {...props} data={data} />}
+            render={props => <Analytics {...props} data={data} />}
           />
           <Route path="/surveys" component={Surveys} />
           <Route path="/builder" component={Builder} />
