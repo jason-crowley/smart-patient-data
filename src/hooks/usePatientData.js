@@ -1,9 +1,9 @@
 import { useEffect, useReducer } from 'react';
 import fetchReducer from 'reducers/fetchReducer';
-import FHIR from 'fhirclient';
-import { map, prop } from 'ramda';
+import { oauth2 as SMART } from 'fhirclient';
+import { prop, propEq } from 'ramda';
 
-const usePatientData = (patientId, resourceTypes) => {
+const usePatientData = resourceTypes => {
   const [state, dispatch] = useReducer(fetchReducer, {
     isLoading: true,
     isError: false,
@@ -11,23 +11,22 @@ const usePatientData = (patientId, resourceTypes) => {
   });
 
   useEffect(() => {
-    const client = FHIR.client('https://r4.smarthealthit.org');
-
     const fetchData = async resourceType => {
-      let url = `${resourceType}?patient=Patient/${patientId}`;
-      const entries = [];
-
-      // Try to fetch all FHIR resources of type 'resourceType' for a given patient
+      // Try to fetch all resources of type 'resourceType' for patient
       dispatch({ type: 'FETCH_INIT' });
       try {
+        const client = await SMART.ready();
+        const { id } = client.patient;
+        let url = `${resourceType}?_count=250&patient=Patient/${id}`;
+        const entries = [];
         while (url) {
           const { entry, link } = await client.request(url);
           entries.push(...entry);
           // Assign 'url' to the url of the link with relation 'next',
-          // if there is one. Otherwise, 'url' will be assigned to undefined
-          ({ url } = link.find(({ relation }) => relation === 'next') || {});
+          // if there is one. Otherwise, 'url' will be undefined
+          ({ url } = link.find(propEq('relation', 'next')) || {});
         }
-        const resources = map(prop('resource'), entries);
+        const resources = entries.map(prop('resource'));
         const bundle = { resourceType, resources };
         dispatch({ type: 'FETCH_ACCUMULATE', payload: bundle });
       } catch (err) {
@@ -35,10 +34,10 @@ const usePatientData = (patientId, resourceTypes) => {
       }
     };
 
-    Promise.all(map(fetchData, resourceTypes))
+    Promise.all(resourceTypes.map(fetchData))
       .then(() => dispatch({ type: 'FETCH_SUCCESS' }))
-      .catch(() => dispatch({ type: 'FETCH_FAILURE' }));
-  }, [patientId, resourceTypes]);
+      .catch(err => dispatch({ type: 'FETCH_FAILURE', reason: err }));
+  }, [resourceTypes]);
 
   return state;
 };

@@ -7,14 +7,3 @@ html, body, #root, .App {
   height: 100%;
   overflow: hidden;
 }
-
-:root {
-  --tab-header-height: 72px;
-  --page-header-height: 38px;
-}
-
-.App {
-  display: grid;
-  grid-template-rows: var(--tab-header-height) auto;
-  border: 1px solid green;
-}

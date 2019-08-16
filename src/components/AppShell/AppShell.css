@@ -1,0 +1,12 @@
+:root {
+  --tab-header-height: 72px;
+  --page-header-height: 38px;
+}
+
+.AppShell {
+  display: grid;
+  grid-template-rows: var(--tab-header-height) auto;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid green;
+}
