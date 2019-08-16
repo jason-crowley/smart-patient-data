@@ -29,6 +29,8 @@ tspanTag.setAttribute('font-size', '12');
 tspanTag.setAttribute('font-family', "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif");
 
 export default function AnalyticsVictoryChart({
+  width = 450,
+  height = 300,
   animate = false,
   data: { responseItems, eventData },
   onClick,
@@ -82,13 +84,11 @@ export default function AnalyticsVictoryChart({
 
   return (
     <div className="AnalyticsVictoryChart">
-      <VictoryChart
+      <VictoryChart width={width} height={height}
         theme={AnalyticsVictoryTheme}
         horizontal
         scale={{ y: 'time' }}
         containerComponent={<VictoryVoronoiContainer />}
-        // containerComponent={containerComponent}
-        // containerComponent={React.cloneElement(Container, { className: 'AnalyticsVictoryChart__container' })}
         events={[
           {
             childName: 'all',
@@ -98,7 +98,7 @@ export default function AnalyticsVictoryChart({
         ]}
         {...restProps}
       >
-        <VictoryLabel x={225} y={25}
+        <VictoryLabel x={width / 2} y={25}
           text={titleText}
           textAnchor="middle"
           style={{ fontSize: 16 }}
