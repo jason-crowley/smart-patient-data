@@ -1,7 +1,7 @@
 import React, { useState, useReducer } from 'react';
 import ResponseItem from 'models/ResponseItem';
 import Event from 'models/Event';
-import AnalyticsContext from './AnalyticsContext';
+import { AnalyticsContext } from 'contexts/AnalyticsContext';
 import AnalyticsFocusVictoryChart from './AnalyticsFocusVictoryChart';
 import AnalyticsVictoryChart from './AnalyticsVictoryChart';
 import AnalyticsEvents from './AnalyticsEvents';

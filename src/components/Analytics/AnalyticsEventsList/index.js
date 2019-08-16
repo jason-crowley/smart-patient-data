@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import AnalyticsContext from '../AnalyticsContext';
+import { AnalyticsContext } from 'contexts/AnalyticsContext';
 import './AnalyticsEventsList.css';
 
 export default function AnalyticsEventsList({ eventsByKey }) {
