@@ -15,8 +15,8 @@ export default function Analytics({ data }) {
   const [focus, setFocus] = useState(null);
 
   // PGHD
-  const { resources: responseResources } =
-    data.find(propEq('resourceType', 'Observation'));
+  const { resources: responseResources = [] } =
+    data.find(propEq('resourceType', 'Observation')) || {};
   const filtered = responseResources.filter(has('valueQuantity'));
   const responseItems = filtered.map(ResponseItem.from);
   const responseItemsByKey = groupByCodeKey(responseItems);
