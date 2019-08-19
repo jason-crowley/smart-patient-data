@@ -30,14 +30,16 @@ textTag.appendChild(tspanTag);
 tspanTag.setAttribute('font-size', '12');
 tspanTag.setAttribute('font-family', "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif");
 
-export default function AnalyticsVictoryChart({
-  width = 450,
-  height = 300,
-  animate = false,
-  data: { responseItems, eventData },
-  onClick,
-  ...restProps
-}) {
+export default function AnalyticsVictoryChart(props) {
+  const {
+    width = 450,
+    height = 300,
+    animate = false,
+    data: { responseItems, eventData },
+    onClick,
+    ...restProps
+  } = props;
+
   // Format text for chart labels
   const { text } = responseItems[0].code;
   const titleText = text.replace(/\s*\[.*?\]\s*/, ' ');
