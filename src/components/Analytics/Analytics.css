@@ -1,29 +1,16 @@
 .Analytics {
   display: grid;
-  grid-template-rows: var(--page-header-height) 1fr;
   grid-template-columns: 5fr 2fr;
-  grid-template-areas: "header header"
-                       "pghd   ehr";
   grid-gap: 20px;
   padding: 20px;
   height: 100%;
   overflow: hidden;
-  border: 1px solid red;
-}
-
-.Analytics__header {
-  grid-area: header;
 }
 
 .Analytics__pghd, .Analytics__ehr {
   padding: 20px;
   height: 100%;
   overflow: scroll;
-  border: 1px solid blue;
-}
-
-.Analytics__pghd {
-  grid-area: pghd;
 }
 
 .Analytics__pghd-charts {
@@ -41,8 +28,4 @@
   .Analytics__pghd-charts {
     grid-template-columns: 100%;
   }
-}
-
-.Analytics__ehr {
-  grid-area: ehr;
 }
