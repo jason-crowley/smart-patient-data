@@ -16,6 +16,8 @@ import { reduce, min, max, map, filter, flatten } from 'ramda';
 import moment from 'moment';
 import AnalyticsVictoryTheme from '../AnalyticsVictoryTheme';
 import AnalyticsLegendIcon from './AnalyticsLegendIcon';
+
+import Card from '@material-ui/core/Card';
 import './AnalyticsVictoryChart.css';
 
 const svgNS = 'http://www.w3.org/2000/svg';
@@ -83,21 +85,22 @@ export default function AnalyticsVictoryChart({
   eventData = flatten(eventData);
 
   return (
-    <div className="AnalyticsVictoryChart">
-      <VictoryChart width={width} height={height}
-        theme={AnalyticsVictoryTheme}
-        horizontal
-        scale={{ y: 'time' }}
-        containerComponent={<VictoryVoronoiContainer />}
-        events={[
-          {
-            childName: 'all',
-            target: 'parent',
-            eventHandlers: { onClick },
-          },
-        ]}
-        {...restProps}
-      >
+    <Card>
+      <div className="AnalyticsVictoryChart">
+        <VictoryChart width={width} height={height}
+          theme={AnalyticsVictoryTheme}
+          horizontal
+          scale={{ y: 'time' }}
+          containerComponent={<VictoryVoronoiContainer />}
+          events={[
+            {
+              childName: 'all',
+              target: 'parent',
+              eventHandlers: { onClick },
+            },
+          ]}
+          {...restProps}
+        >
         <VictoryLabel x={width / 2} y={25}
           text={titleText}
           textAnchor="middle"
@@ -162,7 +165,8 @@ export default function AnalyticsVictoryChart({
           labelComponent={<VictoryLabel dy={1} />}
           style={{ border: { fill: 'white' } }}
         />
-      </VictoryChart>
-    </div>
+        </VictoryChart>
+      </div>
+    </Card>
   );
 };
