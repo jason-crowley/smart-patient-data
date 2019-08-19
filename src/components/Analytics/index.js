@@ -11,11 +11,19 @@ import groupByCodeKey from 'utils/groupByCodeKey';
 
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
+import { makeStyles } from '@material-ui/core/styles';
 import './Analytics.css';
+
+const useStyles = makeStyles(theme => ({
+  eventsHeader: {
+    margin: theme.spacing(0, 0, 2),
+  },
+}));
 
 export default function Analytics({ data }) {
   const [eventKeys, dispatch] = useReducer(eventReducer, new Set());
   const [focus, setFocus] = useState(null);
+  const classes = useStyles();
 
   // PGHD
   const { resources: responseResources = [] } =
@@ -77,7 +85,13 @@ export default function Analytics({ data }) {
         }
       </main>
       <Paper className="Analytics__ehr" component="aside">
-        <h2>EHR Events</h2>
+        <Typography
+          className={classes.eventsHeader}
+          variant="h5"
+          component="h2"
+        >
+          EHR Events
+        </Typography>
         <AnalyticsContext.Provider value={dispatch}>
           <AnalyticsEvents eventsByCategory={eventsByCategory} />
         </AnalyticsContext.Provider>
