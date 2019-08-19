@@ -1,5 +1,7 @@
 import React, { useContext } from 'react';
 import { AnalyticsContext } from 'contexts/AnalyticsContext';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 import './AnalyticsEventsList.css';
 
 export default function AnalyticsEventsList({ eventsByKey }) {
@@ -14,13 +16,10 @@ export default function AnalyticsEventsList({ eventsByKey }) {
           const { display } = firstEvent.code.coding[0];
           return (
             <li key={key}>
-              <label>
-                <input
-                  type="checkbox"
-                  onClick={() => dispatch({ key })}
-                />
-                {' ' + display} {length > 1 && ' (' + length + ')'}
-              </label>
+              <FormControlLabel
+                control={<Checkbox onChange={() => dispatch({ key })} />}
+                label={display + (length > 1 ? ' (' + length + ')' : '')}
+              />
             </li>
           );
         })
