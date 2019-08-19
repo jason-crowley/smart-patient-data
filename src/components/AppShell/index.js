@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route, Link, Redirect } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import usePatientData from 'hooks/usePatientData';
 import Header from '../Header';
 import Home from '../Home';
@@ -27,12 +27,7 @@ export default function AppShell() {
   return (
     <BrowserRouter>
       <div className="AppShell">
-        <Header>
-          <Link className="HeaderNav__link" to="/home">Home</Link>
-          <Link className="HeaderNav__link" to="/analytics">Analytics</Link>
-          <Link className="HeaderNav__link" to="/surveys">Surveys</Link>
-          <Link className="HeaderNav__link" to="/builder">Survey Builder</Link>
-        </Header>
+        <Header />
 
         <Switch>
           <Redirect from="/app" to="/home" />
