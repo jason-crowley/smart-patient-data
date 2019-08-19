@@ -6,6 +6,10 @@ import Home from '../Home';
 import Analytics from '../Analytics';
 import Surveys from '../Surveys';
 import Builder from '../Builder';
+
+import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import './AppShell.css';
 
 const RESOURCE_TYPES = [
@@ -15,12 +19,25 @@ const RESOURCE_TYPES = [
   'Encounter',
 ];
 
+const useStyles = makeStyles(theme => ({
+  centered: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+  },
+}));
+
 export default function AppShell() {
   const { isLoading, isError, data } = usePatientData(RESOURCE_TYPES);
+  const classes = useStyles();
 
   // Display loading and error messages
   if (isLoading)
-    return <h2>Loading...</h2>;
+    return (
+      <Grid className={classes.centered} container>
+        <Grid item><CircularProgress /></Grid>
+      </Grid>
+    );
   if (isError)
     return <h2>There was an error processing your request.</h2>;
 
@@ -28,7 +45,6 @@ export default function AppShell() {
     <BrowserRouter>
       <div className="AppShell">
         <Header />
-
         <Switch>
           <Redirect from="/app" to="/home" />
           <Route path="/home" component={Home} />
