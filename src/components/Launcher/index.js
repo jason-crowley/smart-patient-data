@@ -14,5 +14,5 @@ export default function Launcher({ location }) {
     }).catch(err => setError(err.message));
   }, []);
 
-  return error ? <h2>There was an error authorizing app: {error}</h2> : <h2>Launching...</h2>;
+  return error ? <h2>There was an error authorizing app: {error}</h2> : <div></div>;
 };
