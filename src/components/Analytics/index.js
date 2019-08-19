@@ -46,9 +46,7 @@ export default function Analytics({ data }) {
 
   return (
     <div className="Analytics">
-      <Paper className="Analytics__pghd" component="main">
-        <Typography variant="h5" component="h2">PGHD</Typography>
-        <h2>PGHD</h2>
+      <main className="Analytics__pghd">
         {
           (focus)
             ? (
@@ -77,7 +75,7 @@ export default function Analytics({ data }) {
               </div>
             )
         }
-      </Paper>
+      </main>
       <Paper className="Analytics__ehr" component="aside">
         <h2>EHR Events</h2>
         <AnalyticsContext.Provider value={dispatch}>
