@@ -11,7 +11,6 @@ import { RESOURCE_TYPES } from 'constants/index.js';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import './AppShell.css';
 
 const useStyles = makeStyles(theme => ({
   centered: {
@@ -38,17 +37,23 @@ export default function AppShell() {
   return (
     <BrowserRouter>
       <div className="AppShell">
-        <Header />
-        <Switch>
-          <Redirect from="/app" to="/home" />
-          <Route path="/home" component={Home} />
-          <Route
-            path="/analytics"
-            render={props => <Analytics {...props} data={data} />}
-          />
-          <Route path="/surveys" component={Surveys} />
-          <Route path="/builder" component={Builder} />
-        </Switch>
+        <Grid container>
+          <Grid item xs={12}>
+            <Header />
+          </Grid>
+          <Grid item xs={12}>
+            <Switch>
+              <Redirect from="/app" to="/home" />
+              <Route path="/home" component={Home} />
+              <Route
+                path="/analytics"
+                render={props => <Analytics {...props} data={data} />}
+              />
+              <Route path="/surveys" component={Surveys} />
+              <Route path="/builder" component={Builder} />
+            </Switch>
+          </Grid>
+        </Grid>
       </div>
     </BrowserRouter>
   );
