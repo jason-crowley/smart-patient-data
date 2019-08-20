@@ -16,7 +16,7 @@
 .Analytics__pghd-charts {
   display: grid;
   justify-items: center;
-  align-items: end;
+  align-items: start;
   grid-auto-rows: calc((100% - 28px - 4% - 4%/2) / 2);
   grid-template-columns: 49% 49%;
   row-gap: 4%;
