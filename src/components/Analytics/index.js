@@ -9,12 +9,40 @@ import eventReducer from 'reducers/eventReducer';
 import { propEq, has, compose, not } from 'ramda';
 import groupByCodeKey from 'utils/groupByCodeKey';
 
+import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
-import './Analytics.css';
+
+function makeMaxHeight(theme, top = 0) {
+  const { toolbar } = theme.mixins;
+  const spacing = theme.spacing(3) - top;
+  return {
+    position: 'relative',
+    top,
+    maxHeight: `calc(100vh - 56px + ${spacing}px)`,
+    [`${theme.breakpoints.up('xs')} and (orientation: landscape)`]: {
+      maxHeight: `calc(100vh - 48px + ${spacing}px)`,
+    },
+    [theme.breakpoints.up('sm')]: {
+      maxHeight:  `calc(100vh - 64px + ${spacing}px)`,
+    },
+    overflow: 'scroll',
+  };
+}
 
 const useStyles = makeStyles(theme => ({
+  analytics: {
+    padding: theme.spacing(0, 3),
+  },
+  chartsContainer: {
+    ...makeMaxHeight(theme, theme.spacing(1.5)),
+  },
+  eventsList: {
+    ...makeMaxHeight(theme),
+    margin: theme.spacing(3, 0),
+    padding: theme.spacing(2),
+  },
   eventsHeader: {
     margin: theme.spacing(0, 0, 2),
   },
@@ -53,49 +81,63 @@ export default function Analytics({ data }) {
     });
 
   return (
-    <div className="Analytics">
-      <main className="Analytics__pghd">
-        {
-          (focus)
-            ? (
-              <AnalyticsFocusVictoryChart
-                data={{
-                  responseItems: responseItemsForFocus,
-                  eventData,
-                }}
-                onClick={() => setFocus(null)}
-              />
-            ) : (
-              <div className="Analytics__pghd-charts">
-                {responseItemsByKey.map(({ key, grouping }) => {
-                  return (
-                    <AnalyticsVictoryChart
-                      key={key}
-                      animate={{ duration: 1500 }}
-                      data={{
-                        responseItems: grouping,
-                        eventData,
-                      }}
-                      onClick={() => setFocus(key)}
-                    />
-                  );
-                })}
-              </div>
-            )
-        }
-      </main>
-      <Paper className="Analytics__ehr" component="aside">
-        <Typography
-          className={classes.eventsHeader}
-          variant="h5"
-          component="h2"
-        >
-          EHR Events
-        </Typography>
-        <AnalyticsContext.Provider value={dispatch}>
-          <AnalyticsEvents eventsByCategory={eventsByCategory} />
-        </AnalyticsContext.Provider>
-      </Paper>
+    <div className={classes.analytics}>
+      <Grid container spacing={3}>
+        <Grid item xs={9}>
+          <main className="Analytics__pghd">
+            {
+              (focus)
+                ? (
+                  <AnalyticsFocusVictoryChart
+                    data={{
+                      responseItems: responseItemsForFocus,
+                      eventData,
+                    }}
+                    onClick={() => setFocus(null)}
+                  />
+                ) : (
+                  <div className="Analytics__pghd-charts">
+                    <Grid
+                      className={classes.chartsContainer}
+                      container
+                      spacing={3}
+                    >
+                      {responseItemsByKey.map(({ key, grouping }) => {
+                        return (
+                          <Grid item xs={6}>
+                            <AnalyticsVictoryChart
+                              key={key}
+                              animate={{ duration: 1500 }}
+                              data={{
+                                responseItems: grouping,
+                                eventData,
+                              }}
+                              onClick={() => setFocus(key)}
+                            />
+                          </Grid>
+                        );
+                      })}
+                    </Grid>
+                  </div>
+                )
+            }
+          </main>
+        </Grid>
+        <Grid item xs={3}>
+          <Paper className={classes.eventsList} component="aside">
+            <Typography
+              className={classes.eventsHeader}
+              variant="h5"
+              component="h2"
+            >
+              EHR Events
+            </Typography>
+            <AnalyticsContext.Provider value={dispatch}>
+              <AnalyticsEvents eventsByCategory={eventsByCategory} />
+            </AnalyticsContext.Provider>
+          </Paper>
+        </Grid>
+      </Grid>
     </div>
   );
 };
