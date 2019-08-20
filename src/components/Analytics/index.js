@@ -35,6 +35,9 @@ const useStyles = makeStyles(theme => ({
   analytics: {
     padding: theme.spacing(0, 3),
   },
+  focusChart: {
+    marginTop: theme.spacing(3),
+  },
   chartsContainer: {
     ...makeMaxHeight(theme, theme.spacing(1.5)),
   },
@@ -88,13 +91,15 @@ export default function Analytics({ data }) {
             {
               (focus)
                 ? (
-                  <AnalyticsFocusVictoryChart
-                    data={{
-                      responseItems: responseItemsForFocus,
-                      eventData,
-                    }}
-                    onClick={() => setFocus(null)}
-                  />
+                  <div className={classes.focusChart}>
+                    <AnalyticsFocusVictoryChart
+                      data={{
+                        responseItems: responseItemsForFocus,
+                        eventData,
+                      }}
+                      onClick={() => setFocus(null)}
+                    />
+                  </div>
                 ) : (
                   <div className="Analytics__pghd-charts">
                     <Grid
