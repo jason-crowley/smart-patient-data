@@ -13,7 +13,7 @@ import Grid from '@material-ui/core/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles(theme => ({
-  centered: {
+  progressContainer: {
     justifyContent: 'center',
     alignItems: 'center',
     height: '100%',
@@ -24,10 +24,10 @@ export default function AppShell() {
   const { isLoading, isError, data } = usePatientData(RESOURCE_TYPES);
   const classes = useStyles();
 
-  // Display loading and error messages
+  // Display loading progress and error messages
   if (isLoading)
     return (
-      <Grid className={classes.centered} container>
+      <Grid className={classes.progressContainer} container>
         <Grid item><CircularProgress /></Grid>
       </Grid>
     );
