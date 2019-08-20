@@ -11,6 +11,9 @@ import { reduce, minBy, maxBy } from 'ramda';
 import moment from 'moment';
 import AnalyticsVictoryChart from '../AnalyticsVictoryChart';
 import AnalyticsVictoryTheme from '../AnalyticsVictoryTheme';
+
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 import './AnalyticsFocusVictoryChart.css';
 
 export default function AnalyticsFocusVictoryChart({ data, onClick }) {
@@ -23,8 +26,8 @@ export default function AnalyticsFocusVictoryChart({ data, onClick }) {
   const VictoryZoomVoronoiContainer = VictoryZoomContainer;
 
   return (
-    <div className="AnalyticsFocus">
-      <div className="AnalyticsFocus__zoom">
+    <Grid container spacing={3}>
+      <Grid item xs={12}>
         <AnalyticsVictoryChart width={600} height={250}
           padding={{ top: 50, right: 80, bottom: 50, left: 80 }}
           data={data}
@@ -35,32 +38,34 @@ export default function AnalyticsFocusVictoryChart({ data, onClick }) {
             />
           }
         />
-      </div>
-      <div className="AnalyticsFocus__brush">
-        <VictoryChart
-          width={600} height={100} scale={{ y: 'time' }}
-          horizontal
-          theme={AnalyticsVictoryTheme}
-          padding={20}
-          containerComponent={
-            <VictoryBrushContainer
-              allowDrag={false}
-              allowResize={false}
-              brushDimension="y"
-              brushDomain={zoomDomain}
+      </Grid>
+      <Grid item xs={12}>
+        <Paper>
+          <VictoryChart
+            width={600} height={100} scale={{ y: 'time' }}
+            horizontal
+            theme={AnalyticsVictoryTheme}
+            padding={20}
+            containerComponent={
+              <VictoryBrushContainer
+                allowDrag={false}
+                allowResize={false}
+                brushDimension="y"
+                brushDomain={zoomDomain}
+              />
+            }
+          >
+            <VictoryAxis
+              dependentAxis
+              tickFormat={date => moment(date).format('YYYY')}
             />
-          }
-        >
-          <VictoryAxis
-            dependentAxis
-            tickFormat={date => moment(date).format('YYYY')}
-          />
-          <VictoryLine
-            data={responseItems}
-            x="value" y="date" sortKey="date"
-          />
-        </VictoryChart>
-      </div>
-    </div>
+            <VictoryLine
+              data={responseItems}
+              x="value" y="date" sortKey="date"
+            />
+          </VictoryChart>
+        </Paper>
+      </Grid>
+    </Grid>
   );
 };
