@@ -6,18 +6,12 @@ import Home from '../Home';
 import Analytics from '../Analytics';
 import Surveys from '../Surveys';
 import Builder from '../Builder';
+import { RESOURCE_TYPES } from 'constants/index.js';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import './AppShell.css';
-
-const RESOURCE_TYPES = [
-  'Observation',
-  'MedicationRequest',
-  'Condition',
-  'Encounter',
-];
 
 const useStyles = makeStyles(theme => ({
   centered: {
