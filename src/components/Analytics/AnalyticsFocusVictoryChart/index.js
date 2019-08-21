@@ -32,7 +32,7 @@ export default function AnalyticsFocusVictoryChart({ data, onClick }) {
             width={600} height={250}
             padding={{ top: 50, right: 80, bottom: 50, left: 80 }}
             data={data}
-            onClick={() => console.log('hi')}
+            onClick={onClick}
             containerComponent={
               <VictoryZoomVoronoiContainer
                 zoomDimension="y"
