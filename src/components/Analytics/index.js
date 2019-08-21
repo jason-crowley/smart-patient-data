@@ -1,6 +1,7 @@
 import React, { useState, useReducer } from 'react';
 import ResponseItem from 'models/ResponseItem';
 import Event from 'models/Event';
+import PatientInfo from './PatientInfo';
 import { AnalyticsContext } from 'contexts/AnalyticsContext';
 import AnalyticsFocusVictoryChart from './AnalyticsFocusVictoryChart';
 import AnalyticsChartCard from './AnalyticsChartCard';
@@ -107,6 +108,9 @@ export default function Analytics({ data }) {
                       container
                       spacing={3}
                     >
+                      <Grid item xs={12}>
+                        <PatientInfo />
+                      </Grid>
                       {responseItemsByKey.map(({ key, grouping }) => {
                         return (
                           <Grid item xs={6} key={key}>
