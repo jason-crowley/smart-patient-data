@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { FhirClientContext } from 'contexts/FhirClientContext';
 import usePatientData from 'hooks/usePatientData';
 import Header from '../Header';
 import Home from '../Home';
@@ -21,7 +22,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function AppShell() {
-  const { isLoading, isError, data } = usePatientData(RESOURCE_TYPES);
+  const client = useContext(FhirClientContext);
+  const { isLoading, isError, data } = usePatientData(client, RESOURCE_TYPES);
   const classes = useStyles();
 
   // Display loading progress and error messages

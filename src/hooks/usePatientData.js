@@ -1,9 +1,7 @@
 import { useEffect, useReducer } from 'react';
 import fetchReducer from 'reducers/fetchReducer';
-import { oauth2 as SMART } from 'fhirclient';
-import { curry, map } from 'ramda';
 
-const usePatientData = resourceTypes => {
+const usePatientData = (client, resourceTypes) => {
   const [state, dispatch] = useReducer(fetchReducer, {
     isLoading: true,
     isError: false,
@@ -11,7 +9,7 @@ const usePatientData = resourceTypes => {
   });
 
   useEffect(() => {
-    const fetchTypeWith = async (client, resourceType) => {
+    const fetchType = async resourceType => {
       const { id } = client.patient;
       const resourceUri = `${resourceType}?patient=Patient/${id}`;
       const resources = await client.request(resourceUri, {
@@ -22,12 +20,10 @@ const usePatientData = resourceTypes => {
     };
 
     dispatch({ type: 'FETCH_INIT' });
-    SMART.ready()
-      .then(client => curry(fetchTypeWith)(client))
-      .then(fetchType => Promise.all(map(fetchType, resourceTypes)))
+    Promise.all(resourceTypes.map(fetchType))
       .then(payload => dispatch({ type: 'FETCH_SUCCESS', payload }))
       .catch(err => dispatch({ type: 'FETCH_FAILURE', reason: err }));
-  }, [resourceTypes]);
+  }, [client, resourceTypes]);
 
   return state;
 };
