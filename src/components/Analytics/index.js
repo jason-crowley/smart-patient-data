@@ -92,6 +92,7 @@ export default function Analytics({ data }) {
                 ? (
                   <div className={classes.focusChart}>
                     <AnalyticsFocusVictoryChart
+                      key={Array.from(eventKeys).join()}
                       data={{
                         responseItems: responseItemsForFocus,
                         eventData,
