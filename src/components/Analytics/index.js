@@ -108,9 +108,8 @@ export default function Analytics({ data }) {
                     >
                       {responseItemsByKey.map(({ key, grouping }) => {
                         return (
-                          <Grid item xs={6}>
+                          <Grid item xs={6} key={key}>
                             <AnalyticsChartCard
-                              key={key}
                               animate={{ duration: 1500 }}
                               data={{
                                 responseItems: grouping,
