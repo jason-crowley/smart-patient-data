@@ -14,7 +14,6 @@ import AnalyticsVictoryTheme from '../AnalyticsVictoryTheme';
 
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import './AnalyticsFocusVictoryChart.css';
 
 export default function AnalyticsFocusVictoryChart({ data, onClick }) {
   const { responseItems } = data;
