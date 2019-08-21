@@ -87,23 +87,24 @@ export default function AnalyticsVictoryChart(props) {
   eventData = flatten(eventData);
 
   return (
-    <Card>
-      <div className="AnalyticsVictoryChart">
-        <VictoryChart width={width} height={height}
-          theme={AnalyticsVictoryTheme}
-          horizontal
-          scale={{ y: 'time' }}
-          containerComponent={<VictoryVoronoiContainer />}
-          events={[
-            {
-              childName: 'all',
-              target: 'parent',
-              eventHandlers: { onClick },
-            },
-          ]}
-          {...restProps}
-        >
-        <VictoryLabel x={width / 2} y={25}
+    <div className="AnalyticsVictoryChart">
+      <VictoryChart
+        width={width} height={height}
+        horizontal
+        scale={{ y: 'time' }}
+        theme={AnalyticsVictoryTheme}
+        containerComponent={<VictoryVoronoiContainer />}
+        events={[
+          {
+            childName: 'all',
+            target: 'parent',
+            eventHandlers: { onClick },
+          },
+        ]}
+        {...restProps}
+      >
+        <VictoryLabel
+          x={width / 2} y={25}
           text={titleText}
           textAnchor="middle"
           style={{ fontSize: 16 }}
@@ -149,7 +150,8 @@ export default function AnalyticsVictoryChart(props) {
             return `Date: ${date}\nValue: ${value}`;
           }}
           labelComponent={
-            <VictoryTooltip width={140} height={40}
+            <VictoryTooltip
+              width={140} height={40}
               cornerRadius={2}
               flyoutStyle={{ fill: '#fff' }}
               orientation="top"
@@ -160,15 +162,15 @@ export default function AnalyticsVictoryChart(props) {
           <VictoryLine sortKey="date" animate={animate} />
           <VictoryScatter />
         </VictoryGroup>
-        <VictoryLegend x={90} y={50}
+        <VictoryLegend
+          x={90} y={50}
           borderComponent={<Border width={textLength + 35} />}
           data={[{ name: legendText }]}
           dataComponent={<AnalyticsLegendIcon />}
           labelComponent={<VictoryLabel dy={1} />}
           style={{ border: { fill: 'white' } }}
         />
-        </VictoryChart>
-      </div>
-    </Card>
+      </VictoryChart>
+    </div>
   );
 };

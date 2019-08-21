@@ -28,16 +28,20 @@ export default function AnalyticsFocusVictoryChart({ data, onClick }) {
   return (
     <Grid container spacing={3}>
       <Grid item xs={12}>
-        <AnalyticsVictoryChart width={600} height={250}
-          padding={{ top: 50, right: 80, bottom: 50, left: 80 }}
-          data={data}
-          onClick={() => console.log('hi')}
-          containerComponent={
-            <VictoryZoomVoronoiContainer
-              onZoomDomainChange={domain => setZoomDomain(domain)}
-            />
-          }
-        />
+        <Paper>
+          <AnalyticsVictoryChart
+            width={600} height={250}
+            padding={{ top: 50, right: 80, bottom: 50, left: 80 }}
+            data={data}
+            onClick={() => console.log('hi')}
+            containerComponent={
+              <VictoryZoomVoronoiContainer
+                zoomDimension="y"
+                onZoomDomainChange={domain => setZoomDomain(domain)}
+              />
+            }
+          />
+        </Paper>
       </Grid>
       <Grid item xs={12}>
         <Paper>

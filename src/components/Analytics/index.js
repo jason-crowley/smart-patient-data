@@ -3,7 +3,7 @@ import ResponseItem from 'models/ResponseItem';
 import Event from 'models/Event';
 import { AnalyticsContext } from 'contexts/AnalyticsContext';
 import AnalyticsFocusVictoryChart from './AnalyticsFocusVictoryChart';
-import AnalyticsVictoryChart from './AnalyticsVictoryChart';
+import AnalyticsChartCard from './AnalyticsChartCard';
 import AnalyticsEvents from './AnalyticsEvents';
 import eventReducer from 'reducers/eventReducer';
 import { propEq, has, compose, not } from 'ramda';
@@ -110,7 +110,7 @@ export default function Analytics({ data }) {
                       {responseItemsByKey.map(({ key, grouping }) => {
                         return (
                           <Grid item xs={6}>
-                            <AnalyticsVictoryChart
+                            <AnalyticsChartCard
                               key={key}
                               animate={{ duration: 1500 }}
                               data={{
