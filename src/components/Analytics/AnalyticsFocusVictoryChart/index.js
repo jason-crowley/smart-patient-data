@@ -15,13 +15,19 @@ import AnalyticsVictoryTheme from '../AnalyticsVictoryTheme';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 
+const MULTIPLIER = 0.07747933884;
+
 export default function AnalyticsFocusVictoryChart({ data, onClick }) {
   const { responseItems } = data;
   const { date: firstDate } = responseItems[0];
   const dates = responseItems.map(({ date }) => date);
   const minDate = reduce(minBy(d => d.getTime()), firstDate, dates);
   const maxDate = reduce(maxBy(d => d.getTime()), firstDate, dates);
-  const [zoomDomain, setZoomDomain] = useState({ y: [minDate, maxDate] });
+  const range = maxDate - minDate;
+  const zoomOffset = MULTIPLIER * range;
+  const zoomMin = new Date(+minDate - zoomOffset);
+  const zoomMax = new Date(+maxDate + zoomOffset);
+  const [zoomDomain, setZoomDomain] = useState({ y: [zoomMin, zoomMax] });
   const VictoryZoomVoronoiContainer = VictoryZoomContainer;
 
   return (
@@ -54,7 +60,7 @@ export default function AnalyticsFocusVictoryChart({ data, onClick }) {
                 allowDrag={false}
                 allowResize={false}
                 brushDimension="y"
-                brushDomain={zoomDomain}
+                brushDomain={{ y: zoomDomain.y }}
               />
             }
           >
