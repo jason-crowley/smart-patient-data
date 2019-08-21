@@ -15,7 +15,6 @@ import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 
 function makeMaxHeight(theme, top = 0) {
-  const { toolbar } = theme.mixins;
   const spacing = theme.spacing(3) - top;
   return {
     position: 'relative',

@@ -17,9 +17,6 @@ import moment from 'moment';
 import AnalyticsVictoryTheme from '../AnalyticsVictoryTheme';
 import AnalyticsLegendIcon from './AnalyticsLegendIcon';
 
-import Card from '@material-ui/core/Card';
-import './AnalyticsVictoryChart.css';
-
 const svgNS = 'http://www.w3.org/2000/svg';
 const svgTag = document.createElementNS(svgNS, 'svg');
 const textTag = document.createElementNS(svgNS, 'text');
