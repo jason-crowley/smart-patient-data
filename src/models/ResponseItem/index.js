@@ -5,11 +5,13 @@ export default class ResponseItem {
     id = required(),
     date = required(),
     value = required(),
+    unit = required(),
     code = required(),
   } = {}) {
     this.id = id;
     this.date = date;
     this.value = value;
+    this.unit = unit;
     this.code = code;
   }
 
@@ -20,10 +22,10 @@ export default class ResponseItem {
           id,
           code,
           effectiveDateTime,
-          valueQuantity: { value } = {}
+          valueQuantity: { value, unit } = {}
         } = resource;
         const date = new Date(effectiveDateTime);
-        return new ResponseItem({ id, date, code, value });
+        return new ResponseItem({ id, date, value, unit, code });
       }
       case 'QuestionnaireResponse': {
         const hits = [];
