@@ -38,11 +38,11 @@ export default function AnalyticsVictoryChart(props) {
   } = props;
 
   // Format text for chart labels
-  const { text } = responseItems[0].code;
+  const { unit, code: { text } } = responseItems[0];
   const titleText = text.replace(/\s*\[.*?\]\s*/, ' ');
   const legendText = text.replace(/\[.*/, '').trim();
-  const axisText = (text.length < 40)
-    ? text.replace(/(?<=\]).*/, '').trim()
+  const axisText = (legendText.length < 40)
+    ? `${legendText} (${unit})`
     : legendText;
 
   // Calculate text size for legend
@@ -141,10 +141,10 @@ export default function AnalyticsVictoryChart(props) {
           data={responseItems}
           x="value"
           y="date"
-          labels={({ date, value }) => {
+          labels={({ date, value, unit }) => {
             date = moment(date).format('MMM DD, YYYY');
             value = value.toFixed(2);
-            return `Date: ${date}\nValue: ${value}`;
+            return `Date: ${date}\nValue: ${value} ${unit}`;
           }}
           labelComponent={
             <VictoryTooltip
