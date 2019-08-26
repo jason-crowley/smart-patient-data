@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { FhirClientContext } from 'contexts/FhirClientContext';
 import Launcher from '../Launcher';
 import AppShell from '../AppShell';
@@ -25,6 +25,7 @@ export default function App() {
               </FhirClientContext.Provider>
             )}
           />
+          <Redirect to="/" />
         </Switch>
       </div>
     </BrowserRouter>
