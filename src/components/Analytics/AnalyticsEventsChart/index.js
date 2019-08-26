@@ -13,18 +13,6 @@ const MinHeightBar = ({ x0, x, ...props }) => {
   return <Bar x0={x0} x={Math.max(x0 + 0.5, x)} {...props} />;
 };
 
-// Make default domain around today's date
-const makeDefaultDomain = () => ([
-  moment().subtract(1, 'days').toDate(),
-  new Date(),
-]);
-
-// Make domain around given single date
-const makeSingleDateDomain = datePoint => ([
-  moment(datePoint).subtract(0.5, 'days').toDate(),
-  moment(datePoint).add(0.5, 'days').toDate(),
-]);
-
 export default function AnalyticsEventsChart({ data }) {
   // Use special time domains if not enough data points
   const timeDomain = (data.length === 1 && data[0].length === 1)
