@@ -12,7 +12,7 @@ import {
   VictoryBar,
   VictoryTooltip,
 } from 'victory';
-import { reduce, min, max, map, filter, flatten } from 'ramda';
+// import { reduce, min, max, map, filter, flatten } from 'ramda';
 import moment from 'moment';
 import AnalyticsVictoryTheme from '../AnalyticsVictoryTheme';
 import AnalyticsLegendIcon from './AnalyticsLegendIcon';
@@ -51,37 +51,38 @@ export default function AnalyticsVictoryChart(props) {
   const textLength = tspanTag.getComputedTextLength();
   tspanTag.removeChild(textNode);
 
-  // Filter out events that are not contained within the domain
-  const times = responseItems.map(({ date }) => date.getTime());
-  const minTime = reduce(min, Infinity, times);
-  const maxTime = reduce(max, -Infinity, times);
-  eventData = map(filter(({ startDate, endDate }) => {
-    const startTime = startDate.getTime();
-    const endTime = endDate.getTime();
-    const startInDomain = minTime < startTime && startTime < maxTime;
-    const endInDomain = minTime < endTime && endTime < maxTime;
-    return startInDomain || endInDomain;
-  }), eventData);
-  eventData = eventData.filter(events => events.length);
+//   // Filter out events that are not contained within the domain
+//   const times = responseItems.map(({ date }) => date.getTime());
+//   const minTime = reduce(min, Infinity, times);
+//   const maxTime = reduce(max, -Infinity, times);
+//   eventData = map(filter(({ startDate, endDate }) => {
+//     const startTime = startDate.getTime();
+//     const endTime = endDate.getTime();
+//     const startInDomain = minTime < startTime && startTime < maxTime;
+//     const endInDomain = minTime < endTime && endTime < maxTime;
+//     return startInDomain || endInDomain;
+//   }), eventData);
+//   eventData = eventData.filter(events => events.length);
 
-  // Find min value for event bar height
-  const values = responseItems.map(({ value }) => value);
-  const minValue = reduce(min, Infinity, values);
-  const maxValue = reduce(max, -Infinity, values);
-  const range = maxValue - minValue;
-  const step = range * 1.5 / (eventData.length || 1);
+//   // Find min value for event bar height
+//   const values = responseItems.map(({ value }) => value);
+//   const minValue = reduce(min, Infinity, values);
+//   const maxValue = reduce(max, -Infinity, values);
+//   const range = maxValue - minValue;
+//   const step = range * 1.5 / (eventData.length || 1);
 
-  // Assign a height and color for each grouping of events
-  eventData = eventData.map((events, i) => {
-    return events.map(event => (
-      {
-        ...event,
-        height: minValue - step * (i + 1),
-        color: (i % 2 === 0) ? 'red' : 'green',
-      }
-    ));
-  });
-  eventData = flatten(eventData);
+//   // Assign a height and color for each grouping of events
+//   eventData = eventData.map((events, i) => {
+//     return events.map(event => (
+//       {
+//         ...event,
+//         height: minValue - step * (i + 1),
+//         color: (i % 2 === 0) ? 'red' : 'green',
+//       }
+//     ));
+//   });
+//   eventData = flatten(eventData);
+
 
   return (
     <div className="AnalyticsVictoryChart">
