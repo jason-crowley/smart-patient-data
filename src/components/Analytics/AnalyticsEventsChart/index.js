@@ -41,6 +41,7 @@ export default function AnalyticsEventsChart(props) {
       theme={assocPath(['chart', 'padding', 'top'], 0, AnalyticsVictoryTheme)}
     >
       <VictoryAxis
+        invertAxis
         style={{
           grid: { stroke: 'none' },
           ticks: { stroke: 'none' },
