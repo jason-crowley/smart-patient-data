@@ -112,20 +112,18 @@ export default function Analytics({ data }) {
                       <Grid item xs={12}>
                         <PatientInfo />
                       </Grid>
-                      {responseItemsByKey.map(({ key, grouping }) => {
-                        return (
-                          <Grid item xs={6} key={key}>
-                            <AnalyticsChartCard
-                              animate={{ duration: 1500 }}
-                              data={{
-                                responseItems: grouping,
-                                eventData,
-                              }}
-                              onClick={() => setFocus(key)}
-                            />
-                          </Grid>
-                        );
-                      })}
+                      {responseItemsByKey.map(({ key, grouping }) => (
+                        <Grid item xs={6} key={key}>
+                          <AnalyticsChartCard
+                            animate={{ duration: 1500 }}
+                            data={{
+                              responseItems: grouping,
+                              eventData,
+                            }}
+                            onClick={() => setFocus(key)}
+                          />
+                        </Grid>
+                      ))}
                     </Grid>
                   </div>
                 )
