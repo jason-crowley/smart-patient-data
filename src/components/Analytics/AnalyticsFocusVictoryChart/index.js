@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   createContainer,
-  VictoryZoomContainer,
   VictoryBrushContainer,
   VictoryChart,
   VictoryAxis,
@@ -28,7 +27,7 @@ export default function AnalyticsFocusVictoryChart({ data, onClick }) {
   const zoomMin = new Date(+minDate - zoomOffset);
   const zoomMax = new Date(+maxDate + zoomOffset);
   const [zoomDomain, setZoomDomain] = useState({ y: [zoomMin, zoomMax] });
-  const VictoryZoomVoronoiContainer = VictoryZoomContainer;
+  const VictoryZoomVoronoiContainer = createContainer('zoom', 'voronoi');
 
   return (
     <Grid container spacing={3}>

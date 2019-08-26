@@ -61,7 +61,7 @@ export default function AnalyticsVictoryChart(props) {
           data={responseItems}
           x="value"
           y="date"
-          labels={({ date, value, unit }) => {
+          labels={({ datum: { date, value, unit } }) => {
             date = moment(date).format('MMM DD, YYYY');
             value = value.toFixed(2);
             return `Date: ${date}\nValue: ${value} ${unit}`;
