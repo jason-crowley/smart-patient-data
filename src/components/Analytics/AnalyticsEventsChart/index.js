@@ -15,12 +15,28 @@ const MinHeightBar = ({ x0, x, ...props }) => {
 };
 
 export default function AnalyticsEventsChart({ data }) {
+  // Use default time domain if not enough data points
+  let timeDomain;
+  // timeDomain defaults to undefined, only set in special cases:
+  if (data.length === 1 && data[0].length === 1) {
+    // Only single datapoint
+    const datePoint = data[0][0].startDate;
+    timeDomain = [
+      moment(datePoint).subtract(0.5, 'days').toDate(),
+      moment(datePoint).add(0.5, 'days').toDate(),
+    ];
+  } else if (!data.length) {
+    // No data points
+    timeDomain = DEFAULT_TIME_DOMAIN;
+  }
+
   return (
     <VictoryChart
       width={600} scale={{ y: 'time' }}
       horizontal
       padding={{ top: 50, right: 50, bottom: 50, left: 200 }}
       domainPadding={{ x: 20, y: [20, 30] }}
+      domain={{ y: timeDomain }}
       theme={AnalyticsVictoryTheme}
     >
       <VictoryAxis
