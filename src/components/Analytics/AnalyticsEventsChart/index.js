@@ -2,6 +2,7 @@ import React from 'react';
 import { VictoryChart, VictoryAxis, VictoryBar, Bar, VictoryTooltip } from 'victory';
 import moment from 'moment';
 import AnalyticsVictoryTheme from '../AnalyticsVictoryTheme';
+import { makeSingleDateDomain, makeDefaultDomain } from 'utils/domainMakers';
 
 const COLORS = {
   'MedicationRequest': '#8884d8',

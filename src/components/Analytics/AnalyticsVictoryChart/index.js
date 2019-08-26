@@ -16,6 +16,7 @@ import {
 import moment from 'moment';
 import AnalyticsVictoryTheme from '../AnalyticsVictoryTheme';
 import AnalyticsLegendIcon from './AnalyticsLegendIcon';
+import { makeSingleDateDomain } from 'utils/domainMakers';
 
 const svgNS = 'http://www.w3.org/2000/svg';
 const svgTag = document.createElementNS(svgNS, 'svg');
@@ -83,13 +84,16 @@ export default function AnalyticsVictoryChart(props) {
 //   });
 //   eventData = flatten(eventData);
 
+  const timeDomain = (responseItems.length === 1)
+    ? makeSingleDateDomain(responseItems[0].date)
+    : undefined;
 
   return (
     <div className="AnalyticsVictoryChart">
       <VictoryChart
-        width={width} height={height}
+        width={width} height={height} scale={{ y: 'time' }}
         horizontal
-        scale={{ y: 'time' }}
+        domain={{ y: timeDomain }}
         theme={AnalyticsVictoryTheme}
         containerComponent={<VictoryVoronoiContainer />}
         events={[
