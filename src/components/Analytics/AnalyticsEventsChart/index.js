@@ -15,8 +15,13 @@ const MinHeightBar = ({ x0, x, ...props }) => {
 };
 
 export default function AnalyticsEventsChart({ data }) {
+  const hasSingleDate =
+    data.length === 1
+    && data[0].length === 1
+    && data[0][0].startDate === data[0][0].endDate;
+
   // Use special time domains if not enough data points
-  const timeDomain = (data.length === 1 && data[0].length === 1)
+  const timeDomain = hasSingleDate
     ? makeSingleDateDomain(data[0][0].startDate)
     : (data.length ? undefined : makeDefaultDomain());
 
