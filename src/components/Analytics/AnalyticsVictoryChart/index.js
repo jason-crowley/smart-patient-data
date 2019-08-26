@@ -115,28 +115,28 @@ export default function AnalyticsVictoryChart(props) {
           label={axisText}
           axisLabelComponent={<VictoryLabel dy={-15} />}
         />
-        <VictoryBar
-          data={eventData}
-          x="height"
-          y0="startDate"
-          y="endDate"
-          barWidth={8}
-          labels={({ startDate, endDate, code: { text } }) => {
-            const start = moment(startDate).format('MM/DD/YY');
-            const end = moment(endDate).format('MM/DD/YY');
-            const dates = `${start}${(start === end) ? '' : ' - ' + end}`;
-            return `${text}: ${dates}`;
-          }}
-          labelComponent={
-            <VictoryTooltip
-              cornerRadius={2}
-              dy={4}
-              flyoutStyle={{ fill: '#fff' }}
-              orientation="top"
-              pointerLength={5}
-            />
-          }
-        />
+        {/* <VictoryBar */}
+        {/*   data={eventData} */}
+        {/*   x="height" */}
+        {/*   y0="startDate" */}
+        {/*   y="endDate" */}
+        {/*   barWidth={8} */}
+        {/*   labels={({ startDate, endDate, code: { text } }) => { */}
+        {/*     const start = moment(startDate).format('MM/DD/YY'); */}
+        {/*     const end = moment(endDate).format('MM/DD/YY'); */}
+        {/*     const dates = `${start}${(start === end) ? '' : ' - ' + end}`; */}
+        {/*     return `${text}: ${dates}`; */}
+        {/*   }} */}
+        {/*   labelComponent={ */}
+        {/*     <VictoryTooltip */}
+        {/*       cornerRadius={2} */}
+        {/*       dy={4} */}
+        {/*       flyoutStyle={{ fill: '#fff' }} */}
+        {/*       orientation="top" */}
+        {/*       pointerLength={5} */}
+        {/*     /> */}
+        {/*   } */}
+        {/* /> */}
         <VictoryGroup
           data={responseItems}
           x="value"

@@ -3,6 +3,7 @@ import ResponseItem from 'models/ResponseItem';
 import Event from 'models/Event';
 import PatientInfo from './PatientInfo';
 import { AnalyticsContext } from 'contexts/AnalyticsContext';
+import AnalyticsEventsChart from './AnalyticsEventsChart';
 import AnalyticsFocusVictoryChart from './AnalyticsFocusVictoryChart';
 import AnalyticsChartCard from './AnalyticsChartCard';
 import AnalyticsEvents from './AnalyticsEvents';
@@ -122,6 +123,7 @@ export default function Analytics({ data }) {
                               }}
                               onClick={() => setFocus(key)}
                             />
+                            <AnalyticsEventsChart data={eventData} />
                           </Grid>
                         );
                       })}

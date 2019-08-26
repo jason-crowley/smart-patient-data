@@ -35,7 +35,6 @@ export default function PatientInfo(props) {
   const classes = useStyles();
 
   if (!patient) return null;
-  console.log(patient);
   const {
     name: [{ prefix, given, family }],
     gender,
