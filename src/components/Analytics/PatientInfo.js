@@ -3,17 +3,25 @@ import { FhirClientContext } from 'contexts/FhirClientContext';
 import moment from 'moment';
 
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
+import Card from '@material-ui/core/Card';
+import Grid from '@material-ui/core/Grid';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
+import Divider from '@material-ui/core/Divider';
 
 const useStyles = makeStyles(theme => ({
   root: {
+    marginTop: theme.spacing(1.5),
     padding: theme.spacing(2),
+  },
+  nameAndAvatar: {
+    marginBottom: theme.spacing(1),
   },
   name: {
     flexGrow: 1,
+  },
+  otherInfo: {
+    marginTop: theme.spacing(1),
   },
 }));
 
@@ -41,18 +49,19 @@ export default function PatientInfo(props) {
 
   return (
     <div className="PatientInfo">
-      <Paper className={classes.root}>
-        <Grid container spacing={2}>
+      <Card className={classes.root}>
+        <Grid className={classes.nameAndAvatar} container spacing={2}>
           <Grid item>
             <Avatar>{given[0][0]}</Avatar>
           </Grid>
-          <Grid item className={classes.name}>
+          <Grid className={classes.name} item>
             <Typography variant="h4" component="h1">
               {name}
             </Typography>
           </Grid>
         </Grid>
-        <Grid container spacing={2}>
+        <Divider variant="middle" />
+        <Grid className={classes.otherInfo} container spacing={2}>
           <Grid item xs={4}>
             <Typography variant="body1" component="span">
               Gender: {gender}
@@ -84,7 +93,7 @@ export default function PatientInfo(props) {
             </Typography>
           </Grid>
         </Grid>
-      </Paper>
+      </Card>
     </div>
   );
 };
