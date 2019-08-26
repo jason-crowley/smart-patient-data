@@ -32,13 +32,13 @@ export default function AnalyticsFocusVictoryChart({ data, onClick }) {
 
   return (
     <Grid container spacing={3}>
+      <Grid item xs={12}><p onClick={onClick}>Go Back</p></Grid>
       <Grid item xs={12}>
         <Paper>
           <AnalyticsVictoryChart
             width={600} height={250}
             padding={{ top: 50, right: 80, bottom: 50, left: 80 }}
-            data={data}
-            onClick={onClick}
+            data={responseItems}
             containerComponent={
               <VictoryZoomVoronoiContainer
                 zoomDimension="y"

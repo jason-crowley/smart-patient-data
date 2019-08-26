@@ -18,7 +18,7 @@ export default function AnalyticsVictoryChart(props) {
     width = 450,
     height = 300,
     animate = false,
-    data: { responseItems },
+    data: responseItems,
     onClick,
     ...restProps
   } = props;
@@ -43,13 +43,6 @@ export default function AnalyticsVictoryChart(props) {
         domain={{ y: timeDomain }}
         theme={AnalyticsVictoryTheme}
         containerComponent={<VictoryVoronoiContainer />}
-        events={[
-          {
-            childName: 'all',
-            target: 'parent',
-            eventHandlers: { onClick },
-          },
-        ]}
         {...restProps}
       >
         <VictoryLabel

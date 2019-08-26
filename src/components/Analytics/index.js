@@ -123,7 +123,6 @@ export default function Analytics({ data }) {
                               }}
                               onClick={() => setFocus(key)}
                             />
-                            <AnalyticsEventsChart data={eventData} />
                           </Grid>
                         );
                       })}
