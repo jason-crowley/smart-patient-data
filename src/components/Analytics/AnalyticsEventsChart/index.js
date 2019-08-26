@@ -3,6 +3,7 @@ import { VictoryChart, VictoryAxis, VictoryBar, Bar, VictoryTooltip } from 'vict
 import moment from 'moment';
 import AnalyticsVictoryTheme from '../AnalyticsVictoryTheme';
 import { makeSingleDateDomain, makeDefaultDomain } from 'utils/domainMakers';
+import { assocPath } from 'ramda';
 
 const COLORS = {
   'MedicationRequest': '#8884d8',
@@ -14,7 +15,13 @@ const MinHeightBar = ({ x0, x, ...props }) => {
   return <Bar x0={x0} x={Math.max(x0 + 0.5, x)} {...props} />;
 };
 
-export default function AnalyticsEventsChart({ data }) {
+export default function AnalyticsEventsChart(props) {
+  const {
+    width = 450,
+    height = 240,
+    data,
+  } = props;
+
   const hasSingleDate =
     data.length === 1
     && data[0].length === 1
@@ -27,12 +34,11 @@ export default function AnalyticsEventsChart({ data }) {
 
   return (
     <VictoryChart
-      width={600} scale={{ y: 'time' }}
+      width={width} height={height} scale={{ y: 'time' }}
       horizontal
-      padding={{ top: 50, right: 50, bottom: 50, left: 200 }}
       domainPadding={{ x: 20, y: [20, 30] }}
       domain={{ y: timeDomain }}
-      theme={AnalyticsVictoryTheme}
+      theme={assocPath(['chart', 'padding', 'top'], 0, AnalyticsVictoryTheme)}
     >
       <VictoryAxis
         style={{

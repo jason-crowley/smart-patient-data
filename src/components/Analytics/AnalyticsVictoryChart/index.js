@@ -46,7 +46,7 @@ export default function AnalyticsVictoryChart(props) {
         {...restProps}
       >
         <VictoryLabel
-          x={width / 2} y={25}
+          x={width / 2} y={30}
           text={titleText}
           textAnchor="middle"
           style={{ fontSize: 16 }}

@@ -14,7 +14,7 @@ export default {
   },
   chart: {
     domainPadding: 30,
-    padding: { top: 80, right: 50, bottom: 60, left: 80 },
+    padding: { top: 60, right: 40, bottom: 50, left: 80 },
   },
   legend: {
     orientation: 'horizontal',

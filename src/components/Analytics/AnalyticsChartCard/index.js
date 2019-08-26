@@ -14,7 +14,10 @@ import Collapse from '@material-ui/core/Collapse';
 
 const useStyles = makeStyles(theme => ({
   cardContent: {
-    padding: theme.spacing(0),
+    padding: 0,
+    '&:last-child': {
+      paddingBottom: 0,
+    },
   },
   expand: {
     transform: 'rotate(0deg)',
