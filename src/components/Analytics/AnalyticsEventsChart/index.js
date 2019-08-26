@@ -2,11 +2,12 @@ import React from 'react';
 import { VictoryChart, VictoryAxis, VictoryBar, Bar, VictoryTooltip } from 'victory';
 import moment from 'moment';
 import AnalyticsVictoryTheme from '../AnalyticsVictoryTheme';
+import { DEFAULT_TIME_DOMAIN } from 'constants/index.js';
 
-const colors = {
-  MedicationRequest: '#8884d8',
-  Condition: '#82ca9d',
-  Encounter: 'red',
+const COLORS = {
+  'MedicationRequest': '#8884d8',
+  'Condition': '#82ca9d',
+  'Encounter': 'red',
 };
 
 const MinHeightBar = ({ x0, x, ...props }) => {
@@ -40,7 +41,7 @@ export default function AnalyticsEventsChart({ data }) {
         <VictoryBar
           key={d[0].code.text}
           data={d}
-          style={{ data: { fill: colors[d[0].category] } }}
+          style={{ data: { fill: COLORS[d[0].category] } }}
           x={datum => datum.code.text}
           y0="startDate"
           y="endDate"
