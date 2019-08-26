@@ -2,7 +2,6 @@ import React from 'react';
 import { VictoryChart, VictoryAxis, VictoryBar, Bar, VictoryTooltip } from 'victory';
 import moment from 'moment';
 import AnalyticsVictoryTheme from '../AnalyticsVictoryTheme';
-import { DEFAULT_TIME_DOMAIN } from 'constants/index.js';
 
 const COLORS = {
   'MedicationRequest': '#8884d8',
@@ -14,21 +13,23 @@ const MinHeightBar = ({ x0, x, ...props }) => {
   return <Bar x0={x0} x={Math.max(x0 + 0.5, x)} {...props} />;
 };
 
+// Make default domain around today's date
+const makeDefaultDomain = () => ([
+  moment().subtract(1, 'days').toDate(),
+  new Date(),
+]);
+
+// Make domain around given single date
+const makeSingleDateDomain = datePoint => ([
+  moment(datePoint).subtract(0.5, 'days').toDate(),
+  moment(datePoint).add(0.5, 'days').toDate(),
+]);
+
 export default function AnalyticsEventsChart({ data }) {
-  // Use default time domain if not enough data points
-  let timeDomain;
-  // timeDomain defaults to undefined, only set in special cases:
-  if (data.length === 1 && data[0].length === 1) {
-    // Only single datapoint
-    const datePoint = data[0][0].startDate;
-    timeDomain = [
-      moment(datePoint).subtract(0.5, 'days').toDate(),
-      moment(datePoint).add(0.5, 'days').toDate(),
-    ];
-  } else if (!data.length) {
-    // No data points
-    timeDomain = DEFAULT_TIME_DOMAIN;
-  }
+  // Use special time domains if not enough data points
+  const timeDomain = (data.length === 1 && data[0].length === 1)
+    ? makeSingleDateDomain(data[0][0].startDate)
+    : (data.length ? undefined : makeDefaultDomain());
 
   return (
     <VictoryChart

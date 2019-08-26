@@ -114,6 +114,7 @@ export default function AnalyticsVictoryChart(props) {
         <VictoryAxis
           label={axisText}
           axisLabelComponent={<VictoryLabel dy={-15} />}
+          tickFormat={d => `${d.toFixed(2)}`}
         />
         {/* <VictoryBar */}
         {/*   data={eventData} */}
