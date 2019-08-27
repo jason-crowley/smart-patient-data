@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import {
   VictoryVoronoiContainer,
   VictoryChart,
@@ -10,10 +10,11 @@ import {
   VictoryTooltip,
 } from 'victory';
 import moment from 'moment';
+import { equals } from 'ramda';
 import AnalyticsVictoryTheme from '../AnalyticsVictoryTheme';
 import { makeSingleDateDomain } from 'utils/domainMakers';
 
-export default function AnalyticsVictoryChart(props) {
+const AnalyticsVictoryChart = props => {
   const {
     width = 450,
     height = 300,
@@ -83,3 +84,8 @@ export default function AnalyticsVictoryChart(props) {
     </div>
   );
 };
+
+export default memo(
+  AnalyticsVictoryChart,
+  ({ responseItems: prev }, { responseItems: next }) => equals(prev, next)
+);
