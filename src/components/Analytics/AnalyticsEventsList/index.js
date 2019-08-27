@@ -1,13 +1,19 @@
 import React, { useContext } from 'react';
 import { AnalyticsContext } from 'contexts/AnalyticsContext';
+
+import { makeStyles } from '@material-ui/core/styles';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import './AnalyticsEventsList.css';
+
+const useStyles = makeStyles(theme => ({
+  root: { listStyleType: 'none' },
+}));
 
 export default function AnalyticsEventsList({ eventsByKey }) {
   const dispatch = useContext(AnalyticsContext);
+  const classes = useStyles();
   return (
-    <ol className="AnalyticsEventsList__checkboxes">
+    <ol className={classes.root}>
       {
         // The first event of each group serves as a "representative"
         // containing that group's shared display text
