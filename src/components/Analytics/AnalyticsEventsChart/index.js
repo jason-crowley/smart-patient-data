@@ -65,7 +65,7 @@ export default function AnalyticsEventsChart(props) {
           y="endDate"
           barWidth={8}
           dataComponent={<MinHeightBar />}
-          labels={({ startDate, endDate, code: { text } }) => {
+          labels={({ datum: { startDate, endDate } }) => {
             const start = moment(startDate).format('MM/DD/YY');
             const end = moment(endDate).format('MM/DD/YY');
             return `${start}${(start === end) ? '' : ' - ' + end}`;
