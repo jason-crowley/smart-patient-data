@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from 'react';
+import React, { useState, useReducer, memo } from 'react';
 import ResponseItem from 'models/ResponseItem';
 import Event from 'models/Event';
 import PatientInfo from './PatientInfo';
@@ -7,7 +7,7 @@ import AnalyticsFocusVictoryChart from './AnalyticsFocusVictoryChart';
 import AnalyticsChartCard from './AnalyticsChartCard';
 import AnalyticsEvents from './AnalyticsEvents';
 import eventReducer from 'reducers/eventReducer';
-import { propEq, has, compose, not } from 'ramda';
+import { propEq, has, compose, not, equals } from 'ramda';
 import groupByCodeKey from 'utils/groupByCodeKey';
 
 import Grid from '@material-ui/core/Grid';
@@ -51,7 +51,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function Analytics({ data }) {
+const Analytics = ({ data }) => {
   const [eventKeys, dispatch] = useReducer(eventReducer, new Set());
   const [focus, setFocus] = useState(null);
   const classes = useStyles();
@@ -147,3 +147,8 @@ export default function Analytics({ data }) {
     </div>
   );
 };
+
+export default memo(
+  Analytics,
+  ({ data: prev }, { data: next }) => equals(prev, next)
+);
