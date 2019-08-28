@@ -89,11 +89,10 @@ export default function HeaderNav({ children }) {
             tab={tab}
             handleChangeTab={handleChangeTab}
             children={[
-              { label: 'Home', to: '/home' },
               { label: 'Analytics', to: '/analytics' },
               { label: 'Surveys', to: '/surveys' },
               { label: 'Builder', to: '/builder' },
-              { label: 'Info', to: '/info' },
+              { label: 'About', to: '/about' },
             ]}
           />
           <div className={classes.search}>

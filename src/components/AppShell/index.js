@@ -3,7 +3,7 @@ import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { FhirClientContext } from 'contexts/FhirClientContext';
 import usePatientData from 'hooks/usePatientData';
 import Header from '../Header';
-import Home from '../Home';
+import About from '../About';
 import Analytics from '../Analytics';
 import Surveys from '../Surveys';
 import Builder from '../Builder';
@@ -45,14 +45,14 @@ export default function AppShell() {
           </Grid>
           <Grid item xs={12}>
             <Switch>
-              <Redirect from="/app" to="/home" />
-              <Route path="/home" component={Home} />
+              <Redirect from="/app" to="/analytics" />
               <Route
                 path="/analytics"
                 render={props => <Analytics {...props} data={data} />}
               />
               <Route path="/surveys" component={Surveys} />
               <Route path="/builder" component={Builder} />
+              <Route path="/about" component={About} />
             </Switch>
           </Grid>
         </Grid>
