@@ -54,6 +54,7 @@ export default function AnalyticsEventsChart(props) {
     >
       <VictoryAxis
         invertAxis
+        tickFormat={data.length ? undefined : () => ''}
         style={{
           grid: { stroke: 'none' },
           ticks: { stroke: 'none' },
