@@ -1,3 +1,25 @@
+# SMART Surveys
+
+A SMART on FHIR app that allows doctors to create surveys and view analytics for patient-generated health data
+
+## Downloading and Running the Project
+
+To download and run the project, simply run the commands
+```
+git clone https://github.com/jason-crowley/smart-surveys.git
+cd smart-surveys && npm start
+```
+from your terminal.
+
+## Launching the App
+
+To launch the app in an EHR context, first make sure that the app is running on port 3000 by typing `npm start` in the root of the downloaded project directory.
+Then, go to the [SMART Launcher](http://launch.smarthealthit.org/), and ensure that **Provider EHR Launch** is selected under **Launch Type** and that **R4** is the selected **FHIR Version**.
+Next, type in your desired patient id(s) under **Patient(s)**, or click the dropdown button to select a patient from the patient browser. Note that if you type multiple patient ids, the launcher
+will prompt you to pick one patient during the launch flow. Finally, enter `http://localhost:3000` into the **App Launch URL** field and click 'Launch App!' to open the app in an EHR context!
+
+---
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
