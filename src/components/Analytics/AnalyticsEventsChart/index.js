@@ -27,6 +27,7 @@ export default function AnalyticsEventsChart(props) {
     width = 450,
     height = 240,
     data,
+    ...restProps
   } = props;
 
   const hasSingleDate =
@@ -47,6 +48,7 @@ export default function AnalyticsEventsChart(props) {
       domain={{ y: timeDomain }}
       theme={assocPath(['chart', 'padding', 'top'], 0, AnalyticsVictoryTheme)}
       containerComponent={<VictoryVoronoiContainer />}
+      {...restProps}
     >
       <VictoryAxis
         invertAxis
