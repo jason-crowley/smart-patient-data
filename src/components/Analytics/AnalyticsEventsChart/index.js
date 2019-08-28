@@ -9,7 +9,7 @@ import {
 } from 'victory';
 import moment from 'moment';
 import AnalyticsVictoryTheme from '../AnalyticsVictoryTheme';
-import { makeSingleDateDomain, makeDefaultDomain } from 'utils/domainMakers';
+import { makeDomainFromDates } from 'utils/domainMakers';
 import { assocPath } from 'ramda';
 
 const COLORS = {
@@ -30,21 +30,24 @@ export default function AnalyticsEventsChart(props) {
     ...restProps
   } = props;
 
-  const hasSingleDate =
-    data.length === 1
-    && data[0].length === 1
-    && data[0][0].startDate === data[0][0].endDate;
+  // Get all unique times in data
+  const times = new Set();
+  for (const events of data) {
+    for (const { startDate, endDate } of events) {
+      times.add(+startDate);
+      times.add(+endDate);
+    }
+  }
 
-  // Use special time domains if not enough data points
-  const timeDomain = hasSingleDate
-    ? makeSingleDateDomain(data[0][0].startDate)
-    : (data.length ? undefined : makeDefaultDomain());
+  // Calculate default domain
+  const dates = Array.from(times, time => new Date(time));
+  const domain = { y: makeDomainFromDates(dates) };
 
   return (
     <VictoryChart
       width={width} height={height} scale={{ y: 'time' }}
       horizontal
-      domain={{ y: timeDomain }}
+      domain={domain}
       theme={assocPath(['chart', 'padding', 'top'], 0, AnalyticsVictoryTheme)}
       containerComponent={<VictoryVoronoiContainer />}
       {...restProps}

@@ -12,7 +12,7 @@ import {
 import moment from 'moment';
 import { equals } from 'ramda';
 import AnalyticsVictoryTheme from '../AnalyticsVictoryTheme';
-import { makeSingleDateDomain } from 'utils/domainMakers';
+import { makeDomainFromDates } from 'utils/domainMakers';
 
 const AnalyticsVictoryChart = props => {
   const {
@@ -32,16 +32,16 @@ const AnalyticsVictoryChart = props => {
     ? `${legendText} (${unit})`
     : legendText;
 
-  const timeDomain = (responseItems.length === 1)
-    ? makeSingleDateDomain(responseItems[0].date)
-    : undefined;
+  // Calculate default domain
+  const dates = responseItems.map(({ date }) => date);
+  const domain = { y: makeDomainFromDates(dates) };
 
   return (
     <div className="AnalyticsVictoryChart">
       <VictoryChart
         width={width} height={height} scale={{ y: 'time' }}
         horizontal
-        domain={{ y: timeDomain }}
+        domain={domain}
         theme={AnalyticsVictoryTheme}
         containerComponent={<VictoryVoronoiContainer />}
         {...restProps}
