@@ -1,5 +1,12 @@
 import React from 'react';
-import { VictoryChart, VictoryAxis, VictoryBar, Bar, VictoryTooltip } from 'victory';
+import {
+  VictoryChart,
+  VictoryVoronoiContainer,
+  VictoryAxis,
+  VictoryBar,
+  Bar,
+  VictoryTooltip,
+} from 'victory';
 import moment from 'moment';
 import AnalyticsVictoryTheme from '../AnalyticsVictoryTheme';
 import { makeSingleDateDomain, makeDefaultDomain } from 'utils/domainMakers';
@@ -39,6 +46,7 @@ export default function AnalyticsEventsChart(props) {
       domainPadding={{ x: 20, y: [20, 30] }}
       domain={{ y: timeDomain }}
       theme={assocPath(['chart', 'padding', 'top'], 0, AnalyticsVictoryTheme)}
+      containerComponent={<VictoryVoronoiContainer />}
     >
       <VictoryAxis
         invertAxis
