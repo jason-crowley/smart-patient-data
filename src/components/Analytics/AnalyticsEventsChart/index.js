@@ -18,9 +18,9 @@ const COLORS = {
   'Encounter': 'red',
 };
 
-const MinHeightBar = ({ x0, x, ...props }) => {
-  return <Bar x0={x0} x={Math.max(x0 + 0.5, x)} {...props} />;
-};
+const MinHeightBar = ({ x0, x, ...props }) => (
+  <Bar x0={x0} x={Math.max(x0 + 0.5, x)} {...props} />
+);
 
 export default function AnalyticsEventsChart(props) {
   const {
