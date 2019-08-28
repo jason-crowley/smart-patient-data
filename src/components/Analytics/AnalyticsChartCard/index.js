@@ -38,6 +38,16 @@ export default function AnalyticsChartCard(props) {
   } = props;
   const [expanded, setExpanded] = useState(false);
   const handleExpand = () => setExpanded(wasExpanded => !wasExpanded);
+  const times = responseItems.map(({ date }) => +date);
+  const minTime = Math.min(times);
+  const maxTime = Math.max(times);
+  const eventsInDomain = eventData.filter(({ startDate, endDate }) => {
+    const start = +startDate;
+    const end = +endDate;
+    const startInDomain = minTime < start && start < maxTime;
+    const endInDomain = minTime < end && end < maxTime;
+    return startInDomain || endInDomain;
+  });
   const classes = useStyles();
   return (
     <Card>
