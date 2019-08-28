@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import AnalyticsVictoryChart from '../AnalyticsVictoryChart';
 import AnalyticsEventsChart from '../AnalyticsEventsChart';
+import { makeDomainFromDates } from 'utils/domainMakers';
 import clsx from 'clsx';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -38,25 +39,30 @@ export default function AnalyticsChartCard(props) {
   } = props;
   const [expanded, setExpanded] = useState(false);
   const handleExpand = () => setExpanded(wasExpanded => !wasExpanded);
-  const times = responseItems.map(({ date }) => +date);
-  const minTime = Math.min(times);
-  const maxTime = Math.max(times);
-  const eventsInDomain = eventData.filter(({ startDate, endDate }) => {
-    const start = +startDate;
-    const end = +endDate;
-    const startInDomain = minTime < start && start < maxTime;
-    const endInDomain = minTime < end && end < maxTime;
-    return startInDomain || endInDomain;
-  });
+
+  // Calculate domain of responseItems
+  const dates = responseItems.map(({ date }) => date);
+  const [minDate, maxDate] = makeDomainFromDates(dates);
+  const domain = { y: [minDate, maxDate] };
+
+  // Filter out events not in the domain of responseItems
+  const eventsInDomain = eventData.map(events => {
+    return events.filter(({ startDate, endDate }) => {
+      const startInDomain = +minDate <= +startDate && +startDate <= +maxDate;
+      const endInDomain = +minDate <= +endDate && +endDate <= +maxDate;
+      return startInDomain || endInDomain;
+    });
+  }).filter(events => events.length);
+
   const classes = useStyles();
   return (
     <Card>
       <CardContent className={classes.cardContent}>
-        <AnalyticsVictoryChart data={responseItems} />
+        <AnalyticsVictoryChart data={responseItems} domain={domain} />
       </CardContent>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent className={classes.cardContent}>
-          <AnalyticsEventsChart data={eventData} />
+          <AnalyticsEventsChart data={eventsInDomain} domain={domain} />
         </CardContent>
       </Collapse>
       <CardActions>

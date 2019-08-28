@@ -44,7 +44,6 @@ export default function AnalyticsEventsChart(props) {
     <VictoryChart
       width={width} height={height} scale={{ y: 'time' }}
       horizontal
-      domainPadding={{ x: 20, y: [20, 30] }}
       domain={{ y: timeDomain }}
       theme={assocPath(['chart', 'padding', 'top'], 0, AnalyticsVictoryTheme)}
       containerComponent={<VictoryVoronoiContainer />}
