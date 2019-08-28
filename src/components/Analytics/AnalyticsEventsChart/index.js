@@ -63,11 +63,11 @@ export default function AnalyticsEventsChart(props) {
           tickLabels: { fontSize: 10 },
         }}
       />
-      {data.map(d => (
+      {data.map(events => (
         <VictoryBar
-          key={d[0].code.text}
-          data={d}
-          style={{ data: { fill: COLORS[d[0].category] } }}
+          key={events[0].code.text}
+          data={events}
+          style={{ data: { fill: COLORS[events[0].category] } }}
           x={datum => datum.code.text}
           y0="startDate"
           y="endDate"
