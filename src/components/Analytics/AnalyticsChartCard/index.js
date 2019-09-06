@@ -48,8 +48,8 @@ export default function AnalyticsChartCard(props) {
   // Filter out events not in the domain of responseItems
   const eventsInDomain = eventData.map(events => {
     return events.filter(({ startDate, endDate }) => {
-      const startInDomain = +minDate <= +startDate && +startDate <= +maxDate;
-      const endInDomain = +minDate <= +endDate && +endDate <= +maxDate;
+      const startInDomain = minDate < startDate && startDate < maxDate;
+      const endInDomain = minDate < endDate && endDate < maxDate;
       return startInDomain || endInDomain;
     });
   }).filter(events => events.length);
