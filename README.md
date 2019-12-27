@@ -1,13 +1,13 @@
-# SMART Surveys
+# SMART Patient Data Analytics
 
-A SMART on FHIR app that allows doctors to create surveys and view analytics for patient-generated health data
+A SMART on FHIR app that allows doctors to view analytics for patient-generated health data
 
 ## Downloading and Running the Project
 
 To download and run the project, simply run the commands
 ```
-git clone https://github.com/jason-crowley/smart-surveys.git
-cd smart-surveys && npm start
+git clone https://github.com/jason-crowley/smart-patient-data.git
+cd smart-patient-data && npm start
 ```
 from your terminal.
 
